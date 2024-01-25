@@ -41,7 +41,7 @@ public class CharacterController : MonoBehaviour
         if (movementInput > 0)
         {
             body.velocity += new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
-            body.velocity = Vector3.ClampMagnitude(body.velocity, 10);
+            body.velocity = Vector3.ClampMagnitude(body.velocity, 2);
         }
         else if(movementInput < 0)
         {
