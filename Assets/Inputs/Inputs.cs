@@ -165,7 +165,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
+                    ""name"": ""backward"",
                     ""id"": ""5c0a33fe-a6fa-4157-be51-2a1566768d7e"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
@@ -176,7 +176,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""down"",
+                    ""name"": ""forward"",
                     ""id"": ""3808a840-f245-4415-8b99-86c3e66d3a13"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
@@ -187,7 +187,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""left"",
+                    ""name"": ""up"",
                     ""id"": ""9a70131d-de3a-46c3-9f78-7cb82bfcccfb"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
@@ -198,7 +198,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""right"",
+                    ""name"": ""down"",
                     ""id"": ""1fe70a7f-2031-4e12-8d0c-096b8d32b358"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
@@ -209,7 +209,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""forward"",
+                    ""name"": ""left"",
                     ""id"": ""fce32509-6f02-4b52-bcdb-7eeffd44b901"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
@@ -220,7 +220,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""backward"",
+                    ""name"": ""right"",
                     ""id"": ""a04205f0-ab25-4ea3-8150-cd3e86fe052c"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
