@@ -27,9 +27,9 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(-1, 0, 0);
 
         if (rotationInputs.y > 0)
-            transform.Rotate(0, 1, 0);
-        else if (rotationInputs.y < 0)
             transform.Rotate(0, -1, 0);
+        else if (rotationInputs.y < 0)
+            transform.Rotate(0, 1, 0);
 
         if (rotationInputs.z > 0)
             transform.Rotate(0, 0, 1);
