@@ -22,9 +22,9 @@ public class PlayerController : MonoBehaviour
     {
         rotationInputs = inputs.Player.Rotate.ReadValue<Vector3>();
         if (rotationInputs.x > 0)
-            transform.Rotate(1, 0, 0);
+            transform.GetChild(0).Rotate(1, 0, 0);
         else if (rotationInputs.x < 0)
-            transform.Rotate(-1, 0, 0);
+            transform.GetChild(0).Rotate(-1, 0, 0);
 
         if (rotationInputs.y > 0)
             transform.Rotate(0, -1, 0);
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
         if (movementInput > 0)
         {
             // body.velocity += new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
-            Vector3 movementVector = transform.GetChild(0).position - transform.position;
+            Vector3 movementVector = transform.GetChild(0).GetChild(0).position - transform.GetChild(0).position;
             movementVector.Normalize();
             movementVector = movementVector / 2;
             body.velocity += movementVector;
