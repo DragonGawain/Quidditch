@@ -71,15 +71,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""UnlockCursor"",
-                    ""type"": ""Button"",
-                    ""id"": ""23f038d9-ec8b-4605-aa65-eb027aaf738b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -289,17 +280,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MousePosition"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""87c0a679-4492-48d2-aa97-ec56a7e12e88"",
-                    ""path"": ""<Keyboard>/enter"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UnlockCursor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -892,7 +872,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
-        m_Player_UnlockCursor = m_Player.FindAction("UnlockCursor", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -971,7 +950,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_MousePosition;
-    private readonly InputAction m_Player_UnlockCursor;
     public struct PlayerActions
     {
         private @Inputs m_Wrapper;
@@ -981,7 +959,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
-        public InputAction @UnlockCursor => m_Wrapper.m_Player_UnlockCursor;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1006,9 +983,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @MousePosition.started += instance.OnMousePosition;
             @MousePosition.performed += instance.OnMousePosition;
             @MousePosition.canceled += instance.OnMousePosition;
-            @UnlockCursor.started += instance.OnUnlockCursor;
-            @UnlockCursor.performed += instance.OnUnlockCursor;
-            @UnlockCursor.canceled += instance.OnUnlockCursor;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1028,9 +1002,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @MousePosition.started -= instance.OnMousePosition;
             @MousePosition.performed -= instance.OnMousePosition;
             @MousePosition.canceled -= instance.OnMousePosition;
-            @UnlockCursor.started -= instance.OnUnlockCursor;
-            @UnlockCursor.performed -= instance.OnUnlockCursor;
-            @UnlockCursor.canceled -= instance.OnUnlockCursor;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1218,7 +1189,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
-        void OnUnlockCursor(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

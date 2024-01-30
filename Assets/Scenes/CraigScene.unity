@@ -1058,7 +1058,7 @@ PrefabInstance:
     - target: {fileID: 8893798499550723337, guid: a8bed6a94cc5645f49ab2340265ce075,
         type: 3}
       propertyPath: sensitivity
-      value: 3
+      value: 2.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

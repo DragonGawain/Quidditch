@@ -21,9 +21,8 @@ public class PlayerController : MonoBehaviour
         inputs.Player.Enable();
         body = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = true;
+        Cursor.visible = false;
         currentMousePos = inputs.Player.MousePosition.ReadValue<Vector2>();
-        inputs.Player.UnlockCursor.performed += UnlockCursor;
     }
 
     // FixedUpdate is called 50 times per second
@@ -41,9 +40,9 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(0, 1, 0);
 
         if (rotationInputs.z > 0)
-            transform.Rotate(0, 0, 1);
-        else if (rotationInputs.z < 0)
             transform.Rotate(0, 0, -1);
+        else if (rotationInputs.z < 0)
+            transform.Rotate(0, 0, 1);
 
         movementInput = inputs.Player.Move.ReadValue<float>();
         if (movementInput > 0)
@@ -111,10 +110,5 @@ public class PlayerController : MonoBehaviour
             camObject.transform.rotation = currentRot;
             offset.y += 1.0f * sensitivity;
         }
-    }
-
-    void UnlockCursor (UnityEngine.InputSystem.InputAction.CallbackContext ctx)
-    {
-        Cursor.lockState = CursorLockMode.None;
     }
 }
