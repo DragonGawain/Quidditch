@@ -77,18 +77,18 @@ public class PlayerController : MonoBehaviour
         if (currentMousePos.x < 0 && offset.x > -21)
         {
             // camObject.transform.Rotate(new Vector3(0.0f,-1.0f * sensitivity,0.0f));
-            Quaternion currentRot = camObject.transform.rotation;
+            Quaternion currentRot = camObject.transform.localRotation;
             currentRot.eulerAngles = currentRot.eulerAngles + new Vector3(0.0f,-1.0f * sensitivity,0.0f);
-            camObject.transform.rotation = currentRot;
+            camObject.transform.localRotation = currentRot;
             offset.x -= 1.0f * sensitivity;
         }
         // mouse moved right - yaw right - increase Y axis
         else if (currentMousePos.x > 0 && offset.x < 21)
         {
             // camObject.transform.Rotate(new Vector3(0.0f,1.0f * sensitivity,0.0f));
-            Quaternion currentRot = camObject.transform.rotation;
+            Quaternion currentRot = camObject.transform.localRotation;
             currentRot.eulerAngles = currentRot.eulerAngles + new Vector3(0.0f,1.0f * sensitivity,0.0f);
-            camObject.transform.rotation = currentRot;
+            camObject.transform.localRotation = currentRot;
             offset.x += 1.0f * sensitivity;
         }
 
@@ -96,18 +96,18 @@ public class PlayerController : MonoBehaviour
         if (currentMousePos.y > 0 && offset.y > -21)
         {
             // camObject.transform.Rotate(new Vector3(-1.0f * sensitivity,0.0f,0.0f));
-            Quaternion currentRot = camObject.transform.rotation;
+            Quaternion currentRot = camObject.transform.localRotation;
             currentRot.eulerAngles = currentRot.eulerAngles + new Vector3(-1.0f * sensitivity,0.0f,0.0f);
-            camObject.transform.rotation = currentRot;
+            camObject.transform.localRotation = currentRot;
             offset.y -= 1.0f * sensitivity;
         }
         // mouse moved down - pitch down - increase X axis
         else if (currentMousePos.y < 0 && offset.y < 21)
         {
             // camObject.transform.Rotate(new Vector3(1.0f * sensitivity,0.0f,0.0f));
-            Quaternion currentRot = camObject.transform.rotation;
+            Quaternion currentRot = camObject.transform.localRotation;
             currentRot.eulerAngles = currentRot.eulerAngles + new Vector3(1.0f * sensitivity,0.0f,0.0f);
-            camObject.transform.rotation = currentRot;
+            camObject.transform.localRotation = currentRot;
             offset.y += 1.0f * sensitivity;
         }
     }
