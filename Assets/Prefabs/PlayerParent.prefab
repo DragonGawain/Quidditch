@@ -329,6 +329,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69008c56e84d443c7810e3d194b1b605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camObject: {fileID: 0}
+  sensitivity: 1
 --- !u!54 &1876494538653309373
 Rigidbody:
   m_ObjectHideFlags: 0
