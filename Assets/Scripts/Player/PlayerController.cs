@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
             // body.velocity += new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
             Vector3 movementVector = transform.GetChild(0).GetChild(0).position - transform.GetChild(0).position;
             movementVector.Normalize();
-            movementVector = movementVector / 2;
+            movementVector /= 2;
             body.velocity += movementVector;
             body.velocity = Vector3.ClampMagnitude(body.velocity, 2);
         }
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 deccel = new Vector3(body.velocity.x, body.velocity.y, body.velocity.z);
             deccel.Normalize();
-            deccel = deccel / 2;
+            deccel /= 2;
             body.velocity -= deccel;
         }
 
@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
         {
             // camObject.transform.Rotate(new Vector3(0.0f,-1.0f * sensitivity,0.0f));
             Quaternion currentRot = camObject.transform.localRotation;
-            currentRot.eulerAngles = currentRot.eulerAngles + new Vector3(0.0f,-1.0f * sensitivity,0.0f);
+            currentRot.eulerAngles += new Vector3(0.0f,-1.0f * sensitivity,0.0f);
             camObject.transform.localRotation = currentRot;
             offset.x -= 1.0f * sensitivity;
         }
@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
         {
             // camObject.transform.Rotate(new Vector3(0.0f,1.0f * sensitivity,0.0f));
             Quaternion currentRot = camObject.transform.localRotation;
-            currentRot.eulerAngles = currentRot.eulerAngles + new Vector3(0.0f,1.0f * sensitivity,0.0f);
+            currentRot.eulerAngles += new Vector3(0.0f,1.0f * sensitivity,0.0f);
             camObject.transform.localRotation = currentRot;
             offset.x += 1.0f * sensitivity;
         }
@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
         {
             // camObject.transform.Rotate(new Vector3(-1.0f * sensitivity,0.0f,0.0f));
             Quaternion currentRot = camObject.transform.localRotation;
-            currentRot.eulerAngles = currentRot.eulerAngles + new Vector3(-1.0f * sensitivity,0.0f,0.0f);
+            currentRot.eulerAngles += new Vector3(-1.0f * sensitivity,0.0f,0.0f);
             camObject.transform.localRotation = currentRot;
             offset.y -= 1.0f * sensitivity;
         }
@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
         {
             // camObject.transform.Rotate(new Vector3(1.0f * sensitivity,0.0f,0.0f));
             Quaternion currentRot = camObject.transform.localRotation;
-            currentRot.eulerAngles = currentRot.eulerAngles + new Vector3(1.0f * sensitivity,0.0f,0.0f);
+            currentRot.eulerAngles += new Vector3(1.0f * sensitivity,0.0f,0.0f);
             camObject.transform.localRotation = currentRot;
             offset.y += 1.0f * sensitivity;
         }

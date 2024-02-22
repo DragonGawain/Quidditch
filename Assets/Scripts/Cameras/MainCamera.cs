@@ -12,14 +12,14 @@ public class MainCamera : MonoBehaviour
     // +Z : ROLL RIGHT
     // Start is called before the first frame update
 
-    void Awake()
-    {
+    // void Awake()
+    // {
         
-    }
+    // }
 
-    // Update is called once per frame
-    void Update()
-    {
+    // // Update is called once per frame
+    // void Update()
+    // {
         
-    }
+    // }
 }
