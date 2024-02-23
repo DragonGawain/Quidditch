@@ -24,9 +24,6 @@ abstract public class BranchNode : Node
     protected List<Node> myChildNodes;
 
     // To do: add methods for node insertion, deletion, ordering as needed.
-
-    // To do: add methods for randomization as needed.
-    // Potentially should be implemented at the Selector/Sequence level.
 }
 
 // Parent class of leaf nodes.
