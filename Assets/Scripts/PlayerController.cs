@@ -6,17 +6,21 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public PlayerInputActions playerControls;
-    private InputAction forward,yaw;
+    private InputAction forward,yaw,pitch,roll;
     public float moveSpeed = 10f, pivotSpeed = 2f, verticalSpeed = 5f ;
-    public float throttleIncrement = 0.1f, maxThrust = 200f, maxBackwardsThrust = 10f, upwardsOffset = 8.00f, upwardsForce = Mathf.Abs(Physics.gravity.y);
+    public float throttleIncrement = 0.1f, maxThrust = 200f, maxBackwardsThrust = 10f, upwardsOffset = 1.50f, upwardsForce = Mathf.Abs(Physics.gravity.y);//TODO: UPWARDS FORCE STILL APPEARS NEGATIVE??
+    public float deltaZ = 75.0f;
     [Tooltip("")]
     public float responsiveness = 10f;
 
     private Rigidbody rb;
-    private float forwardMove = 0, pivot =0;
-    private float _throttle, _roll, _yaw, _pitch,_upwardsForce; //a broom is somewhat like a helicopter meets a plane
-    private float MAX_OFF = 11.0f, MIN_OFF = 8.7f;
+    private float _throttle,_forward, _roll, _yaw, _pitch,_upwardsForce; //a broom is somewhat like a helicopter meets a plane
+    private float MAX_OFF = 11.0f, MIN_OFF = 8.7f, UP_OFF = 1.50f;
     private float liftTimer = 0;
+
+    //TESTING
+
+    public float eulerX, eulerY, eulerZ;
     
     //Inputs inputs;
     //Vector3 rotationInputs = new Vector3(0, 0, 0);
@@ -40,13 +44,19 @@ public class PlayerController : MonoBehaviour
 
         forward = playerControls.Player.Forward;
         yaw = playerControls.Player.Yaw;
+        pitch = playerControls.Player.Pitch;
+        roll = playerControls.Player.Roll; 
         forward.Enable();
         yaw.Enable();
+        pitch.Enable();
+        roll.Enable();
     }
     void Update()
     {
-        forwardMove = forward.ReadValue<float>();
-        pivot = yaw.ReadValue<float>();
+        _forward = forward.ReadValue<float>();
+        _yaw = yaw.ReadValue<float>();
+        _pitch =  pitch.ReadValue<float>();
+        _roll = roll.ReadValue<float>();
         
     }
 
@@ -55,34 +65,96 @@ public class PlayerController : MonoBehaviour
     {//Required by Input system, can have issues if not included
         forward.Disable();
         yaw.Disable();
+        pitch.Disable();
+        roll.Disable();
     }
 
     private void throttler()
     {//throttle speed up or down
         //forward speed
-
-        if (forwardMove< 0)// Like cats, brooms dont like to move backwards
+        float force =0;
+        if (_forward< 0)// Like cats, brooms dont like to move backwards
         {
             _throttle +=  throttleIncrement/2;
-            rb.AddForce(transform.forward * forwardMove * maxBackwardsThrust * _throttle);//needs to be * forwardMove to remain in a backwards direction
+            force = _forward * maxBackwardsThrust * _throttle;
+            rb.AddForce(transform.forward *force);
+            // rb.AddForce(transform.forward * forwardMove * maxBackwardsThrust * _throttle);//needs to be * forwardMove to remain in a backwards direction
         }
-        else if (forwardMove > 0)
+        else if (_forward > 0)
         {
-            _throttle += forwardMove * throttleIncrement;
-            rb.AddForce(transform.forward * forwardMove * maxThrust * _throttle);
- 
-        }       
+            _throttle += throttleIncrement;
+            force = _forward * maxThrust * _throttle;
+            rb.AddForce(transform.forward * force);
+            //rb.AddForce(transform.forward * forwardMove * maxThrust * _throttle);
+
+        }
+
+        //equalize(force/4);
+    }
+
+    private void equalize(float _force)
+    {//this does not work very well
+        float eZ = eulerZ-180;
+        if (eulerZ < deltaZ || eulerZ > 360-deltaZ)
+        {
+
+        }
+        else
+        {
+            Debug.Log("euler");
+            Ailerons(Mathf.Sign(eZ),_force);
+        }
+        //rb.AddRelativeTorque(0, 0, eZ);
+        //if (eulerZ > 180) eulerZ -= 360;
+        //if (Mathf.Abs(eulerZ) > 60)
+        //{
+        //    eulerZ = 0;
+        //}
+        //if (eulerZ > 30 || eulerZ< -30)
+        //{
+        //    Ailerons(Mathf.Sign(eulerZ), _force);
+        //}
+        //rb.AddRelativeTorque(0,0,eulerZ);
+        //var stableVector = new Vector3(-Mathf.Clamp(0.0f, -stabilizer, stabilizer), 0, -Mathf.Clamp(0, -stabilizer, stabilizer));
+        //var stable = transform.TransformDirection(stableVector);
+        ////print(Array(Vector3(xRot, 0, zRot), stableVector, rigidbody.angularVelocity));
+        //rb.angularVelocity += stableVector;
+        //rb.angularVelocity = rb.angularVelocity / 1.1f;
     }
     private void rudder()
     {//controls the nose movement (yaw)
-        _yaw = pivot * responseModifier(pivotSpeed);
-        rb.AddTorque(transform.up * _yaw);
+        float torque =  _yaw * responseModifier(pivotSpeed);
+        //do a little roll too
+        //Ailerons(-_yaw);
+        rb.AddRelativeTorque(transform.up * torque);
     }
 
-    private void yoke()
-    {
-        //_pitch 
-        rb.AddTorque(transform.forward * _yaw);
+    private void Ailerons(float _r)
+    {//The ailerons(flaps) of a plane contol the Roll
+        //_roll = roll * responseModifier(rollSpeed);
+        float torque = _r * responseModifier(pivotSpeed / 2);
+        rb.AddTorque(transform.forward * torque);
+        //rb.AddTorque(transform.forward * _pitch);//this worked for roll
+    }
+    private void Ailerons(float _r, float force)
+    {//The ailerons(flaps) of a plane contol the Roll
+        //_roll = roll * responseModifier(rollSpeed);
+        float torque = _r * responseModifier(force / 2);
+        rb.AddTorque(transform.forward * torque);
+        //rb.AddTorque(transform.forward * _pitch);//this worked for roll
+    }
+    private void Ailerons()
+    {//The ailerons(flaps) of a plane contol the Roll
+        //_roll = roll * responseModifier(rollSpeed);
+        float torque = _roll * responseModifier(pivotSpeed / 2);
+        rb.AddTorque(transform.forward * torque);
+        //rb.AddTorque(transform.forward * _pitch);//this worked for roll
+    }
+    private void Elevator ()
+    {//Controls the pitch
+        float torque = _pitch * responseModifier(pivotSpeed);
+        
+        rb.AddTorque(transform.right * torque);
     }
 
     private void lift()
@@ -91,7 +163,8 @@ public class PlayerController : MonoBehaviour
         if (liftTimer == 0)
         {
             liftTimer = Random.Range(1.0f, 2.0f);
-            upwardsOffset = Random.Range(MIN_OFF, MAX_OFF);
+            upwardsOffset = Random.Range(MIN_OFF, MAX_OFF); //gravity seems to win if you use an even range
+            //upwardsOffset = Random.Range(upwardsForce - UP_OFF, upwardsForce + UP_OFF);
         }
         else { 
             liftTimer -= Time.deltaTime;
@@ -109,6 +182,12 @@ public class PlayerController : MonoBehaviour
         throttler();
         rudder();
         lift();
+        Elevator();
+        Ailerons();
+        //testing
+        eulerX = transform.eulerAngles.x;
+        eulerY = transform.eulerAngles.y;
+        eulerZ = transform.eulerAngles.z;
     }
 
     //factor in mass to rotation (pitch,yaw,roll)
