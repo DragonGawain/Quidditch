@@ -780,7 +780,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1111274045}
   serializedVersion: 4
-  m_Mass: 1000
+  m_Mass: 10
   m_Drag: 1
   m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -819,7 +819,11 @@ MonoBehaviour:
   maxBackwardsThrust: 10
   upwardsOffset: 0.1
   upwardsForce: -9.81
+  deltaZ: 90
   responsiveness: 10
+  eulerX: 0
+  eulerY: 0
+  eulerZ: 0
 --- !u!114 &1111274048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -872,8 +876,8 @@ Transform:
   - {fileID: 679721690}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!65 &1111274050
-BoxCollider:
+--- !u!136 &1111274050
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -890,8 +894,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1289712184
 PrefabInstance:
