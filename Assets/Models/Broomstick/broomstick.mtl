@@ -1,0 +1,29 @@
+# Material file for broomstick.obj
+
+newmtl broomstick
+	Ns 0
+	d 1
+	illum 2
+	Kd 1.0 1.0 1.0
+	Ks 0.0 0.0 0.0
+	Ka 0.2 0.2 0.2
+	map_Kd 00001000-5ece-e2e3-c1c6-35375858081c_0_0.png
+
+newmtl broom
+	Ns 0
+	d 1
+	illum 2
+	Kd 1.0 1.0 1.0
+	Ks 0.0 0.0 0.0
+	Ka 0.2 0.2 0.2
+	map_Kd 00001000-5ece-e2e3-c1c6-35375858081c_3_0.png
+
+newmtl stick
+	Ns 0
+	d 1
+	illum 2
+	Kd 1.0 1.0 1.0
+	Ks 0.0 0.0 0.0
+	Ka 0.2 0.2 0.2
+	map_Kd 00001000-5ece-e2e3-c1c6-35375858081c_2_0.png
+

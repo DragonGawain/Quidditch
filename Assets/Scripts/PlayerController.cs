@@ -14,19 +14,24 @@ public class PlayerController : MonoBehaviour
     public float responsiveness = 10f;
 
     private Rigidbody rb;
-    private float _throttle,_forward, _roll, _yaw, _pitch,_upwardsForce; //a broom is somewhat like a helicopter meets a plane
-    private float MAX_OFF = 11.0f, MIN_OFF = 8.7f, UP_OFF = 1.50f;
+    private float _throttle,_forward, _roll, _yaw, _pitch; //a broom is somewhat like a helicopter meets a plane
+    private float MAX_OFF = 10.5f, MIN_OFF = 9.0f;
     private float liftTimer = 0;
 
     //TESTING
 
     public float eulerX, eulerY, eulerZ;
+
+    Vector3 Velocity = Vector3.zero;
+
     
     //Inputs inputs;
     //Vector3 rotationInputs = new Vector3(0, 0, 0);
     //float movementInput = 0;
     //Rigidbody body;
 
+
+   
 
 
     void Awake()
@@ -57,9 +62,15 @@ public class PlayerController : MonoBehaviour
         _yaw = yaw.ReadValue<float>();
         _pitch =  pitch.ReadValue<float>();
         _roll = roll.ReadValue<float>();
+          
         
     }
 
+    void CalculateState()
+    {
+        Velocity = rb.velocity;
+
+    }
 
     private void OnDisable()
     {//Required by Input system, can have issues if not included
@@ -162,7 +173,7 @@ public class PlayerController : MonoBehaviour
         //make it bob a little
         if (liftTimer == 0)
         {
-            liftTimer = Random.Range(1.0f, 2.0f);
+            liftTimer = Random.Range(0.5f, 1.0f);
             upwardsOffset = Random.Range(MIN_OFF, MAX_OFF); //gravity seems to win if you use an even range
             //upwardsOffset = Random.Range(upwardsForce - UP_OFF, upwardsForce + UP_OFF);
         }
