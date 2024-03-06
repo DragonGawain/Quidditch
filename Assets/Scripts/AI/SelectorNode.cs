@@ -5,25 +5,43 @@ using UnityEngine;
 // "?"
 public class SelectorNode : BranchNode
 {
-    override public bool Execute()
+    // CONSTRUCTORS
+    public SelectorNode(List<Node> childNodes = null, Node parentNode = null) : base(childNodes, parentNode) { }
+
+
+    // METHODS.
+    override public NodeState Execute()
     {
         foreach (Node child in myChildNodes)
         {
-            if (child.Execute())
+            switch(child.Execute())
             {
-                // Return successful as soon as a child does so.
-                return true;
+                case NodeState.FAILURE:
+                    continue;
+
+                case NodeState.SUCCESS:
+                    myState = NodeState.SUCCESS;
+                    return myState;
+
+                case NodeState.RUNNING:
+                    anyChildIsRunning = true;
+                    continue;
+
+                default:
+                    continue;
             }
         }
         // Should they all fail, return false.
-        return false;
+        myState = anyChildIsRunning ? NodeState.RUNNING : NodeState.FAILURE;
+        return myState;
     }
 
 
     // Randomize the node's result (success or failure).
     // Threshold: a value between 0 and 1 above which we'll consider a success.
-    public bool RandomResult(float threshold = 0.5f)
+    public NodeState RandomResult(float threshold = 0.5f)
     {
-        return Random.Range(0f, 1f) >= threshold;
+        return (Random.Range(0f, 1f) >= threshold ? NodeState.SUCCESS : NodeState.FAILURE);
     }
+    // Should this be in the base / individual node instead?
 }

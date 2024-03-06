@@ -5,18 +5,35 @@ using UnityEngine;
 // "->"
 public class SequenceNode : BranchNode
 {
-    override public bool Execute()
+    // CONSTRUCTORS
+    public SequenceNode(List<Node> childNodes = null, Node parentNode = null) : base(childNodes, parentNode) { }
+
+
+    // METHODS.
+    override public NodeState Execute()
     {
         foreach (Node child in myChildNodes)
         {
-            if (!child.Execute())
+            switch (child.Execute())
             {
-                // Return failed as soon as a child does so.
-                return false;
+                case NodeState.FAILURE:
+                    myState = NodeState.FAILURE;
+                    return myState;
+
+                case NodeState.SUCCESS:
+                    continue;
+
+                case NodeState.RUNNING:
+                    anyChildIsRunning = true;
+                    continue;
+
+                default:
+                    continue;
             }
         }
         // Should they all succeed, return true.
-        return true;
+        myState = anyChildIsRunning ? NodeState.RUNNING : NodeState.SUCCESS;
+        return myState;
     }
 
 
