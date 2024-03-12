@@ -12,6 +12,8 @@ public class SelectorNode : BranchNode
     // METHODS.
     override public NodeState Execute()
     {
+        bool anyChildIsRunning = false;
+
         foreach (Node child in myChildNodes)
         {
             switch(child.Execute())
@@ -24,8 +26,12 @@ public class SelectorNode : BranchNode
                     return myState;
 
                 case NodeState.RUNNING:
-                    anyChildIsRunning = true;
-                    continue;
+                    anyChildIsRunning = true; // Could we simply return here?
+
+                    myState = NodeState.RUNNING;
+                    return myState;
+
+                    //continue;
 
                 default:
                     continue;
@@ -35,13 +41,4 @@ public class SelectorNode : BranchNode
         myState = anyChildIsRunning ? NodeState.RUNNING : NodeState.FAILURE;
         return myState;
     }
-
-
-    // Randomize the node's result (success or failure).
-    // Threshold: a value between 0 and 1 above which we'll consider a success.
-    public NodeState RandomResult(float threshold = 0.5f)
-    {
-        return (Random.Range(0f, 1f) >= threshold ? NodeState.SUCCESS : NodeState.FAILURE);
-    }
-    // Should this be in the base / individual node instead?
 }
