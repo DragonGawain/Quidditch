@@ -2,17 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerRole
+{
+    CHASER,
+    BEATER,
+    KEEPER,
+    SEAKER
+}
+
 public class PlayerController : MonoBehaviour
 {
     Inputs inputs;
     Vector3 rotationInputs = new Vector3(0, 0, 0);
     float movementInput = 0;
     Rigidbody body;
-    [SerializeField] GameObject camObject;
-    Vector2 currentMousePos = new Vector2(0,0);
-    [SerializeField, Range(0.1f, 5f)] float sensitivity = 1;
-    Vector2 offset = new Vector2(0,0);
 
+    [SerializeField]
+    GameObject camObject;
+    Vector2 currentMousePos = new Vector2(0, 0);
+
+    [SerializeField, Range(0.1f, 5f)]
+    float sensitivity = 1;
+    Vector2 offset = new Vector2(0, 0);
+
+    PlayerRole playerRole;
 
     // Start is called before the first frame update
     void Awake()
@@ -48,7 +61,8 @@ public class PlayerController : MonoBehaviour
         if (movementInput > 0)
         {
             // body.velocity += new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
-            Vector3 movementVector = transform.GetChild(0).GetChild(0).position - transform.GetChild(0).position;
+            Vector3 movementVector =
+                transform.GetChild(0).GetChild(0).position - transform.GetChild(0).position;
             movementVector.Normalize();
             movementVector /= 2;
             body.velocity += movementVector;
@@ -78,7 +92,7 @@ public class PlayerController : MonoBehaviour
         {
             // camObject.transform.Rotate(new Vector3(0.0f,-1.0f * sensitivity,0.0f));
             Quaternion currentRot = camObject.transform.localRotation;
-            currentRot.eulerAngles += new Vector3(0.0f,-1.0f * sensitivity,0.0f);
+            currentRot.eulerAngles += new Vector3(0.0f, -1.0f * sensitivity, 0.0f);
             camObject.transform.localRotation = currentRot;
             offset.x -= 1.0f * sensitivity;
         }
@@ -87,7 +101,7 @@ public class PlayerController : MonoBehaviour
         {
             // camObject.transform.Rotate(new Vector3(0.0f,1.0f * sensitivity,0.0f));
             Quaternion currentRot = camObject.transform.localRotation;
-            currentRot.eulerAngles += new Vector3(0.0f,1.0f * sensitivity,0.0f);
+            currentRot.eulerAngles += new Vector3(0.0f, 1.0f * sensitivity, 0.0f);
             camObject.transform.localRotation = currentRot;
             offset.x += 1.0f * sensitivity;
         }
@@ -97,7 +111,7 @@ public class PlayerController : MonoBehaviour
         {
             // camObject.transform.Rotate(new Vector3(-1.0f * sensitivity,0.0f,0.0f));
             Quaternion currentRot = camObject.transform.localRotation;
-            currentRot.eulerAngles += new Vector3(-1.0f * sensitivity,0.0f,0.0f);
+            currentRot.eulerAngles += new Vector3(-1.0f * sensitivity, 0.0f, 0.0f);
             camObject.transform.localRotation = currentRot;
             offset.y -= 1.0f * sensitivity;
         }
@@ -106,9 +120,14 @@ public class PlayerController : MonoBehaviour
         {
             // camObject.transform.Rotate(new Vector3(1.0f * sensitivity,0.0f,0.0f));
             Quaternion currentRot = camObject.transform.localRotation;
-            currentRot.eulerAngles += new Vector3(1.0f * sensitivity,0.0f,0.0f);
+            currentRot.eulerAngles += new Vector3(1.0f * sensitivity, 0.0f, 0.0f);
             camObject.transform.localRotation = currentRot;
             offset.y += 1.0f * sensitivity;
         }
+    }
+
+    public PlayerRole GetPlayerRole()
+    {
+        return playerRole;
     }
 }
