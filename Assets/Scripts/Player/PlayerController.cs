@@ -25,7 +25,8 @@ public class PlayerController : MonoBehaviour
     float sensitivity = 1;
     Vector2 offset = new Vector2(0, 0);
 
-    PlayerRole playerRole;
+    //TODO:: I'm making the playerRole a SerializeField for now to make debugging easier, but it should be set via a UI option at the start
+    [SerializeField] PlayerRole playerRole; 
 
     // Start is called before the first frame update
     void Awake()

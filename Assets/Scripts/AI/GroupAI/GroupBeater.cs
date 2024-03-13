@@ -6,12 +6,23 @@ public class GroupBeater : GroupAI
 {
     protected override void OnAwake()
     {
-        return;
+        string output = "BEATER " + this.gameObject.name + ", - chasers: ";
+        foreach (GroupAI chaser in friendlyChasers)
+        {
+            output += chaser.gameObject.name + ", ";
+        }
+        output += "beaters: ";
+        foreach (GroupAI beater in friendlyBeaters)
+        {
+            output += beater.gameObject.name + ", ";
+        }
+        if (freindlySeeker != null)
+            output += "seeker: " + freindlySeeker.gameObject.name;
+        if (freindlyKeeper != null)
+            output += ", keeper: " + freindlyKeeper.gameObject.name;
+        Debug.Log(output);
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void Update() { }
 }

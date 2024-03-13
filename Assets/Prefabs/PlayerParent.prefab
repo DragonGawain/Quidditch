@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 1876494538653309373}
   m_Layer: 0
   m_Name: PlayerParent
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -331,6 +331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camObject: {fileID: 0}
   sensitivity: 1
+  playerRole: 0
 --- !u!54 &1876494538653309373
 Rigidbody:
   m_ObjectHideFlags: 0
