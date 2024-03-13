@@ -67,7 +67,7 @@ public abstract class GroupAI : MonoBehaviour
         GameObject[] keepers = GameObject.FindGameObjectsWithTag("keeper");
         GameObject[] seekers = GameObject.FindGameObjectsWithTag("seeker");
 
-        // Not that whenever I do stuff with GroupAI, it also applies to the children. Hence why the abstraction is super handy here.
+        // Note that whenever I do stuff with GroupAI, it also applies to the children. Hence why the abstraction is super handy here.
         // fill in friendlyChasers
         foreach (GameObject chaser in chasers)
         {
