@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class NodeTest_CoinFlip : Node
 {
+    // CONSTRUCTORS
+    public NodeTest_CoinFlip(BehaviourTree parentTree) : base(parentTree) { }
+
+
     // METHODS
     public override NodeState Execute()
     {

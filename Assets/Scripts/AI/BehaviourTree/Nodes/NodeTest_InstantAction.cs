@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class NodeTest_InstantAction : Node
 {
+    // CONSTRUCTORS
+    public NodeTest_InstantAction(BehaviourTree parentTree) : base(parentTree) { }
+
+
     // METHODS
     public override NodeState Execute()
     {

@@ -59,8 +59,15 @@ public abstract class GroupAI : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        playerRole = player.GetPlayerRole();
+        // Find the player. 
+        // Roxane: add to add a check to keep it from glitching in my test scene.
+        GameObject potentialPlayer = GameObject.FindGameObjectWithTag("Player");
+        if (potentialPlayer != null)
+        {
+            player = potentialPlayer.GetComponent<PlayerController>();
+            playerRole = player.GetPlayerRole();
+        }
+
         // fill the lists here, but skip over the player cause it won't have the GroupAI script
         GameObject[] chasers = GameObject.FindGameObjectsWithTag("chaser");
         GameObject[] beaters = GameObject.FindGameObjectsWithTag("beater");

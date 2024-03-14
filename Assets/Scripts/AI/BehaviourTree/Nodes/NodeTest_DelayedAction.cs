@@ -9,6 +9,10 @@ public class NodeTest_DelayedAction : Node
 
 
 
+    // CONSTRUCTORS
+    public NodeTest_DelayedAction(BehaviourTree parentTree) : base(parentTree) { }
+
+
     // METHODS
     public override NodeState Execute()
     {

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // "?"
-public class SelectorNode : BranchNode
+public class NodeSelector : NodeBranch
 {
     // CONSTRUCTORS
-    public SelectorNode(List<Node> childNodes = null, Node parentNode = null) : base(childNodes, parentNode) { }
+    public NodeSelector(BehaviourTree parentTree, List<Node> childNodes = null) : base(parentTree, childNodes) { }
 
 
     // METHODS.
@@ -26,17 +26,14 @@ public class SelectorNode : BranchNode
                     return myState;
 
                 case NodeState.RUNNING:
-                    anyChildIsRunning = true; // Could we simply return here?
-
-                    myState = NodeState.RUNNING;
-                    return myState;
-
-                    //continue;
+                    anyChildIsRunning = true; 
+                    continue;
 
                 default:
                     continue;
             }
         }
+
         // Should they all fail, return false.
         myState = anyChildIsRunning ? NodeState.RUNNING : NodeState.FAILURE;
         return myState;

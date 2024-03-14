@@ -18,17 +18,20 @@ abstract public class Node
     // VARIABLES
     protected NodeState myState;
 
+    protected BehaviourTree myParentTree;
+    public BehaviourTree MyParentTree { get { return myParentTree; } }
+
     protected Node myParentNode;
-    public Node MyParentNode { get; set; }
+    public Node MyParentNode { get { return myParentNode; } set { myParentNode = value; } }
 
     protected Dictionary<string, object> blackboard = new Dictionary<string, object>();
 
 
 
     // CONSTRUCTORS
-    public Node(Node parentNode = null)
+    public Node(BehaviourTree parentTree)
     {
-        myParentNode = parentNode;
+        myParentTree = parentTree;
     }
 
 
@@ -116,7 +119,7 @@ abstract public class Node
 
 
 // Parent class of composite nodes.
-abstract public class BranchNode : Node
+abstract public class NodeBranch : Node
 {
     // VARIABLES
     protected List<Node> myChildNodes;
@@ -124,7 +127,7 @@ abstract public class BranchNode : Node
 
 
     // CONSTRUCTOR
-    public BranchNode(List<Node> childNodes = null, Node parentNode = null) : base(parentNode)
+    public NodeBranch(BehaviourTree parentTree, List<Node> childNodes = null) : base(parentTree)
     {
         if (childNodes != null)
         {
