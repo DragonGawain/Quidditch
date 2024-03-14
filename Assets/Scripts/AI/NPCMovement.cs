@@ -21,36 +21,26 @@ public class NPCMovement : MonoBehaviour
     float wanderDegreesDelta;
     // To do: put these as parameter in the function.
 
-    // Trackers for Seek, Arrive, etc.
-    [SerializeField] bool hasArrived;
-    public bool HasArrived { get { return hasArrived; } set { hasArrived = value; } }
 
 
 
     // METHODS
 
     // Seek.
-    public Vector3 KinematicSeek(Vector3 targetPosition, float maxVelocity, bool setsArrived, float stopRadius = 0f)
+    public Vector3 KinematicSeek(Vector3 targetPosition, float maxVelocity)
     {
         Vector3 desiredVelocity = targetPosition - gameObject.transform.position;
-
-        if (setsArrived && desiredVelocity.magnitude <= stopRadius && !hasArrived)
-        {
-            hasArrived = true;
-            // desiredVelocity *= 0;
-        }
-
         return desiredVelocity.normalized * maxVelocity;
     }
-    public Vector3 Seek(Vector3 targetPosition, float maxVelocity, bool setsArrived, float stopRadius = 0f)
+    public Vector3 Seek(Vector3 targetPosition, float maxVelocity)
     {
-        return KinematicSeek(targetPosition, maxVelocity, setsArrived, stopRadius) - currentVelocity;
+        return KinematicSeek(targetPosition, maxVelocity) - currentVelocity;
     }
 
     // Flee
     public Vector3 KinematicFlee(Vector3 targetPosition, float maxVelocity)
     {
-        return -1 * KinematicSeek(targetPosition, maxVelocity, false); // Invertion of the seek behaviour.
+        return -1 * KinematicSeek(targetPosition, maxVelocity); // Invertion of the seek behaviour.
     }
     public Vector3 Flee(Vector3 targetPosition, float maxVelocity)
     {
@@ -58,19 +48,15 @@ public class NPCMovement : MonoBehaviour
     }
 
     // Arrive
-    public Vector3 KinematicArrive(Vector3 targetPosition, float maxVelocity, bool setsArrived, float stopRadius, float slowRadius)
+    public Vector3 KinematicArrive(Vector3 targetPosition, float maxVelocity, float stopRadius, float slowRadius)
     {
         Vector3 desiredVelocity = targetPosition - gameObject.transform.position;
         float distance = desiredVelocity.magnitude;
         desiredVelocity = desiredVelocity.normalized * maxVelocity;
 
         // To do: add events?
-        if (distance <= stopRadius && !hasArrived)
+        if (distance <= stopRadius)
         {
-            if (setsArrived)
-            {
-                hasArrived = true;
-            }
             desiredVelocity *= 0;
         }
         else if (distance < slowRadius)
@@ -80,23 +66,23 @@ public class NPCMovement : MonoBehaviour
 
         return desiredVelocity;
     }
-    public Vector3 Arrive(Vector3 targetPosition, float maxVelocity, bool setsArrived, float stopRadius, float slowRadius)
+    public Vector3 Arrive(Vector3 targetPosition, float maxVelocity, float stopRadius, float slowRadius)
     {
-        return KinematicArrive(targetPosition, maxVelocity, setsArrived, stopRadius, slowRadius) - currentVelocity;
+        return KinematicArrive(targetPosition, maxVelocity, stopRadius, slowRadius) - currentVelocity;
     }
 
     // Pursue
-    public Vector3 KinematicPursue(Vector3 targetPosition, Vector3 targetVelocity, float maxVelocity, bool setsArrived, float stopRadius = 0f)
+    public Vector3 KinematicPursue(Vector3 targetPosition, Vector3 targetVelocity, float maxVelocity)
     {
         float distance = Vector3.Distance(targetPosition, gameObject.transform.position);
         float ahead = distance / 10; // should the 10 be a parameter?
         Vector3 futurePosition = targetPosition + targetVelocity * ahead;
 
-        return KinematicSeek(futurePosition, maxVelocity, setsArrived, stopRadius);
+        return KinematicSeek(futurePosition, maxVelocity);
     }
-    public Vector3 Pursue(Vector3 targetPosition, Vector3 targetVelocity, float maxVelocity, bool setsArrived, float stopRadius = 0f)
+    public Vector3 Pursue(Vector3 targetPosition, Vector3 targetVelocity, float maxVelocity)
     {
-        return KinematicPursue(targetPosition, targetVelocity, maxVelocity, setsArrived, stopRadius) - currentVelocity;
+        return KinematicPursue(targetPosition, targetVelocity, maxVelocity) - currentVelocity;
     }
 
     // Evade

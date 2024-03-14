@@ -12,22 +12,20 @@ public class NodeSelector : NodeBranch
     // METHODS.
     override public NodeState Execute()
     {
-        bool anyChildIsRunning = false;
-
         foreach (Node child in myChildNodes)
         {
             switch(child.Execute())
             {
-                case NodeState.FAILURE:
-                    continue;
-
                 case NodeState.SUCCESS:
                     myState = NodeState.SUCCESS;
                     return myState;
 
-                case NodeState.RUNNING:
-                    anyChildIsRunning = true; 
+                case NodeState.FAILURE:
                     continue;
+
+                case NodeState.RUNNING:
+                    myState = NodeState.RUNNING;
+                    return myState;
 
                 default:
                     continue;
@@ -35,7 +33,7 @@ public class NodeSelector : NodeBranch
         }
 
         // Should they all fail, return false.
-        myState = anyChildIsRunning ? NodeState.RUNNING : NodeState.FAILURE;
+        myState = NodeState.FAILURE;
         return myState;
     }
 }

@@ -16,7 +16,7 @@ public class Node_FleeBludger : Node
     // METHODS
     public override NodeState Execute()
     {
-        Debug.Log("Executing FleeBludger");
+        //Debug.Log("Executing FleeBludger");
 
         // Find the snitch.
         GameObject closestBludger = ReadFromBlackboard("bludger") as GameObject;
@@ -25,24 +25,10 @@ public class Node_FleeBludger : Node
             closestBludger = GameObject.FindGameObjectWithTag("bludger");
         }
 
-        // Verify whether enough time has passed.
-        if (counter >= 100f)
-        {
-            Debug.Log("FleeBludger completed.");
-
-            counter = 0;
-
-            myState = NodeState.SUCCESS;
-            return myState;
-        }
-
-        // Else, keep fleeing, increase the counter and return running.
+        // Flee it and return running.
         Vector3 desiredVelocity = MyParentTree.MyNPCMovement.KinematicFlee(closestBludger.transform.position, 1f);
         MyParentTree.gameObject.transform.position += desiredVelocity * Time.deltaTime;
         // To do: gooder movement behaviour. Obstacle avoidance, pathfinding, etc.
-
-        counter++;
-        // Debug.Log(counter);
 
         myState = NodeState.RUNNING;
         return myState;

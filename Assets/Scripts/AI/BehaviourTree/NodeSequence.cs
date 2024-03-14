@@ -12,36 +12,31 @@ public class NodeSequence : NodeBranch
     // METHODS.
     override public NodeState Execute()
     {
+        bool anyChildIsRunning = false;
+
         foreach (Node child in myChildNodes)
         {
-            NodeState childsState = child.Execute();
-
-            Debug.Log("In Sequence, checking the state of child " + child + " : " + childsState);
-
-            switch (childsState)
+            switch (child.Execute())
             {
-                case NodeState.RUNNING:
-                    myState = NodeState.RUNNING;
-                    Debug.Log("Should return RUNNING");
-                    return myState;
-
-                case NodeState.FAILURE:
-                    Debug.Log("Should return FAILURE");
-                    myState = NodeState.FAILURE;
-                    return myState;
-
                 case NodeState.SUCCESS:
                     continue;
 
-                default:
+                case NodeState.FAILURE:
+                    myState = NodeState.FAILURE;
+                    return myState;
+
+                case NodeState.RUNNING:
+                    anyChildIsRunning = true;
                     continue;
+
+                default:
+                    myState = NodeState.SUCCESS;
+                    return myState;
             }
         }
 
-        Debug.Log("Should return SUCCESS");
-
         // Should they all succeed, return true.
-        myState = NodeState.SUCCESS;
+        myState = anyChildIsRunning ? NodeState.RUNNING : NodeState.SUCCESS;
         return myState;
     }
 }
