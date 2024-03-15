@@ -137,9 +137,9 @@ namespace Astar
             //use postion relative to a fixed assigned center object - less messy
             //that way x and z are centered at 0 so there are - and positive vals
             //we just assume y is never negative because why would a pathfinding node be underground
-            float percentX = (worldPosition.x + (worldSize.x / 2)) / worldSize.x;
-            float percentY = (worldPosition.y) / worldSize.y;
-            float percentZ = (worldPosition.z + (worldSize.z / 2)) / worldSize.z;
+            float percentX = (relativePosition.x + (worldSize.x / 2)) / worldSize.x;
+            float percentY = (relativePosition.y + (worldSize.y / 2)) / worldSize.y;
+            float percentZ = (relativePosition.z + (worldSize.z / 2)) / worldSize.z;
             //if character is outside of grid, we dont want invalid inputs
             percentX = Mathf.Clamp01(percentX);
             percentY = Mathf.Clamp01(percentY);
