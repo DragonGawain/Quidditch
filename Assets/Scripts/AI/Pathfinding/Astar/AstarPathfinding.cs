@@ -7,7 +7,9 @@ using UnityEngine.Assertions;
 namespace Astar
 {
     using Astar;
-public class Pathfinding : MonoBehaviour
+    using Unity.VisualScripting;
+
+    public class Pathfinding : MonoBehaviour
 {
     Astar.Grid grid;
     //noot optimal, since finding lowest cost is expensive, bestt to use a heap
@@ -15,11 +17,12 @@ public class Pathfinding : MonoBehaviour
     Material testOpen, testPath, testClosed;
 
     [SerializeField]
-    public bool drawNodes;
+    public bool drawNodes, drawPathOnly;
 
     public Transform seeker;
     public Transform target;
-    public List<Node> open = new List<Node>();
+    //public List<Node> open = new List<Node>();
+    public Heap<Node> open;
     HashSet<Node> closed = new HashSet<Node>();
     public List<Node> path;
 
@@ -29,7 +32,9 @@ public class Pathfinding : MonoBehaviour
     void Awake()
     {
         grid = GetComponent<Grid>();
+        open = new Heap<Node>(grid.maxSize);
     }
+  
 
     void Update()
     {
@@ -42,13 +47,9 @@ public class Pathfinding : MonoBehaviour
     void testAddToOpen(Astar.Node n)
     {
         open.Add(n);
-        if (drawNodes == false) { return; }
+        if ( !drawNodes || drawPathOnly) { n.disableTestSphere(); return; }
 
-        if (n.testSphere == null)
-        {
-            n.testSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            n.testSphere.transform.position = n.worldPosition;
-        }
+        n.enableTestSphere();
         n.testSphere.GetComponent<Renderer>().material = testOpen;
 
     }
@@ -56,10 +57,10 @@ public class Pathfinding : MonoBehaviour
     void testAddToClosed(Astar.Node n)
     {
         //just drawing a phere to visualise path quickly
-        open.Remove(n);
+        //open.Remove(n);
         closed.Add(n);
 
-        if (drawNodes == false) { return; }
+        if (!drawNodes || drawPathOnly ) { return; }
         n.testSphere.GetComponent<Renderer>().material = testClosed;
 
     }
@@ -72,8 +73,9 @@ public class Pathfinding : MonoBehaviour
         if (start == null) { UnityEngine.Debug.Log("Start Node is Null"); return; }
         if (target == null) { UnityEngine.Debug.Log("Target Node is Null"); return; }
 
-        //List<Node> open = new List<Node>();
-        // HashSet<Node> closed = new HashSet<Node>();
+            //List<Node> open = new List<Node>();
+            // HashSet<Node> closed = new HashSet<Node>();
+            //open.Clear();
         open.Clear();
         closed.Clear();
         //add start node to openset
@@ -81,8 +83,8 @@ public class Pathfinding : MonoBehaviour
         testAddToOpen(start);
         while (open.Count > 0)
         {//while there are still nodes that havent been explored yet
-
-            current = open[0];
+             current = open.pop();
+            /*current = open[0];
 
             for (int i = 1; i < open.Count; i++)
             {
@@ -93,16 +95,15 @@ public class Pathfinding : MonoBehaviour
             }
             //remove current node(node with lowest f cost) from openset and add to closed set
             //open.Remove(current);
-            //closed.Add(current);
+            //closed.Add(current);*/
             testAddToClosed(current);
-
+            
             if (current.gridX == target.gridX && current.gridY == target.gridY && current.gridZ == target.gridZ)
             {//target reached, return path
 
                 retracePath(start, target);
                 return;
             }
-            //Debug.Log($"Current (x,y): ({current.gridX},{current.gridY})");
             //loop through neighbours
             foreach (Node neighbour in grid.GetNeighbours(current))
             {
@@ -137,13 +138,14 @@ public class Pathfinding : MonoBehaviour
 
         while (current != start)
         {
-            if (drawNodes) current.testSphere.GetComponent<Renderer>().material = testPath;
+            if (drawNodes)
+            {
+                current.enableTestSphere();
+                current.testSphere.GetComponent<Renderer>().material = testPath;
+            }
             p.Add(current);
             current = current.parent;
             Assert.IsNotNull(current, "Current parent is null, cant retrace path");
-
-
-
         }
         p.Reverse();//its backwareds need to reverse it
 

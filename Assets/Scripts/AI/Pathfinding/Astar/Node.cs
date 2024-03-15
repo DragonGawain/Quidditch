@@ -29,8 +29,19 @@ namespace Astar{
             gridX = gX;
             gridY = gY;
             gridZ = gZ;
+            testSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            testSphere.transform.position = worldPosition;
+            testSphere.GetComponent<Collider>().enabled = false;
+            disableTestSphere();
         }
-
+        public void disableTestSphere()
+        {
+            testSphere.GetComponent<Renderer>().enabled = false;
+        }
+        public void enableTestSphere()
+        {
+            testSphere.GetComponent<Renderer>().enabled = true;
+        }
         //Implement IHeapItem
         public int HeapIndex
         {
@@ -50,4 +61,6 @@ namespace Astar{
             return -compare;
         }
     }
+
+
 }

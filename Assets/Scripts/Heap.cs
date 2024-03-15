@@ -40,11 +40,20 @@ public class Heap<T> where T : IHeapItem<T>
     {
         sort(element);
     }
-
     public bool Contains(T element)
-    {
-        return Equals(elements, elements[element.HeapIndex]);
+    {//clear resets count, not data.
+
+        if (element.HeapIndex < count)
+        {
+            return Equals(element, elements[element.HeapIndex]);
+
+        }
+        else
+        {
+            return false;
+        }
     }
+
     void sort(T element)
     {//sort for insertion (upwards)
         int parentIndex;
@@ -142,8 +151,16 @@ public class Heap<T> where T : IHeapItem<T>
         element1.HeapIndex = element2.HeapIndex;
         element2.HeapIndex = temp;
     }
+    public void Clear(){
+        //reset the counter does not reset the data, it is recalculated.
+        //be careful, pointers directly to nodes may still contain old data
+        count = 0;
+    }
+   
 
 }
+
+
 
 public interface IHeapItem<T> : IComparable<T>
 {

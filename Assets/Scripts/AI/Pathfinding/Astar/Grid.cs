@@ -1,13 +1,15 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using System.IO;
-using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace Astar
 {
     using Astar;
+    using Unity.VisualScripting;
+    using UnityEditor;
+
     public class Grid : MonoBehaviour
     {
         //must be cubes (or perfect squares)
@@ -15,30 +17,37 @@ namespace Astar
         public LayerMask unwalkableMask;
 
         [SerializeField]
-        GameObject environmentX,environmentY,environmentZ; //bases the size of the grid off of another game object. If any (not X) left null, will base off of X
+        GameObject environmentX,environmentY,environmentZ,center; //bases the size of the grid off of another game object. If any (not X) left null, will base off of X
         [SerializeField]
         int numberOfNodes = 100; // adjust number of nodes in grid
         public Vector3 worldSize; // area in world coords that the grid covers
+        public Vector3 centerWorldPosition;
         public float nodeRadius = 1; //how much space each individual node covers (from center so this is half)
         public float diagonal2D, diagonal3D;
         public Node[,,] grid;
+        private int xsize,ysize,zsize;
         public GameObject[,,] cubes;
 
+        public int maxSize
+        {
+            get { return xsize * ysize * zsize; }
+        } 
         [SerializeField]
-        public bool drawGizmos;
+        public bool drawGizmos, showGridPositions;
 
         public List<Node> path;
 
-        private void Start()
+        void Awake()
         {
             Assert.AreNotEqual(0, nodeRadius, "Node radius is 0");
             
             Assert.IsNotNull(player, "Player is null in Grid");
             initDimensions();
 
-            int xsize = (int)Mathf.Floor(worldSize.x / (nodeRadius * 2));
-            int ysize = (int)Mathf.Floor(worldSize.y / (nodeRadius * 2));
-            int zsize = (int)Mathf.Floor(worldSize.z / (nodeRadius * 2));
+
+            xsize = (int)Mathf.Floor(worldSize.x / (nodeRadius * 2));
+            ysize = (int)Mathf.Floor(worldSize.y / (nodeRadius * 2));
+            zsize = (int)Mathf.Floor(worldSize.z / (nodeRadius * 2));
 
             numberOfNodes = xsize * ysize * zsize;
 
@@ -69,6 +78,7 @@ namespace Astar
                 Node playernode = GetNode(player.position);
                 foreach (Node n in grid)
                 {
+                    Handles.Label(n.worldPosition, $"({n.gridX}, {n.gridY},{n.gridZ})");
                     Gizmos.color = n.walkable ? blank : obstacle; /*Color.white: Color.red;*/
                     if (path != null)
                         if (path.Contains(n))
@@ -97,12 +107,10 @@ namespace Astar
             //loop through all positions of the nodes to check if they are walkable
             for (int _x = 0; _x < x; _x++)
             {
-
                 for (int _y = 0; _y < y; _y++)
                 {
                     for (int _z = 0; _z < z; _z++)
                     {
-
                         Vector3 worldPoint = worldBotLeft;
                         worldPoint += Vector3.right * (_x * (nodeRadius * 2) + nodeRadius);
                         worldPoint += Vector3.up * (_y * (nodeRadius * 2) + nodeRadius);
@@ -124,6 +132,11 @@ namespace Astar
                 Debug.Log("World dimension = 0, cannot get node");
                 return null;
             }
+            Vector3 relativePosition = worldPosition - centerWorldPosition;
+            
+            //use postion relative to a fixed assigned center object - less messy
+            //that way x and z are centered at 0 so there are - and positive vals
+            //we just assume y is never negative because why would a pathfinding node be underground
             float percentX = (worldPosition.x + (worldSize.x / 2)) / worldSize.x;
             float percentY = (worldPosition.y) / worldSize.y;
             float percentZ = (worldPosition.z + (worldSize.z / 2)) / worldSize.z;
@@ -131,10 +144,29 @@ namespace Astar
             percentX = Mathf.Clamp01(percentX);
             percentY = Mathf.Clamp01(percentY);
             percentZ = Mathf.Clamp01(percentZ);
+            //convert from percentage into an array index (hence -1) 
+            int x = (int)Mathf.Floor((grid.GetLength(0) - 1) * percentX);
+            int y = (int)Mathf.Floor((grid.GetLength(1) - 1) * percentY);
+            int z = (int)Mathf.Floor((grid.GetLength(2) - 1) * percentZ);
 
-            int x = Mathf.RoundToInt((grid.GetLength(0) - 1) * percentX);
-            int y = Mathf.RoundToInt((grid.GetLength(1) - 1) * percentY);
-            int z = Mathf.RoundToInt((grid.GetLength(2) - 1) * percentZ);
+            /*
+            //assuming x and z are centered at 0 so there are - and positive vals
+            float percentX = (worldPosition.x + (worldSize.x / 2)) / worldSize.x;
+            float percentY = (worldPosition.y) / worldSize.y;
+            float percentZ = (worldPosition.z + (worldSize.z / 2)) / worldSize.z;
+            //if character is outside of grid, we dont want invalid inputs
+            percentX = Mathf.Clamp01(percentX);
+            percentY = Mathf.Clamp01(percentY);
+            percentZ = Mathf.Clamp01(percentZ);
+    
+            //int x = Mathf.RoundToInt((grid.GetLength(0)-1) * percentX);
+            //int y = Mathf.RoundToInt((grid.GetLength(1) - 1) * percentY);
+            //int z = Mathf.RoundToInt((grid.GetLength(2)-1) * percentZ);
+            
+            //convert from percentage into an array index (hence -1) 
+            int x = (int)Mathf.Floor((grid.GetLength(0)-1) * percentX);
+            int y = (int)Mathf.Floor((grid.GetLength(1)-1) * percentY);
+            int z = (int)Mathf.Floor((grid.GetLength(2)-1) * percentZ);*/
             return grid[x, y, z];
         }
 
@@ -184,7 +216,7 @@ namespace Astar
         {
 
             Assert.IsNotNull(environmentX);
-
+            Vector3 gridPos = Vector3.one; 
             if (environmentY == null)
             {
                 environmentY = environmentX;
@@ -193,6 +225,12 @@ namespace Astar
             {
                 environmentZ = environmentX;
             }
+            if(center == null)
+            {
+                center = environmentX;
+            }
+            //Vector3 envPos = new Vector3(environmentX.transform.position.x, environmentY.transform.position.y, environmentZ.transform.position.z);
+            
 
             worldSize = Vector3.one;
             Renderer r = environmentX.GetComponentInChildren<Renderer>();
@@ -202,7 +240,10 @@ namespace Astar
             r = environmentZ.GetComponentInChildren<Renderer>();
             worldSize.z = r.bounds.size.z != 0 ? r.bounds.size.z : 1;
 
-
+            centerWorldPosition = center.transform.position;
+            centerWorldPosition.y = worldSize.y/2;//we just assume y is never in the negative direction because why would a pathfinding node be underground
+            
+            transform.position = centerWorldPosition;
 
 
                 //if (environmentX != null)
