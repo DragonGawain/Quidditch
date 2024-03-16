@@ -31,12 +31,16 @@ public abstract class GroupAI : MonoBehaviour
 {
     PlayerController player;
     protected PlayerRole playerRole;
+    public PlayerRole PlayersRole { get { return playerRole; } }
     protected AIType aIType;
 
     [SerializeField]
     protected Team team;
+    public Team Team { get { return team; } }
     protected bool hasBall = false;
+    public bool HasBall { get { return hasBall; } }
     protected List<GroupAI> friendlyChasers = new();
+    public List<GroupAI> FriendlyChasers { get { return friendlyChasers; } }
     protected List<GroupAI> friendlyBeaters = new();
     protected GroupAI freindlySeeker;
     protected GroupAI freindlyKeeper;
