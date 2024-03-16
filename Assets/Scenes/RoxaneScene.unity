@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 455809009}
   - component: {fileID: 455809008}
   - component: {fileID: 455809007}
+  - component: {fileID: 455809011}
   m_Layer: 0
   m_Name: Snitch
   m_TagString: snitch
@@ -228,6 +229,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &455809011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455809006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38f063a86fc3bb44aed5302b2e8e2bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myNPCMovement: {fileID: 0}
 --- !u!1 &1820617397
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +254,7 @@ GameObject:
   - component: {fileID: 1820617400}
   - component: {fileID: 1820617399}
   - component: {fileID: 1820617398}
+  - component: {fileID: 1820617402}
   m_Layer: 0
   m_Name: Bludger
   m_TagString: bludger
@@ -333,6 +348,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1820617402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820617397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7940b5fd4571c924baccb0bf16f1b7dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myNPCMovement: {fileID: 0}
 --- !u!1 &1823442440
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,7 +711,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentVelocity: {x: 0, y: 0, z: 0}
-  hasArrived: 0
 --- !u!114 &1983466893
 MonoBehaviour:
   m_ObjectHideFlags: 0

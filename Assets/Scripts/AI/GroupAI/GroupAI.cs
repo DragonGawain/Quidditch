@@ -42,6 +42,15 @@ public abstract class GroupAI : MonoBehaviour
     protected GroupAI freindlyKeeper;
     protected AIState state;
 
+    protected Snitch theSnitch;
+    public Snitch TheSnitch { get { return theSnitch; } }
+    protected Quaffle theQuaffle;
+    public Quaffle TheQuaffle { get { return theQuaffle; } }
+    protected List<Bludger> theBludgers = new();
+    public List<Bludger> TheBludgers { get { return theBludgers; } }
+
+
+    //
     public AIState GetState()
     {
         return state;
@@ -66,6 +75,32 @@ public abstract class GroupAI : MonoBehaviour
         {
             player = potentialPlayer.GetComponent<PlayerController>();
             playerRole = player.GetPlayerRole();
+        }
+
+        // Find the balls.
+        GameObject potentialSnitch = GameObject.FindGameObjectWithTag("snitch");
+        if (potentialSnitch != null)
+        {
+            theSnitch = potentialSnitch.GetComponent<Snitch>();
+        }
+        GameObject potentialQuaffle = GameObject.FindGameObjectWithTag("quaffle");
+        if (potentialQuaffle != null)
+        {
+            theQuaffle = potentialQuaffle.GetComponent<Quaffle>();
+        }
+        GameObject[] potentialBludgers = GameObject.FindGameObjectsWithTag("bludger");
+        {
+            if (potentialBludgers != null)
+            {
+                foreach (GameObject potentialBludger in potentialBludgers)
+                {
+                    Bludger bludger = potentialBludger.GetComponent<Bludger>();
+                    if (bludger != null)
+                    {
+                        theBludgers.Add(bludger);
+                    }
+                }
+            }
         }
 
         // fill the lists here, but skip over the player cause it won't have the GroupAI script
