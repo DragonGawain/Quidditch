@@ -7,12 +7,16 @@ public abstract class BehaviourTree : MonoBehaviour
     // VARIABLES
     [SerializeField] private Node myRootNode = null;
 
-    // Other references.
+    // References.
     [SerializeField] protected NPCMovement myNPCMovement;
     public NPCMovement MyNPCMovement { get { return myNPCMovement; } }
 
     [SerializeField] protected GroupAI myGroupAI;
     public GroupAI MyGroupAI { get { return myGroupAI; } }
+
+    // Speeds and the like.
+    [SerializeField] protected float myMaxSpeed;
+    public float MyMaxSpeed { get { return myMaxSpeed; } }
 
 
 
@@ -37,5 +41,25 @@ public abstract class BehaviourTree : MonoBehaviour
         {
             myRootNode.Execute();
         }
+    }
+
+
+
+    // UTILITY METHODS
+    public (GameObject, float) LocateClosestBludger(GameObject closestBludger)
+    {
+        float distanceToClosestBludger = (closestBludger != null) ? Vector3.Distance(this.gameObject.transform.position, closestBludger.transform.position) : float.MaxValue;
+        foreach (Bludger bludger in this.MyGroupAI.TheBludgers)
+        {
+            // Assuming that we have only two bludgers.
+            if (bludger.gameObject != closestBludger && Vector3.Distance(this.gameObject.transform.position, bludger.gameObject.transform.position) < distanceToClosestBludger)
+            {
+                closestBludger = bludger.gameObject;
+                distanceToClosestBludger = Vector3.Distance(this.gameObject.transform.position, bludger.gameObject.transform.position);
+                break;
+            }
+        }
+
+        return (closestBludger, distanceToClosestBludger);
     }
 }

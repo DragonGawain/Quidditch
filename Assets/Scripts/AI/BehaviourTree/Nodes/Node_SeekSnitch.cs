@@ -22,9 +22,8 @@ public class Node_SeekSnitch : Node
         }
 
         // Seek it and return running.
-        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.KinematicSeek(theSnitch.transform.position, 1f);
+        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.KinematicSeek(theSnitch.transform.position, MyParentTree.MyMaxSpeed);
         MyParentTree.gameObject.transform.position += desiredVelocity * Time.deltaTime;
-        // To do: implement proper speed, either here or within the base seeker tree.
         // To do: gooder movement behaviour. Obstacle avoidance, pathfinding, etc.
 
         myState = NodeState.RUNNING;

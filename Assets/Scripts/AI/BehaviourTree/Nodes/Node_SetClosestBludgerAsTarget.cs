@@ -15,19 +15,8 @@ public class Node_SetClosestBludgerAsTarget : Node
 
         // Find the closest bludger.
         GameObject closestBludger = ReadFromBlackboard("closestBludger") as GameObject;
-        float distanceToClosestBludger = (closestBludger != null) ? Vector3.Distance(MyParentTree.gameObject.transform.position, closestBludger.transform.position) : float.MaxValue;
-        foreach (Bludger bludger in MyParentTree.MyGroupAI.TheBludgers)
-        {
-            // Assuming that we have only two bludgers.
-            if (bludger.gameObject != closestBludger && Vector3.Distance(MyParentTree.gameObject.transform.position, bludger.gameObject.transform.position) < distanceToClosestBludger)
-            {
-                closestBludger = bludger.gameObject;
-                distanceToClosestBludger = Vector3.Distance(MyParentTree.gameObject.transform.position, bludger.gameObject.transform.position);
-
-                WriteToBlackboard("closestBludger", bludger.gameObject);
-                break;
-            }
-        }
+        closestBludger = MyParentTree.LocateClosestBludger(closestBludger).Item1;
+        WriteToBlackboard("closestBludger", closestBludger);
 
         // Set and return.
         if (closestBludger)

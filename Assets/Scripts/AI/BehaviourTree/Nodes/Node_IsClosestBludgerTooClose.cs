@@ -15,23 +15,11 @@ public class Node_IsClosestBludgerTooClose : Node
 
         // Find the closest bludger.
         GameObject closestBludger = ReadFromBlackboard("closestBludger") as GameObject;
-        float distanceToClosestBludger = (closestBludger != null) ? Vector3.Distance(MyParentTree.gameObject.transform.position, closestBludger.transform.position) : float.MaxValue;
-        foreach (Bludger bludger in MyParentTree.MyGroupAI.TheBludgers)
-        {
-            // Assuming that we have only two bludgers.
-            if (bludger.gameObject != closestBludger && Vector3.Distance(MyParentTree.gameObject.transform.position, bludger.gameObject.transform.position) < distanceToClosestBludger)
-            {
-                closestBludger = bludger.gameObject;
-                distanceToClosestBludger = Vector3.Distance(MyParentTree.gameObject.transform.position, bludger.gameObject.transform.position);
-
-                WriteToBlackboard("closestBludger", bludger.gameObject);
-                break;
-            }
-        }
+        (GameObject, float) closestBludgerAndDistance = MyParentTree.LocateClosestBludger(closestBludger);
+        WriteToBlackboard("closestBludger", closestBludgerAndDistance.Item1);
 
         // Do the check.
-        // To do: set the distance threshold to something legit.
-        if (distanceToClosestBludger < 5f)
+        if (closestBludgerAndDistance.Item2 < 5f) // To do: set the distance threshold to something legit.
         {
             myState = NodeState.SUCCESS;
         }
