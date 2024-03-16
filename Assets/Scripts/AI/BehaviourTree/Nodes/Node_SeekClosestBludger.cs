@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node_FleeClosestBludger : Node
+public class Node_SeekClosestBludger : Node
 {
     // CONSTRUCTORS
-    public Node_FleeClosestBludger(BehaviourTree parentTree) : base(parentTree) { }
+    public Node_SeekClosestBludger(BehaviourTree parentTree) : base(parentTree) { }
+
 
 
     // METHODS
     public override NodeState Execute()
     {
-        //Debug.Log("Executing FleeBludger");
+        //Debug.Log("Executing SeekClosestBludger");
 
         // Find the closest bludger.
         GameObject closestBludger = ReadFromBlackboard("closestBludger") as GameObject;
@@ -29,10 +30,10 @@ public class Node_FleeClosestBludger : Node
             }
         }
 
-        // Flee it and return running.
-        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.KinematicFlee(closestBludger.transform.position, 1f);
+        // Seek it and return running.
+        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.KinematicSeek(closestBludger.transform.position, 1f);
         MyParentTree.gameObject.transform.position += desiredVelocity * Time.deltaTime;
-        // To do: implement proper speed, either here or within the base player tree.
+        // To do: implement proper speed, either here or within the base beater tree.
         // To do: gooder movement behaviour. Obstacle avoidance, pathfinding, etc.
 
         myState = NodeState.RUNNING;

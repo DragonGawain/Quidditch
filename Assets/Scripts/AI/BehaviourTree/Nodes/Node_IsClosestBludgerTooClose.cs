@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node_FleeClosestBludger : Node
+public class Node_IsClosestBludgerTooClose : Node
 {
     // CONSTRUCTORS
-    public Node_FleeClosestBludger(BehaviourTree parentTree) : base(parentTree) { }
+    public Node_IsClosestBludgerTooClose(BehaviourTree parentTree) : base(parentTree) { }
 
 
     // METHODS
     public override NodeState Execute()
     {
-        //Debug.Log("Executing FleeBludger");
+        //Debug.Log("Executing IsClosestBludgerTooClose");
 
         // Find the closest bludger.
         GameObject closestBludger = ReadFromBlackboard("closestBludger") as GameObject;
@@ -29,13 +29,16 @@ public class Node_FleeClosestBludger : Node
             }
         }
 
-        // Flee it and return running.
-        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.KinematicFlee(closestBludger.transform.position, 1f);
-        MyParentTree.gameObject.transform.position += desiredVelocity * Time.deltaTime;
-        // To do: implement proper speed, either here or within the base player tree.
-        // To do: gooder movement behaviour. Obstacle avoidance, pathfinding, etc.
-
-        myState = NodeState.RUNNING;
+        // Do the check.
+        // To do: set the distance threshold to something legit.
+        if (distanceToClosestBludger < 5f)
+        {
+            myState = NodeState.SUCCESS;
+        }
+        else
+        {
+            myState = NodeState.FAILURE;
+        }
         return myState;
     }
 }
