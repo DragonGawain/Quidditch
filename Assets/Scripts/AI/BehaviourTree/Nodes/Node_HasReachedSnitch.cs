@@ -11,7 +11,7 @@ public class Node_HasReachedSnitch : Node
     // METHODS
     public override NodeState Execute()
     {
-        Debug.Log("Executing ReachedSnitch?");
+        Debug.Log("Executing HasReachedSnitch?");
 
         // Find the snitch.
         GameObject theSnitch = ReadFromBlackboard("snitch") as GameObject;

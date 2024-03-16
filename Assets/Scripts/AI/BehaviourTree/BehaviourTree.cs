@@ -15,7 +15,7 @@ public abstract class BehaviourTree : MonoBehaviour
     public GroupAI MyGroupAI { get { return myGroupAI; } }
 
     // Speeds and the like.
-    [SerializeField] protected float myMaxSpeed;
+    [SerializeField] protected float myMaxSpeed = 1f;
     public float MyMaxSpeed { get { return myMaxSpeed; } }
 
 
