@@ -135,5 +135,50 @@ public class NPCMovement : MonoBehaviour
     }
 
 
-    // 
+    // Look Where You Are Going
+    Quaternion KinematicLookWhereYouAreGoing()
+    {
+        if (currentVelocity == Vector3.zero)
+        {
+            return transform.rotation;
+        }
+
+        return Quaternion.LookRotation(currentVelocity);
+    }
+    Quaternion LookWhereYouAreGoing()
+    {
+        return Quaternion.FromToRotation(transform.forward, KinematicLookWhereYouAreGoing() * Vector3.forward);
+    }
+
+    // Align
+    Quaternion KinematicAlign(Transform target)
+    {
+        if (transform.forward == target.forward || Mathf.Approximately(target.forward.magnitude, 0))
+        {
+            return transform.rotation;
+        }
+
+        return Quaternion.LookRotation(target.forward);
+    }
+    Quaternion Align(Transform target)
+    {
+        return Quaternion.FromToRotation(transform.forward, KinematicAlign(target) * Vector3.forward);
+    }
+
+    // Face
+    Quaternion KinematicFace(Transform target)
+    {
+        Vector3 direction = target.position - transform.position;
+
+        if (direction.normalized == transform.forward || Mathf.Approximately(direction.magnitude, 0))
+        {
+            return transform.rotation;
+        }
+
+        return Quaternion.LookRotation(direction);
+    }
+    Quaternion Face(Transform target)
+    {
+        return Quaternion.FromToRotation(transform.forward, KinematicFace(target) * Vector3.forward);
+    }
 }
