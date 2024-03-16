@@ -8,7 +8,6 @@ public class Node_SeekSnitch : Node
     public Node_SeekSnitch(BehaviourTree parentTree) : base(parentTree) { }
 
 
-
     // METHODS
     public override NodeState Execute()
     {
