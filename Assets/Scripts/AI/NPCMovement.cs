@@ -7,24 +7,21 @@ using UnityEngine;
 public class NPCMovement : MonoBehaviour
 {
     // VARIABLES
-    //float maxVelocity;
-    [SerializeField] Vector3 currentVelocity; // to do: hook into RigidBody.
+    // References
+    protected Rigidbody myRigidbody;
+    public Rigidbody MyRigidbody { get { return myRigidbody; } }
 
-    // Have these as parameters in the specific functions instead?
-    //float stopRadius;
-    //float slowRadius;
-    
-    float wanderInterval;
-    float wanderTimer;
-    Vector3 lastWanderDirection;
-    Vector3 lastDisplacement;
-    float wanderDegreesDelta;
-    // To do: put these as parameter in the function.
-
+    // To do: hook currentVelocity into the rigidBody stuff.
+    private Vector3 currentVelocity;
 
 
 
     // METHODS
+    private void Awake()
+    {
+        myRigidbody = GetComponent<Rigidbody>();
+    }
+
 
     // Seek.
     public Vector3 KinematicSeek(Vector3 targetPosition, float maxVelocity)
@@ -100,7 +97,7 @@ public class NPCMovement : MonoBehaviour
     }
 
     // Wander
-    public Vector3 KinematicWander(float maxVelocity)
+    public Vector3 KinematicWander(float maxVelocity, float wanderInterval, ref float wanderTimer, ref Vector3 lastWanderDirection, ref Vector3 lastDisplacement, float wanderDegreesDelta)
     {
         wanderTimer += Time.deltaTime;
 
@@ -124,6 +121,7 @@ public class NPCMovement : MonoBehaviour
             desiredVelocity = destination - gameObject.transform.position;
             desiredVelocity = desiredVelocity.normalized * maxVelocity;
 
+            // To do: hook these back in?
             lastDisplacement = desiredVelocity;
             lastWanderDirection = direction;
             wanderTimer = 0;
@@ -131,8 +129,11 @@ public class NPCMovement : MonoBehaviour
 
         return desiredVelocity;
     }
-    public Vector3 Wander(float maxVelocity)
+    public Vector3 Wander(float maxVelocity, float wanderInterval, ref float wanderTimer, ref Vector3 lastWanderDirection, ref Vector3 lastDisplacement, float wanderDegreesDelta)
     {
-        return KinematicWander(maxVelocity) - currentVelocity;
+        return KinematicWander(maxVelocity, wanderInterval, ref wanderTimer, ref lastWanderDirection, ref lastDisplacement, wanderDegreesDelta) - currentVelocity;
     }
+
+
+    // 
 }

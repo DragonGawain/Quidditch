@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node_ReachedSnitch : Node
+public class Node_HasReachedSnitch : Node
 {
     // CONSTRUCTORS
-    public Node_ReachedSnitch(BehaviourTree parentTree) : base(parentTree) { }
+    public Node_HasReachedSnitch(BehaviourTree parentTree) : base(parentTree) { }
 
 
     // METHODS
@@ -17,9 +17,12 @@ public class Node_ReachedSnitch : Node
         GameObject theSnitch = ReadFromBlackboard("snitch") as GameObject;
         if (theSnitch == null)
         {
-            theSnitch = GameObject.FindGameObjectWithTag("snitch");
+            theSnitch = MyParentTree.MyGroupAI.TheSnitch.gameObject;
+            WriteToBlackboard("snitch", theSnitch);
         }
 
+        // Do the check.
+        // To do: set the distance threshold to something legit.
         if (Vector3.Distance(MyParentTree.gameObject.transform.position, theSnitch.transform.position) <= 1f)
         {
             myState = NodeState.SUCCESS;
