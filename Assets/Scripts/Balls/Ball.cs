@@ -19,4 +19,28 @@ public class Ball : MonoBehaviour
     {
         myNPCMovement = GetComponent<NPCMovement>();
     }
+
+    // Get the closest target
+    protected Transform GetClosestTarget(string tag)
+    {
+        GameObject[] targets;                   // potential targets
+        Transform target = null;                // the closest target
+        float minDistance = Mathf.Infinity;     // min distance between the current ball and closest target
+
+        // Get the potential targets for the current ball
+        targets = GameObject.FindGameObjectsWithTag(tag);
+
+        // Get the closest target out of the potential ones
+        foreach (GameObject t in targets)
+        {
+            float distance = Vector3.Distance(t.transform.position, transform.position);
+            if (distance < minDistance)
+            {
+                target = t.transform;
+                minDistance = distance;
+            }
+        }
+
+        return target;
+    }
 }
