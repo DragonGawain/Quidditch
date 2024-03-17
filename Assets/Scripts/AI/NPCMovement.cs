@@ -14,8 +14,10 @@ public class NPCMovement : MonoBehaviour
         get { return myRigidbody; }
     }
 
-    // To do: hook currentVelocity into the rigidBody stuff.
+    // TODO: hook currentVelocity into the rigidBody stuff. - should be done
     private Vector3 currentVelocity;
+
+    // TODO:: add friction (objects should slowly slowdown) (shouldn't really be needed in the end cause the target will always be set)
 
     // METHODS
     private void Awake()

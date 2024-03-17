@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GroupChaser : GroupAI
 {
+    GroupAI[] chaserFormation = new GroupAI[] { null, null, null }; // list of the chasers in order - pos 0 = leader
+
     protected override void OnAwake()
     {
         string output = "CHASER " + this.gameObject.name + ", - chasers: ";
@@ -24,5 +26,20 @@ public class GroupChaser : GroupAI
     }
 
     // Update is called once per frame
-    void Update() { }
+    void Update()
+    {
+        // check if the team has the ball
+        if (theQuaffle.GetTeam() == team)
+        {
+            if (hasBall)
+                chaserFormation[0] = this;
+            else if (chaserFormation[1] == null)
+                chaserFormation[1] = this;
+            else
+                chaserFormation[2] = this;
+        }
+        else
+            for (int i = 0; i < 3; i++)
+                chaserFormation[i] = null;
+    }
 }

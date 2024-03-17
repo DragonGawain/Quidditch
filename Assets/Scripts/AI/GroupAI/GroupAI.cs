@@ -24,7 +24,8 @@ public enum AIState
 public enum Team
 {
     PLAYER,
-    AI
+    AI,
+    NONE
 }
 
 public abstract class GroupAI : MonoBehaviour
