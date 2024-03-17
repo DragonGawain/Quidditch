@@ -37,9 +37,9 @@ public class UIManager : MonoBehaviour
     public void StartGame()
     {
         // Temporary for timer testing
-        SceneManager.LoadScene("CristianScene");
+        //SceneManager.LoadScene("CristianScene");
 
-        //SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene("MainGame");
         mainMenu.SetActive(false);
         HUD.SetActive(true);
         Debug.Log("start game");
