@@ -9,23 +9,28 @@ public class Ball : MonoBehaviour
     // Do we need a variable for being held/handled? Should it be exclusive to the quaffle?
 
     // References
-    [SerializeField] protected NPCMovement myNPCMovement;
-    public NPCMovement MyNPCMovement { get { return myNPCMovement; } }
-
-
+    [SerializeField]
+    protected NPCMovement myNPCMovement;
+    public NPCMovement MyNPCMovement
+    {
+        get { return myNPCMovement; }
+    }
+    protected Rigidbody rb;
 
     // METHODS.
     private void Awake()
     {
         myNPCMovement = GetComponent<NPCMovement>();
+        rb = GetComponent<Rigidbody>();
+        OnAwake();
     }
 
     // Get the closest target
     protected Transform GetClosestTarget(string tag)
     {
-        GameObject[] targets;                   // potential targets
-        Transform target = null;                // the closest target
-        float minDistance = Mathf.Infinity;     // min distance between the current ball and closest target
+        GameObject[] targets; // potential targets
+        Transform target = null; // the closest target
+        float minDistance = Mathf.Infinity; // min distance between the current ball and closest target
 
         // Get the potential targets for the current ball
         targets = GameObject.FindGameObjectsWithTag(tag);
@@ -42,5 +47,10 @@ public class Ball : MonoBehaviour
         }
 
         return target;
+    }
+
+    protected virtual void OnAwake()
+    {
+        return;
     }
 }

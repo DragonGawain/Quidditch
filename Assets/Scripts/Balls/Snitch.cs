@@ -6,24 +6,45 @@ public class Snitch : Ball
 {
     // VARIABLES
     // Should speed and the like be defined here, or by the parent classe?
-    [SerializeField] Transform target;
-    float speed = 1f;
+    [SerializeField]
+    Transform target;
 
+    [SerializeField, Range(0, 15)]
+    float maxSpeed = 4f;
 
+    [SerializeField, Range(0, 10)]
+    float acceleration = 1f;
 
     // METHODS.
     // Start is called before the first frame update
-    void Start() {  }
+    void Start() { }
+
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+    }
 
     // Update is called once per frame
-    void Update()
+    // void Update()
+    // {
+    //     // Get the closest seeker to flee away from them
+    //     target = GetClosestTarget("seeker");
+
+    //     Vector3 desiredVelocity = myNPCMovement.Flee(target.position, speed);
+    //     //Vector3 desiredVelocity = myNPCMovement.KinematicFlee(target.position, speed);
+
+    //     transform.position += desiredVelocity * Time.deltaTime;
+    // }
+
+    void FixedUpdate()
     {
         // Get the closest seeker to flee away from them
         target = GetClosestTarget("seeker");
 
-        Vector3 desiredVelocity = myNPCMovement.Flee(target.position, speed);
-        //Vector3 desiredVelocity = myNPCMovement.KinematicFlee(target.position, speed);
-
-        transform.position += desiredVelocity * Time.deltaTime;
+        Vector3 desiredVelocity = Vector3.ClampMagnitude(
+            myNPCMovement.Flee(target.position, acceleration) + rb.velocity,
+            maxSpeed
+        );
+        rb.velocity = desiredVelocity;
     }
 }

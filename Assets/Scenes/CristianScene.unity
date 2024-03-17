@@ -444,61 +444,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6991206258708848081, guid: 13e2dfbee11dbcb45b3536d83f90942d,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 690562803}
-    - targetCorrespondingSourceObject: {fileID: 6991206258708848081, guid: 13e2dfbee11dbcb45b3536d83f90942d,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 690562802}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13e2dfbee11dbcb45b3536d83f90942d, type: 3}
---- !u!1 &690562800 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6991206258708848081, guid: 13e2dfbee11dbcb45b3536d83f90942d,
-    type: 3}
-  m_PrefabInstance: {fileID: 690562799}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &690562801 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9106048313059534958, guid: 13e2dfbee11dbcb45b3536d83f90942d,
-    type: 3}
-  m_PrefabInstance: {fileID: 690562799}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 690562800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d77075e640946804096550747b9e63e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &690562802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 690562800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d327bcc762423843ade6ebae85779c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myNPCMovement: {fileID: 690562803}
-  myGroupAI: {fileID: 690562801}
-  myMaxSpeed: 1
---- !u!114 &690562803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 690562800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 899fde094087a2b42a6f02223ac0575a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1759407569
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -565,61 +512,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6991206258708848081, guid: 13e2dfbee11dbcb45b3536d83f90942d,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1759407571}
-    - targetCorrespondingSourceObject: {fileID: 6991206258708848081, guid: 13e2dfbee11dbcb45b3536d83f90942d,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1759407573}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13e2dfbee11dbcb45b3536d83f90942d, type: 3}
---- !u!1 &1759407570 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6991206258708848081, guid: 13e2dfbee11dbcb45b3536d83f90942d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1759407569}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1759407571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1759407570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 899fde094087a2b42a6f02223ac0575a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1759407572 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9106048313059534958, guid: 13e2dfbee11dbcb45b3536d83f90942d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1759407569}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1759407570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d77075e640946804096550747b9e63e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1759407573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1759407570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d327bcc762423843ade6ebae85779c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myNPCMovement: {fileID: 1759407571}
-  myGroupAI: {fileID: 1759407572}
-  myMaxSpeed: 1
 --- !u!1001 &1634350203503676655
 PrefabInstance:
   m_ObjectHideFlags: 0

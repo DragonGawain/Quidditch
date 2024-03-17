@@ -5,8 +5,8 @@ using UnityEngine;
 public class Node_SeekClosestBludger : Node
 {
     // CONSTRUCTORS
-    public Node_SeekClosestBludger(BehaviourTree parentTree) : base(parentTree) { }
-
+    public Node_SeekClosestBludger(BehaviourTree parentTree)
+        : base(parentTree) { }
 
     // METHODS
     public override NodeState Execute()
@@ -21,9 +21,17 @@ public class Node_SeekClosestBludger : Node
         // To do: should we mention the target bludger?
 
         // Seek it and return running.
-        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.KinematicSeek(closestBludger.transform.position, MyParentTree.MyMaxSpeed);
-        MyParentTree.gameObject.transform.position += desiredVelocity * Time.deltaTime;
-        // To do: gooder movement behaviour. Obstacle avoidance, pathfinding, etc.
+        // Vector3 desiredVelocity = MyParentTree.MyNPCMovement.KinematicSeek(closestBludger.transform.position, MyParentTree.MyMaxSpeed);
+        // MyParentTree.gameObject.transform.position += desiredVelocity * Time.deltaTime;
+        Vector3 desiredVelocity = Vector3.ClampMagnitude(
+            MyParentTree.MyNPCMovement.KinematicSeek(
+                closestBludger.transform.position,
+                MyParentTree.Acceleration
+            ) + MyParentTree.GetRigidbody().velocity,
+            MyParentTree.MyMaxSpeed
+        );
+        MyParentTree.SetVelocity(desiredVelocity);
+        // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
 
         myState = NodeState.RUNNING;
         return myState;
