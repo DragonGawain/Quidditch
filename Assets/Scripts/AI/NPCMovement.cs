@@ -26,39 +26,38 @@ public class NPCMovement : MonoBehaviour
     }
 
     // Seek.
-    public Vector3 KinematicSeek(Vector3 targetPosition, float acceleration)
+    public Vector3 KinematicSeek(Vector3 targetPosition, float maxVelocity)
     {
         Vector3 desiredVelocity = targetPosition - gameObject.transform.position;
-        return desiredVelocity.normalized * acceleration;
+        return desiredVelocity.normalized * maxVelocity;
     }
-
-    public Vector3 Seek(Vector3 targetPosition, float acceleration)
+    public Vector3 Seek(Vector3 targetPosition, float maxVelocity)
     {
-        return KinematicSeek(targetPosition, acceleration) - myRigidbody.velocity;
+        return KinematicSeek(targetPosition, maxVelocity) - myRigidbody.velocity;
     }
 
     // Flee
-    public Vector3 KinematicFlee(Vector3 targetPosition, float acceleration)
+    public Vector3 KinematicFlee(Vector3 targetPosition, float maxVelocity)
     {
-        return -1 * KinematicSeek(targetPosition, acceleration); // Invertion of the seek behaviour.
+        Vector3 desiredVelocity = gameObject.transform.position - targetPosition;
+        return desiredVelocity.normalized * maxVelocity;
     }
-
-    public Vector3 Flee(Vector3 targetPosition, float acceleration)
+    public Vector3 Flee(Vector3 targetPosition, float maxVelocity)
     {
-        return KinematicFlee(targetPosition, acceleration) - myRigidbody.velocity;
+        return KinematicFlee(targetPosition, maxVelocity) - myRigidbody.velocity;
     }
 
     // Arrive
     public Vector3 KinematicArrive(
         Vector3 targetPosition,
-        float acceleration,
+        float maxVelocity,
         float stopRadius,
         float slowRadius
     )
     {
         Vector3 desiredVelocity = targetPosition - gameObject.transform.position;
         float distance = desiredVelocity.magnitude;
-        desiredVelocity = desiredVelocity.normalized * acceleration;
+        desiredVelocity = desiredVelocity.normalized * maxVelocity;
 
         // To do: add events?
         if (distance <= stopRadius)
@@ -72,58 +71,56 @@ public class NPCMovement : MonoBehaviour
 
         return desiredVelocity;
     }
-
     public Vector3 Arrive(
         Vector3 targetPosition,
-        float acceleration,
+        float maxVelocity,
         float stopRadius,
         float slowRadius
     )
     {
-        return KinematicArrive(targetPosition, acceleration, stopRadius, slowRadius) - myRigidbody.velocity;
+        return KinematicArrive(targetPosition, maxVelocity, stopRadius, slowRadius) - myRigidbody.velocity;
     }
 
     // Pursue
     public Vector3 KinematicPursue(
         Vector3 targetPosition,
         Vector3 targetVelocity,
-        float acceleration
+        float maxVelocity
     )
     {
         float distance = Vector3.Distance(targetPosition, gameObject.transform.position);
         float ahead = distance / 10; // should the 10 be a parameter?
         Vector3 futurePosition = targetPosition + targetVelocity * ahead;
 
-        return KinematicSeek(futurePosition, acceleration);
+        return KinematicSeek(futurePosition, maxVelocity);
     }
 
-    public Vector3 Pursue(Vector3 targetPosition, Vector3 targetVelocity, float acceleration)
+    public Vector3 Pursue(Vector3 targetPosition, Vector3 targetVelocity, float maxVelocity)
     {
-        return KinematicPursue(targetPosition, targetVelocity, acceleration) - myRigidbody.velocity;
+        return KinematicPursue(targetPosition, targetVelocity, maxVelocity) - myRigidbody.velocity;
     }
 
     // Evade
     public Vector3 KinematicEvade(
         Vector3 targetPosition,
         Vector3 targetVelocity,
-        float acceleration
+        float maxVelocity
     )
     {
         float distance = Vector3.Distance(targetPosition, gameObject.transform.position);
         float ahead = distance / 10; // should the 10 be a parameter?
         Vector3 futurePosition = targetPosition + targetVelocity * ahead;
 
-        return KinematicFlee(futurePosition, acceleration);
+        return KinematicFlee(futurePosition, maxVelocity);
     }
-
-    public Vector3 Evade(Vector3 targetPosition, Vector3 targetVelocity, float acceleration)
+    public Vector3 Evade(Vector3 targetPosition, Vector3 targetVelocity, float maxVelocity)
     {
-        return KinematicEvade(targetPosition, targetVelocity, acceleration) - myRigidbody.velocity;
+        return KinematicEvade(targetPosition, targetVelocity, maxVelocity) - myRigidbody.velocity;
     }
 
     // Wander
     public Vector3 KinematicWander(
-        float acceleration,
+        float maxVelocity,
         float wanderInterval,
         ref float wanderTimer,
         ref Vector3 lastWanderDirection,
@@ -135,7 +132,7 @@ public class NPCMovement : MonoBehaviour
 
         if (lastWanderDirection == Vector3.zero)
         {
-            lastWanderDirection = gameObject.transform.forward.normalized * acceleration;
+            lastWanderDirection = gameObject.transform.forward.normalized * maxVelocity;
         }
 
         if (lastDisplacement == Vector3.zero)
@@ -152,7 +149,7 @@ public class NPCMovement : MonoBehaviour
             Vector3 circleCenter = gameObject.transform.position + lastDisplacement;
             Vector3 destination = circleCenter + direction.normalized;
             desiredVelocity = destination - gameObject.transform.position;
-            desiredVelocity = desiredVelocity.normalized * acceleration;
+            desiredVelocity = desiredVelocity.normalized * maxVelocity;
 
             // To do: hook these back in?
             lastDisplacement = desiredVelocity;
@@ -164,7 +161,7 @@ public class NPCMovement : MonoBehaviour
     }
 
     public Vector3 Wander(
-        float acceleration,
+        float maxVelocity,
         float wanderInterval,
         ref float wanderTimer,
         ref Vector3 lastWanderDirection,
@@ -173,7 +170,7 @@ public class NPCMovement : MonoBehaviour
     )
     {
         return KinematicWander(
-                acceleration,
+                maxVelocity,
                 wanderInterval,
                 ref wanderTimer,
                 ref lastWanderDirection,

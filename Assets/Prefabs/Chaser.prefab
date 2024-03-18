@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -3748047399492814316}
   - component: {fileID: 2498514774501528093}
   - component: {fileID: -5651564666363166671}
+  - component: {fileID: 4273821967308426057}
   m_Layer: 0
   m_Name: Chaser
   m_TagString: chaser
@@ -160,3 +161,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899fde094087a2b42a6f02223ac0575a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4273821967308426057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7981417123366933304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c115db44a5ebaae4291c46d7b4028cf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myNPCMovement: {fileID: 0}
+  myGroupAI: {fileID: 0}
+  myMaxSpeed: 3
+  acceleration: 1

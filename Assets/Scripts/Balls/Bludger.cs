@@ -36,10 +36,12 @@ public class Bludger : Ball
         // Get the closest seeker to flee away from them
         target = GetClosestTarget(tags);
 
-        Vector3 desiredVelocity = Vector3.ClampMagnitude(
+        if (target != null)
+        {
+            Vector3 desiredVelocity = Vector3.ClampMagnitude(
             myNPCMovement.Seek(target.position, acceleration) + rb.velocity,
-            maxSpeed
-        );
-        rb.velocity = desiredVelocity;
+            maxSpeed);
+            rb.velocity = desiredVelocity;
+        }
     }
 }

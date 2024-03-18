@@ -19,7 +19,7 @@ public class Node_FleeClosestBludger : Node
         WriteToBlackboard("closestBludger", closestBludger);
 
         // Flee it and return running.
-        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.KinematicFlee(closestBludger.transform.position, MyParentTree.MyMaxSpeed);
+        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Flee(closestBludger.transform.position, MyParentTree.MyMaxSpeed);
         MyParentTree.SetVelocity(desiredVelocity);
         // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
 

@@ -54,6 +54,10 @@ public abstract class GroupAI : MonoBehaviour
     protected List<Bludger> theBludgers = new();
     public List<Bludger> TheBludgers { get { return theBludgers; } }
 
+    protected Goalpost ourGoalpost;
+    public Goalpost OurGoalpost { get { return ourGoalpost; } }
+    protected Goalpost enemyGoalpost;
+    public Goalpost EnemyGoalpost { get { return enemyGoalpost; } }
 
     //
     public AIState GetState()
@@ -70,6 +74,7 @@ public abstract class GroupAI : MonoBehaviour
     {
         return team;
     }
+
 
     private void Awake()
     {
@@ -94,16 +99,34 @@ public abstract class GroupAI : MonoBehaviour
             theQuaffle = potentialQuaffle.GetComponent<Quaffle>();
         }
         GameObject[] potentialBludgers = GameObject.FindGameObjectsWithTag("bludger");
+        if (potentialBludgers != null)
         {
-            if (potentialBludgers != null)
+            foreach (GameObject potentialBludger in potentialBludgers)
             {
-                foreach (GameObject potentialBludger in potentialBludgers)
+                Bludger bludger = potentialBludger.GetComponent<Bludger>();
+                if (bludger != null)
                 {
-                    Bludger bludger = potentialBludger.GetComponent<Bludger>();
-                    if (bludger != null)
-                    {
-                        theBludgers.Add(bludger);
-                    }
+                    theBludgers.Add(bludger);
+                }
+            }
+        }
+
+        // Find the goalposts.
+        GameObject[] potentialGoalpostGOs = GameObject.FindGameObjectsWithTag("goalpost");
+        if (potentialGoalpostGOs != null && potentialGoalpostGOs.Length > 0)
+        {
+            // We assume that there are at most two goalposts.
+            foreach (GameObject potentialGoalpostGO in potentialGoalpostGOs)
+            {
+                Goalpost potentialGoalpost = potentialGoalpostGO.GetComponent<Goalpost>();
+
+                if (potentialGoalpost.OwningTeam == team)
+                {
+                    ourGoalpost = potentialGoalpost;
+                }
+                else
+                {
+                    enemyGoalpost = potentialGoalpost;
                 }
             }
         }

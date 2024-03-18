@@ -21,7 +21,7 @@ public class Node_SeekClosestBludger : Node
         // To do: should we mention the target bludger?
 
         // Seek it and return running.
-        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.KinematicSeek(closestBludger.transform.position, MyParentTree.MyMaxSpeed);
+        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(closestBludger.transform.position, MyParentTree.MyMaxSpeed);
         MyParentTree.SetVelocity(desiredVelocity);
         // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
 

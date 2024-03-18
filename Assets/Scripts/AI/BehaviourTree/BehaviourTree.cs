@@ -43,12 +43,10 @@ public abstract class BehaviourTree : MonoBehaviour
     {
         return myRigidbody;
     }
-
-    public void SetVelocity(Vector3 vel)
+    public void SetVelocity(Vector3 desiredVelocity)
     {
-        myRigidbody.velocity = vel;
+        myRigidbody.velocity = Vector3.ClampMagnitude(desiredVelocity + myRigidbody.velocity, myMaxSpeed);
     }
-
 
 
 
@@ -59,8 +57,8 @@ public abstract class BehaviourTree : MonoBehaviour
     {
         // Collect other references.
         myNPCMovement = gameObject.GetComponent<NPCMovement>();
-        myGroupAI = gameObject.GetComponent<GroupAI>(); // TODO: find the better way to fetch the groupAI. - Craig note: uhh, this is kinda just, the way though...
-        myRigidbody = GetComponent<Rigidbody>(); // Extra note from Craig: you don't need to say gameObject.GetComponent<>, the gameObject is implied)
+        myGroupAI = gameObject.GetComponent<GroupAI>();
+        myRigidbody = GetComponent<Rigidbody>(); // Extra note from Craig: you don't need to say gameObject.GetComponent<>, the gameObject is implied) // Roxane: I like being explicit my dude :P
     }
 
     protected void Start()

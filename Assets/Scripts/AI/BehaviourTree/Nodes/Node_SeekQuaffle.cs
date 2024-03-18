@@ -22,11 +22,9 @@ public class Node_SeekQuaffle : Node
         }
 
         // Seek it and return running.
-        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.KinematicSeek(theQuaffle.transform.position, MyParentTree.MyMaxSpeed);
+        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(theQuaffle.transform.position, MyParentTree.MyMaxSpeed);
         MyParentTree.SetVelocity(desiredVelocity);
         // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
-
-        // TODO: alternate "Arrive at quaffle" node.
 
         myState = NodeState.RUNNING;
         return myState;

@@ -7,6 +7,16 @@ public class Quaffle : Ball
     // VARIABLES
     // Should speed and the like be defined here, or by the parent classe?
     Team teamWithQuaffle = Team.NONE;
+    public void SetTeam(Team team)
+    {
+        teamWithQuaffle = team;
+    }
+    public Team GetTeam()
+    {
+        return teamWithQuaffle;
+    }
+
+
 
     // METHODS.
     // Start is called before the first frame update
@@ -15,13 +25,5 @@ public class Quaffle : Ball
     // Update is called once per frame
     void Update() { }
 
-    public void SetTeam(Team team)
-    {
-        teamWithQuaffle = team;
-    }
-
-    public Team GetTeam()
-    {
-        return teamWithQuaffle;
-    }
+    
 }

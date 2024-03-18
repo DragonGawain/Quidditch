@@ -11,6 +11,7 @@ TagManager:
   - snitch
   - bludger
   - quaffle
+  - goalpost
   layers:
   - Default
   - TransparentFX
