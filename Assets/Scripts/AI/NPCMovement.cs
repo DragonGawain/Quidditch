@@ -34,7 +34,7 @@ public class NPCMovement : MonoBehaviour
 
     public Vector3 Seek(Vector3 targetPosition, float acceleration)
     {
-        return KinematicSeek(targetPosition, acceleration) - currentVelocity;
+        return KinematicSeek(targetPosition, acceleration) - myRigidbody.velocity;
     }
 
     // Flee
@@ -45,7 +45,7 @@ public class NPCMovement : MonoBehaviour
 
     public Vector3 Flee(Vector3 targetPosition, float acceleration)
     {
-        return KinematicFlee(targetPosition, acceleration) - currentVelocity;
+        return KinematicFlee(targetPosition, acceleration) - myRigidbody.velocity;
     }
 
     // Arrive
@@ -80,8 +80,7 @@ public class NPCMovement : MonoBehaviour
         float slowRadius
     )
     {
-        return KinematicArrive(targetPosition, acceleration, stopRadius, slowRadius)
-            - currentVelocity;
+        return KinematicArrive(targetPosition, acceleration, stopRadius, slowRadius) - myRigidbody.velocity;
     }
 
     // Pursue
@@ -100,7 +99,7 @@ public class NPCMovement : MonoBehaviour
 
     public Vector3 Pursue(Vector3 targetPosition, Vector3 targetVelocity, float acceleration)
     {
-        return KinematicPursue(targetPosition, targetVelocity, acceleration) - currentVelocity;
+        return KinematicPursue(targetPosition, targetVelocity, acceleration) - myRigidbody.velocity;
     }
 
     // Evade
@@ -119,7 +118,7 @@ public class NPCMovement : MonoBehaviour
 
     public Vector3 Evade(Vector3 targetPosition, Vector3 targetVelocity, float acceleration)
     {
-        return KinematicEvade(targetPosition, targetVelocity, acceleration) - currentVelocity;
+        return KinematicEvade(targetPosition, targetVelocity, acceleration) - myRigidbody.velocity;
     }
 
     // Wander
@@ -180,7 +179,7 @@ public class NPCMovement : MonoBehaviour
                 ref lastWanderDirection,
                 ref lastDisplacement,
                 wanderDegreesDelta
-            ) - currentVelocity;
+            ) - myRigidbody.velocity;
     }
 
     // Look Where You Are Going
@@ -191,7 +190,7 @@ public class NPCMovement : MonoBehaviour
             return transform.rotation;
         }
 
-        return Quaternion.LookRotation(currentVelocity);
+        return Quaternion.LookRotation(myRigidbody.velocity);
     }
 
     Quaternion LookWhereYouAreGoing()

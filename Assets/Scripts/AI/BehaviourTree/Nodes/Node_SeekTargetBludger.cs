@@ -23,15 +23,8 @@ public class Node_SeekTargetBludger : Node
         }
 
         // Seek it and return running.
-        Vector3 desiredVelocity = Vector3.ClampMagnitude(
-            MyParentTree.MyNPCMovement.KinematicSeek(
-                targetBludger.transform.position,
-                MyParentTree.Acceleration
-            ) + MyParentTree.GetRigidbody().velocity,
-            MyParentTree.MyMaxSpeed
-        );
+        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.KinematicSeek(targetBludger.transform.position, MyParentTree.MyMaxSpeed);
         MyParentTree.SetVelocity(desiredVelocity);
-        // MyParentTree.gameObject.transform.position += desiredVelocity * Time.deltaTime;
         // To do: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
 
         myState = NodeState.RUNNING;

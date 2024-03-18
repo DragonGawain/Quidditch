@@ -38,7 +38,19 @@ public abstract class BehaviourTree : MonoBehaviour
         get { return acceleration; }
     }
 
-    protected Rigidbody rb;
+    protected Rigidbody myRigidbody;
+    public Rigidbody GetRigidbody()
+    {
+        return myRigidbody;
+    }
+
+    public void SetVelocity(Vector3 vel)
+    {
+        myRigidbody.velocity = vel;
+    }
+
+
+
 
     // METHODS
     protected abstract Node PlantTheTree(BehaviourTree self);
@@ -48,7 +60,7 @@ public abstract class BehaviourTree : MonoBehaviour
         // Collect other references.
         myNPCMovement = gameObject.GetComponent<NPCMovement>();
         myGroupAI = gameObject.GetComponent<GroupAI>(); // TODO: find the better way to fetch the groupAI. - Craig note: uhh, this is kinda just, the way though...
-        rb = GetComponent<Rigidbody>(); // Extra note from Craig: you don't need to say gameObject.GetComponent<>, the gameObject is implied)
+        myRigidbody = GetComponent<Rigidbody>(); // Extra note from Craig: you don't need to say gameObject.GetComponent<>, the gameObject is implied)
     }
 
     protected void Start()
@@ -97,15 +109,5 @@ public abstract class BehaviourTree : MonoBehaviour
         }
 
         return (closestBludger, distanceToClosestBludger);
-    }
-
-    public Rigidbody GetRigidbody()
-    {
-        return rb;
-    }
-
-    public void SetVelocity(Vector3 vel)
-    {
-        rb.velocity = vel;
     }
 }
