@@ -12,9 +12,8 @@ public class Node_SeekEnemyGoalpost : Node
     {
         //Debug.Log("Executing ArriveAtEnemyGoalpost");
 
-        // Find the snitch.
+        // Find the goalpost.
         GameObject theEnemyGoalpost = ReadFromBlackboard("enemyGoalpost") as GameObject;
-
         if (theEnemyGoalpost == null)
         {
             theEnemyGoalpost = MyParentTree.MyGroupAI.EnemyGoalpost.gameObject;

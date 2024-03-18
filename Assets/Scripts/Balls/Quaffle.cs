@@ -6,7 +6,10 @@ public class Quaffle : Ball
 {
     // VARIABLES
     // Should speed and the like be defined here, or by the parent classe?
-    Team teamWithQuaffle = Team.NONE;
+    [SerializeField] private GameObject myHolder;
+    public GameObject MyHolder { get { return myHolder; } set { myHolder = value; } }
+
+    private Team teamWithQuaffle = Team.NONE;
     public void SetTeam(Team team)
     {
         teamWithQuaffle = team;
@@ -18,12 +21,38 @@ public class Quaffle : Ball
 
 
 
-    // METHODS.
-    // Start is called before the first frame update
-    void Start() { }
+    // METHODS
+    // Built in.
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(string.Format("The quaffle collided with {0}.", collision.gameObject));
 
-    // Update is called once per frame
-    void Update() { }
+        GroupAI theChaser = collision.gameObject.GetComponent<GroupAI>();
+        if (theChaser != null && collision.gameObject.CompareTag("chaser"))
+        {
+            theChaser.HasBall = true;
+            myHolder = collision.gameObject;
+            SetTeam(theChaser.Team);
 
-    
+            MyRigidbody.isKinematic = true;
+            gameObject.transform.parent = collision.gameObject.transform;
+        }
+    }
+
+    // Actions.
+    public void Throw(Vector3 force) 
+    {
+        Debug.Log("In THROW");
+
+        GroupAI theChaser = myHolder.GetComponent<GroupAI>();
+        theChaser.HasBall = false;
+        myHolder = null;
+        //SetTeam(null);
+
+        MyRigidbody.isKinematic = false;
+        gameObject.transform.parent = null;
+
+        // Should this partly exist in the parent Ball class?
+        myRigidbody.AddForce(force, ForceMode.Impulse);
+    }
 }

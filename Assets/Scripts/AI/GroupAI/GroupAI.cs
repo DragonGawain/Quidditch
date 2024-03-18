@@ -39,7 +39,7 @@ public abstract class GroupAI : MonoBehaviour
     protected Team team;
     public Team Team { get { return team; } }
     protected bool hasBall = false;
-    public bool HasBall { get { return hasBall; } }
+    public bool HasBall { get { return hasBall; } set { hasBall = value; } }
     protected List<GroupAI> friendlyChasers = new();
     public List<GroupAI> FriendlyChasers { get { return friendlyChasers; } }
     protected List<GroupAI> friendlyBeaters = new();

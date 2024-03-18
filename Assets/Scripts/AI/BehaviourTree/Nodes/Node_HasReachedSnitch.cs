@@ -22,7 +22,7 @@ public class Node_HasReachedSnitch : Node
         }
 
         // Do the check.
-        // To do: set the distance threshold to something legit.
+        // TODO: set the distance threshold to something legit.
         if (Vector3.Distance(MyParentTree.gameObject.transform.position, theSnitch.transform.position) <= 1f)
         {
             myState = NodeState.SUCCESS;

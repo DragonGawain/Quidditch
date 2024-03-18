@@ -39,9 +39,9 @@ public class Bludger : Ball
         if (target != null)
         {
             Vector3 desiredVelocity = Vector3.ClampMagnitude(
-            myNPCMovement.Seek(target.position, acceleration) + rb.velocity,
+            myNPCMovement.Seek(target.position, acceleration) + myRigidbody.velocity,
             maxSpeed);
-            rb.velocity = desiredVelocity;
+            myRigidbody.velocity = desiredVelocity;
         }
     }
 }

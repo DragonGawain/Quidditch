@@ -13,7 +13,7 @@ public class Node_SeekQuaffle : Node
     {
         //Debug.Log("Executing SeekQuaffle");
 
-        // Find the snitch.
+        // Find the quaffle.
         GameObject theQuaffle = ReadFromBlackboard("quaffle") as GameObject;
         if (theQuaffle == null)
         {

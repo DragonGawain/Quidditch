@@ -46,9 +46,9 @@ public class Snitch : Ball
         target = GetClosestTarget(tags);
 
         Vector3 desiredVelocity = Vector3.ClampMagnitude(
-            myNPCMovement.Flee(target.position, acceleration) + rb.velocity,
+            myNPCMovement.Flee(target.position, acceleration) + myRigidbody.velocity,
             maxSpeed
         );
-        rb.velocity = desiredVelocity;
+        myRigidbody.velocity = desiredVelocity;
     }
 }

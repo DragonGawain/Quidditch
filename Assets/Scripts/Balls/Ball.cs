@@ -15,16 +15,24 @@ public class Ball : MonoBehaviour
     {
         get { return myNPCMovement; }
     }
-    protected Rigidbody rb;
+    protected Rigidbody myRigidbody;
+    public Rigidbody MyRigidbody { get { return myRigidbody; } }
+
+
 
     // METHODS.
     private void Awake()
     {
         myNPCMovement = GetComponent<NPCMovement>();
-        rb = GetComponent<Rigidbody>();
+        myRigidbody = GetComponent<Rigidbody>();
         OnAwake();
     }
+    protected virtual void OnAwake()
+    {
+        return;
+    }
 
+    // Utilities.
     // Get the closest target
     protected Transform GetClosestTarget(string[] tags)
     {
@@ -76,9 +84,4 @@ public class Ball : MonoBehaviour
 
             return target;
         }*/
-
-    protected virtual void OnAwake()
-    {
-        return;
-    }
 }
