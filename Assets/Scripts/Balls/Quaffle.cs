@@ -34,6 +34,7 @@ public class Quaffle : Ball
             myHolder = collision.gameObject;
             SetTeam(theChaser.Team);
 
+            MyRigidbody.velocity = Vector3.zero;
             MyRigidbody.isKinematic = true;
             gameObject.transform.parent = collision.gameObject.transform;
         }
@@ -42,8 +43,6 @@ public class Quaffle : Ball
     // Actions.
     public void Throw(Vector3 force) 
     {
-        Debug.Log("In THROW");
-
         GroupAI theChaser = myHolder.GetComponent<GroupAI>();
         theChaser.HasBall = false;
         myHolder = null;
