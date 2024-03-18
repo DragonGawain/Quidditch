@@ -15,6 +15,10 @@ public class Snitch : Ball
     [SerializeField, Range(0, 10)]
     float acceleration = 1f;
 
+    // Tags corresponding to the possible targets for the snitch
+    private string[] tags = {"seeker"};
+
+
     // METHODS.
     // Start is called before the first frame update
     void Start() { }
@@ -39,7 +43,7 @@ public class Snitch : Ball
     void FixedUpdate()
     {
         // Get the closest seeker to flee away from them
-        target = GetClosestTarget("seeker");
+        target = GetClosestTarget(tags);
 
         Vector3 desiredVelocity = Vector3.ClampMagnitude(
             myNPCMovement.Flee(target.position, acceleration) + rb.velocity,
