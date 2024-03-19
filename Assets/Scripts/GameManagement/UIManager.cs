@@ -18,6 +18,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     GameObject HUD;
 
+    [SerializeField]
+    GameObject endGame;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -33,6 +36,9 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     public void StartGame()
     {
+        // Temporary for timer testing
+        //SceneManager.LoadScene("CristianScene");
+
         SceneManager.LoadScene("MainGame");
         mainMenu.SetActive(false);
         HUD.SetActive(true);
@@ -61,6 +67,13 @@ public class UIManager : MonoBehaviour
         mainMenu.SetActive(true);
         HUD.SetActive(false);
         pauseMenu.SetActive(false);
+        endGame.SetActive(false);
         Debug.Log("return to main menu");
+    }
+
+    // Enable the End Game Panel
+    public void EndGame()
+    {
+        endGame.SetActive(true);
     }
 }

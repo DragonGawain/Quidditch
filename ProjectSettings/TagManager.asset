@@ -8,6 +8,10 @@ TagManager:
   - beater
   - keeper
   - seeker
+  - snitch
+  - bludger
+  - quaffle
+  - goalpost
   layers:
   - Default
   - TransparentFX

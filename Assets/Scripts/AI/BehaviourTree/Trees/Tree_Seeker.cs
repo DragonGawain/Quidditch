@@ -12,7 +12,7 @@ public class Tree_Seeker : BehaviourTree
     {
         Node rootNode = new NodeSelector(self,
                                          new List<Node> {  new NodeSequence( self,
-                                                                             new List<Node> { new Node_ReachedSnitch(self), new Node_FleeBludger(this) }),
+                                                                             new List<Node> { new Node_IsClosestBludgerTooClose(self), new Node_FleeClosestBludger(this) }),
                                          new Node_SeekSnitch(this) });
         return rootNode;
     }

@@ -12,7 +12,10 @@ GameObject:
   - component: {fileID: 4610093926294230164}
   - component: {fileID: 6111201902287733560}
   - component: {fileID: 385669582146492666}
+  - component: {fileID: -3748047399492814316}
   - component: {fileID: 2498514774501528093}
+  - component: {fileID: -5651564666363166671}
+  - component: {fileID: 4273821967308426057}
   m_Layer: 0
   m_Name: Chaser
   m_TagString: chaser
@@ -106,6 +109,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &-3748047399492814316
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7981417123366933304}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &2498514774501528093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,3 +149,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 1
+--- !u!114 &-5651564666363166671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7981417123366933304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 899fde094087a2b42a6f02223ac0575a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4273821967308426057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7981417123366933304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c115db44a5ebaae4291c46d7b4028cf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myNPCMovement: {fileID: 0}
+  myGroupAI: {fileID: 0}
+  myMaxSpeed: 3
+  acceleration: 1
