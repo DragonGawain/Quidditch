@@ -9,15 +9,15 @@ public class Quaffle : Ball
     [SerializeField] private GameObject myHolder;
     public GameObject MyHolder { get { return myHolder; } set { myHolder = value; } }
 
-    private Team teamWithQuaffle = Team.NONE;
-    public void SetTeam(Team team)
-    {
-        teamWithQuaffle = team;
-    }
-    public Team GetTeam()
-    {
-        return teamWithQuaffle;
-    }
+    // private Team teamWithQuaffle = Team.NONE;
+    // public void SetTeam(Team team)
+    // {
+    //     teamWithQuaffle = team;
+    // }
+    // public Team GetTeam()
+    // {
+    //     return teamWithQuaffle;
+    // }
 
 
 
@@ -30,9 +30,9 @@ public class Quaffle : Ball
         GroupAI theChaser = collision.gameObject.GetComponent<GroupAI>();
         if (theChaser != null && collision.gameObject.CompareTag("chaser"))
         {
-            theChaser.HasBall = true;
+            theChaser.SetHasBall(true);
             myHolder = collision.gameObject;
-            SetTeam(theChaser.Team);
+            // SetTeam(theChaser.Team);
 
             MyRigidbody.velocity = Vector3.zero;
             MyRigidbody.isKinematic = true;
@@ -44,7 +44,7 @@ public class Quaffle : Ball
     public void Throw(Vector3 force) 
     {
         GroupAI theChaser = myHolder.GetComponent<GroupAI>();
-        theChaser.HasBall = false;
+        theChaser.SetHasBall(false);
         myHolder = null;
         //SetTeam(null);
 

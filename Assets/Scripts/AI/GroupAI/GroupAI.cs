@@ -32,34 +32,70 @@ public abstract class GroupAI : MonoBehaviour
 {
     PlayerController player;
     protected PlayerRole playerRole;
-    public PlayerRole PlayersRole { get { return playerRole; } }
+    public PlayerRole PlayersRole
+    {
+        get { return playerRole; }
+    }
     protected AIType aIType;
 
     [SerializeField]
     protected Team team;
-    public Team Team { get { return team; } }
+    public Team Team
+    {
+        get { return team; }
+    }
     protected bool hasBall = false;
-    public bool HasBall { get { return hasBall; } set { hasBall = value; } }
+    public bool HasBall
+    {
+        get { return hasBall; }
+        set { hasBall = value; }
+    }
     protected List<GroupAI> friendlyChasers = new();
-    public List<GroupAI> FriendlyChasers { get { return friendlyChasers; } }
+    public List<GroupAI> FriendlyChasers
+    {
+        get { return friendlyChasers; }
+    }
     protected List<GroupAI> friendlyBeaters = new();
     protected GroupAI freindlySeeker;
     protected GroupAI freindlyKeeper;
     protected AIState state;
 
     protected Snitch theSnitch;
-    public Snitch TheSnitch { get { return theSnitch; } }
+    public Snitch TheSnitch
+    {
+        get { return theSnitch; }
+    }
     protected Quaffle theQuaffle;
-    public Quaffle TheQuaffle { get { return theQuaffle; } }
+    public Quaffle TheQuaffle
+    {
+        get { return theQuaffle; }
+    }
     protected List<Bludger> theBludgers = new();
-    public List<Bludger> TheBludgers { get { return theBludgers; } }
+    public List<Bludger> TheBludgers
+    {
+        get { return theBludgers; }
+    }
 
     protected Goalpost ourGoalpost;
-    public Goalpost OurGoalpost { get { return ourGoalpost; } }
+    public Goalpost OurGoalpost
+    {
+        get { return ourGoalpost; }
+    }
     protected Goalpost enemyGoalpost;
-    public Goalpost EnemyGoalpost { get { return enemyGoalpost; } }
+    public Goalpost EnemyGoalpost
+    {
+        get { return enemyGoalpost; }
+    }
 
-    //
+    protected Rigidbody rb;
+
+    protected Transform upRef;
+    protected Transform rightRef;
+    protected Transform forwardRef;
+
+    static protected Formation AIFormation = new();
+    static protected Formation PlayerFormation = new();
+
     public AIState GetState()
     {
         return state;
@@ -75,10 +111,40 @@ public abstract class GroupAI : MonoBehaviour
         return team;
     }
 
+    public Vector3 GetUpRef()
+    {
+        return upRef.position - transform.position;
+    }
+
+    public Vector3 GetRightRef()
+    {
+        return rightRef.position - transform.position;
+    }
+
+    public Vector3 GetForwardRef()
+    {
+        return forwardRef.position - transform.position;
+    }
+
+    // Yes I know that I'm breaking standard setter practice by adding additional functionality to the setter, but frankly this is just the easiest way to detect when a team/person has picked up the quaffle
+    public void SetHasBall(bool state)
+    {
+        hasBall = state;
+        if (state)
+            OnTeamObtainedQuaffle();
+        else
+            OnTeamLostQuaffle();
+    }
 
     private void Awake()
     {
-        // Find the player. 
+        // rigidbody
+        rb = GetComponent<Rigidbody>();
+        upRef = transform.GetChild(0);
+        rightRef = transform.GetChild(1);
+        forwardRef = transform.GetChild(2);
+
+        // Find the player.
         // Roxane: add to add a check to keep it from glitching in my test scene.
         GameObject potentialPlayer = GameObject.FindGameObjectWithTag("Player");
         if (potentialPlayer != null)
@@ -112,6 +178,7 @@ public abstract class GroupAI : MonoBehaviour
         }
 
         // Find the goalposts.
+        // TODO:: I thought wach team was supposed to have 3 goal posts? Might need to tweak this a bit..
         GameObject[] potentialGoalpostGOs = GameObject.FindGameObjectsWithTag("goalpost");
         if (potentialGoalpostGOs != null && potentialGoalpostGOs.Length > 0)
         {
@@ -194,4 +261,14 @@ public abstract class GroupAI : MonoBehaviour
     }
 
     abstract protected void OnAwake();
+
+    protected virtual void OnTeamObtainedQuaffle()
+    {
+        return;
+    }
+
+    protected virtual void OnTeamLostQuaffle()
+    {
+        return;
+    }
 }
