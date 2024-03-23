@@ -25,8 +25,8 @@ namespace CharacterAI
             }
 
             // Do the check.
-            // To do: set the distance threshold to something legit.
-            if (Vector3.Distance(MyParentTree.gameObject.transform.position, theTargetBludger.transform.position) <= 1f)
+            // The distance threshold is set in the individual AI's root BehaviourTree script.
+            if (Vector3.Distance(MyParentTree.gameObject.transform.position, theTargetBludger.transform.position) <= MyParentTree.GenericHasReachedDistance)  
             {
                 myState = NodeState.SUCCESS;
             }

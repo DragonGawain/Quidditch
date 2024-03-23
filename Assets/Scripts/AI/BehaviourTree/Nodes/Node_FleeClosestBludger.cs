@@ -22,7 +22,7 @@ namespace CharacterAI
 
             // Flee it and return running.
             Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Flee(closestBludger.transform.position, MyParentTree.MyMaxSpeed);
-            MyParentTree.SetVelocity(desiredVelocity);
+            MyParentTree.SetVRigidbodyVelocity(desiredVelocity);
             // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
 
             myState = NodeState.RUNNING;

@@ -22,7 +22,7 @@ namespace CharacterAI
 
             // Do the check.
             // To do: set the distance threshold to something legit.
-            if (Vector3.Distance(MyParentTree.gameObject.transform.position, closestBludger.transform.position) <= 1f)
+            if (Vector3.Distance(MyParentTree.gameObject.transform.position, closestBludger.transform.position) <= MyParentTree.GenericHasReachedDistance)
             {
                 myState = NodeState.SUCCESS;
             }

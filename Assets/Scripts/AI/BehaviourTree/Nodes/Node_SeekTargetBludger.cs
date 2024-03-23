@@ -26,7 +26,7 @@ namespace CharacterAI
 
             // Seek it and return running.
             Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(targetBludger.transform.position, MyParentTree.MyMaxSpeed);
-            MyParentTree.SetVelocity(desiredVelocity);
+            MyParentTree.SetVRigidbodyVelocity(desiredVelocity);
             // To do: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
 
             myState = NodeState.RUNNING;

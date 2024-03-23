@@ -25,29 +25,36 @@ namespace CharacterAI
             get { return myGroupAI; }
         }
 
-        // Speeds and the like.
-        [SerializeField, Range(0, 15)]
+        protected Rigidbody myRigidbody;
+        public Rigidbody GetRigidbody()
+        {
+            return myRigidbody;
+        }
+        public void SetVRigidbodyVelocity(Vector3 desiredVelocity)
+        {
+            myRigidbody.velocity = Vector3.ClampMagnitude(desiredVelocity + myRigidbody.velocity, myMaxSpeed);
+        }
+
+        // Per role or character information.
+        [SerializeField, Range(0, 15)] // Edit these ranges if needed.
         protected float myMaxSpeed = 5f;
         public float MyMaxSpeed
         {
             get { return myMaxSpeed; }
         }
 
-        [SerializeField, Range(0, 10)]
-        protected float acceleration = 1f;
-        public float Acceleration
+        [SerializeField, Range(1, 50)] // At what distance from a bludger should the character begin to flee it?
+        protected float bludgerFleeDistance = 5f;
+        public float BludgerFleeDistance
         {
-            get { return acceleration; }
+            get { return bludgerFleeDistance; }
         }
 
-        protected Rigidbody myRigidbody;
-        public Rigidbody GetRigidbody()
+        [SerializeField, Range(0, 5)] // At what distance does this character consider a target as having been reached?
+        protected float genericHasReachedDistance = 1f;
+        public float GenericHasReachedDistance
         {
-            return myRigidbody;
-        }
-        public void SetVelocity(Vector3 desiredVelocity)
-        {
-            myRigidbody.velocity = Vector3.ClampMagnitude(desiredVelocity + myRigidbody.velocity, myMaxSpeed);
+            get { return genericHasReachedDistance; }
         }
 
 

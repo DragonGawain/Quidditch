@@ -25,7 +25,7 @@ namespace CharacterAI
 
             // Seek it and return running.
             Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(theSnitch.transform.position, MyParentTree.MyMaxSpeed);
-            MyParentTree.SetVelocity(desiredVelocity);
+            MyParentTree.SetVRigidbodyVelocity(desiredVelocity);
             // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
 
 

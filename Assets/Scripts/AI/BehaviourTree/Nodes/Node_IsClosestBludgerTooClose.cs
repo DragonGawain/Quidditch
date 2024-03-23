@@ -21,7 +21,7 @@ namespace CharacterAI
             WriteToBlackboard("closestBludger", closestBludgerAndDistance.Item1);
 
             // Do the check.
-            if (closestBludgerAndDistance.Item2 < 5f) // To do: set the distance threshold to something legit.
+            if (closestBludgerAndDistance.Item2 < MyParentTree.BludgerFleeDistance) // This distance threshold is set in the individual AI's root BehaviourTree script.
             {
                 myState = NodeState.SUCCESS;
             }
