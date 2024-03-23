@@ -31,8 +31,9 @@ namespace CharacterAI
                 if (targetGoalpost != null && theQuaffleGO != null && theQuaffle != null && theQuaffle.MyHolder == MyParentTree.gameObject)
                 {
                     // Determine hit force vector.
+                    // TODO: let distance from target influence the throw force?
                     Vector3 desiredThrow = targetGoalpost.gameObject.transform.position - MyParentTree.gameObject.transform.position;
-                    theQuaffle.Throw(desiredThrow * MyParentTree.BallAddedForceMultiplier);
+                    theQuaffle.Throw(desiredThrow.normalized * MyParentTree.BallAddedForceMultiplier); 
 
                     myState = NodeState.SUCCESS;
                     return myState;

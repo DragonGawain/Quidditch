@@ -27,7 +27,7 @@ namespace CharacterAI
                 {
                     // Determine hit force vector.
                     Vector3 desiredThrow = -1 * theBludger.MyRigidbody.velocity;
-                    theBludger.Throw(desiredThrow * MyParentTree.BallAddedForceMultiplier);
+                    theBludger.Throw(desiredThrow.normalized * MyParentTree.BallAddedForceMultiplier);
 
                     myState = NodeState.SUCCESS;
                     return myState;
