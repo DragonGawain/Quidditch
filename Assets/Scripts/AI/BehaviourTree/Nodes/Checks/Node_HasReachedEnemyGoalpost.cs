@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace CharacterAI
 {
+    // TODO: erase if it can be handled by a generic node + a value writen into the blackboard.
     public class Node_HasReachedEnemyGoalpost : Node
     {
         // CONSTRUCTORS

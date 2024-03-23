@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace CharacterAI
 {
+    // Might delete if SeekTarget fulfills the same role.
     public class Node_SeekTargetBludger : Node
     {
         // CONSTRUCTORS

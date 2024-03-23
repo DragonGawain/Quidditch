@@ -43,6 +43,20 @@ namespace CharacterAI
             get { return myMaxSpeed; }
         }
 
+        [SerializeField, Range(0, 5)] // At what distance does this character consider a target as having been reached?
+        protected float genericHasReachedDistance = 1f;
+        public float GenericHasReachedDistance
+        {
+            get { return genericHasReachedDistance; }
+        }
+
+        [SerializeField, Range(0, 50)] // From what distance should this character follow a target?
+        protected float followHasReachedDistance = 5f;
+        public float FollowHasReachedDistance
+        {
+            get { return followHasReachedDistance; }
+        }
+
         [SerializeField, Range(1, 50)] // At what distance from a bludger should the character begin to flee it?
         protected float bludgerFleeDistance = 5f;
         public float BludgerFleeDistance
@@ -50,11 +64,18 @@ namespace CharacterAI
             get { return bludgerFleeDistance; }
         }
 
-        [SerializeField, Range(0, 5)] // At what distance does this character consider a target as having been reached?
-        protected float genericHasReachedDistance = 1f;
-        public float GenericHasReachedDistance
+        [SerializeField, Range(1, 50)] // At what distance should the character feel concerned about an enemy held quaffle?
+        protected float quaffleConcernDistance = 10f;
+        public float QuaffleConcernDistance
         {
-            get { return genericHasReachedDistance; }
+            get { return quaffleConcernDistance; }
+        }
+
+        [SerializeField, Range(0, 5)] // Modulates the force of a throw on hit ball.
+        protected float ballAddedForceMultiplier = 1f;
+        public float BallAddedForceMultiplier
+        {
+            get { return ballAddedForceMultiplier; }
         }
 
 

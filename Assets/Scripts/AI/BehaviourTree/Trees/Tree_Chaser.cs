@@ -21,7 +21,7 @@ namespace CharacterAI
                                                                                                                                                      new NodeSequence(self,
                                                                                                                                                                       new List<Node> {
                                                                                                                                                                           new Node_HasReachedEnemyGoalpost(this),
-                                                                                                                                                                          new Node_ThrowQuaffle(this)
+                                                                                                                                                                          new Node_ThrowQuaffleAtGoalpost(this)
                                                                                                                                                                       }
                                                                                                                                                      ),
                                                                                                                                                      new Node_SeekEnemyGoalpost(this) })}),
