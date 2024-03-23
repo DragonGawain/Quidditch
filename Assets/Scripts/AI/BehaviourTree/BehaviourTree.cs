@@ -78,6 +78,22 @@ namespace CharacterAI
             get { return ballAddedForceMultiplier; }
         }
 
+        // Path to follow.
+        protected int currentWaypointIndex = -1;
+        protected Vector3[] waypoints; // Change the format when we get the pathfinding nodes proper.
+        public void IncreaseCurrentWaypointIndex()
+        {
+            currentWaypointIndex++;
+        }
+        public Vector3 returnCurrentWaypoint()
+        {
+            return waypoints[currentWaypointIndex];
+        }
+        public Vector3 returnNextWaypoint()
+        {
+            return waypoints[currentWaypointIndex + 1];
+        }
+
 
 
         // METHODS
