@@ -2,41 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// "->"
-public class NodeSequence : NodeBranch
+namespace CharacterAI
 {
-    // CONSTRUCTORS
-    public NodeSequence(BehaviourTree parentTree, List<Node> childNodes = null) : base(parentTree, childNodes) { }
-
-
-    // METHODS.
-    override public NodeState Execute()
+    // "->"
+    public class NodeSequence : NodeBranch
     {
-        bool anyChildIsRunning = false;
+        // CONSTRUCTORS
+        public NodeSequence(BehaviourTree parentTree, List<Node> childNodes = null) : base(parentTree, childNodes) { }
 
-        foreach (Node child in myChildNodes)
+
+        // METHODS.
+        override public NodeState Execute()
         {
-            switch (child.Execute())
+            bool anyChildIsRunning = false;
+
+            foreach (Node child in myChildNodes)
             {
-                case NodeState.SUCCESS:
-                    continue;
+                switch (child.Execute())
+                {
+                    case NodeState.SUCCESS:
+                        continue;
 
-                case NodeState.FAILURE:
-                    myState = NodeState.FAILURE;
-                    return myState;
+                    case NodeState.FAILURE:
+                        myState = NodeState.FAILURE;
+                        return myState;
 
-                case NodeState.RUNNING:
-                    anyChildIsRunning = true;
-                    continue;
+                    case NodeState.RUNNING:
+                        anyChildIsRunning = true;
+                        continue;
 
-                default:
-                    myState = NodeState.SUCCESS;
-                    return myState;
+                    default:
+                        myState = NodeState.SUCCESS;
+                        return myState;
+                }
             }
-        }
 
-        // Should they all succeed, return true.
-        myState = anyChildIsRunning ? NodeState.RUNNING : NodeState.SUCCESS;
-        return myState;
+            // Should they all succeed, return true.
+            myState = anyChildIsRunning ? NodeState.RUNNING : NodeState.SUCCESS;
+            return myState;
+        }
     }
 }

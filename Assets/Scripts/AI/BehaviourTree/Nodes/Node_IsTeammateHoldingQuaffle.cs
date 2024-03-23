@@ -2,35 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node_IsTeammateHoldingQuaffle : Node
+namespace CharacterAI
 {
-    // CONSTRUCTORS
-    public Node_IsTeammateHoldingQuaffle(BehaviourTree parentTree) : base(parentTree) { }
-
-
-    // METHODS
-    public override NodeState Execute()
+    public class Node_IsTeammateHoldingQuaffle : Node
     {
-        Debug.Log("Executing IsTeammateHoldingQuaffle?");
+        // CONSTRUCTORS
+        public Node_IsTeammateHoldingQuaffle(BehaviourTree parentTree) : base(parentTree) { }
 
-        // Do the check.
-        foreach (GroupAI chaser in MyParentTree.MyGroupAI.FriendlyChasers)
+
+        // METHODS
+        public override NodeState Execute()
         {
-            if (chaser.HasBall)
+            Debug.Log("Executing IsTeammateHoldingQuaffle?");
+
+            // Do the check.
+            foreach (GroupAI chaser in MyParentTree.MyGroupAI.FriendlyChasers)
             {
-                WriteToBlackboard("quaffleHolder", chaser.gameObject);
+                if (chaser.HasBall)
+                {
+                    WriteToBlackboard("quaffleHolder", chaser.gameObject);
 
-                myState = NodeState.SUCCESS;
-                return myState;
+                    myState = NodeState.SUCCESS;
+                    return myState;
+                }
             }
-        }
-        //if (MyParentTree.MyGroupAI.
-        //    && MyParentTree.MyGroupAI.PlayersRole == PlayerRole.CHASER)
-        //{
+            //if (MyParentTree.MyGroupAI.
+            //    && MyParentTree.MyGroupAI.PlayersRole == PlayerRole.CHASER)
+            //{
             // To do: check if the player is in the same team and holding the ball.
-        //}
+            //}
 
-        myState = NodeState.FAILURE;
-        return myState;
+            myState = NodeState.FAILURE;
+            return myState;
+        }
     }
 }

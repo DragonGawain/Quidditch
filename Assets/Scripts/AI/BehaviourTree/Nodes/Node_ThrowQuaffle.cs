@@ -2,37 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node_ThrowQuaffle : Node
+namespace CharacterAI
 {
-    // CONSTRUCTORS
-    public Node_ThrowQuaffle(BehaviourTree parentTree) : base(parentTree) { }
-
-
-    // METHODS
-    public override NodeState Execute()
+    public class Node_ThrowQuaffle : Node
     {
-        Debug.Log("Executing ThrowQuaffle");
+        // CONSTRUCTORS
+        public Node_ThrowQuaffle(BehaviourTree parentTree) : base(parentTree) { }
 
-        // First verify that we are holding the quaffle
-        if (MyParentTree.MyGroupAI.HasBall)
+
+        // METHODS
+        public override NodeState Execute()
         {
-            // Make sure it knows we are holding it.
-            GameObject theQuaffleGO = MyParentTree.MyGroupAI.TheQuaffle.gameObject;
-            Quaffle theQuaffle = theQuaffleGO.GetComponent<Quaffle>();
+            Debug.Log("Executing ThrowQuaffle");
 
-            if (theQuaffleGO != null && theQuaffle != null && theQuaffle.MyHolder == MyParentTree.gameObject)
+            // First verify that we are holding the quaffle
+            if (MyParentTree.MyGroupAI.HasBall)
             {
-                // Determine the location of the enemy goalpost in order to throw the quaffle in its direction.
-                // TODO: Adjust throw intensity, fix wonky physics.
-                Vector3 desiredThrow = MyParentTree.MyGroupAI.EnemyGoalpost.gameObject.transform.position - MyParentTree.gameObject.transform.position;
-                theQuaffle.Throw(desiredThrow);
+                // Make sure it knows we are holding it.
+                GameObject theQuaffleGO = MyParentTree.MyGroupAI.TheQuaffle.gameObject;
+                Quaffle theQuaffle = theQuaffleGO.GetComponent<Quaffle>();
 
-                myState = NodeState.SUCCESS;
-                return myState;
+                if (theQuaffleGO != null && theQuaffle != null && theQuaffle.MyHolder == MyParentTree.gameObject)
+                {
+                    // Determine the location of the enemy goalpost in order to throw the quaffle in its direction.
+                    // TODO: Adjust throw intensity, fix wonky physics.
+                    Vector3 desiredThrow = MyParentTree.MyGroupAI.EnemyGoalpost.gameObject.transform.position - MyParentTree.gameObject.transform.position;
+                    theQuaffle.Throw(desiredThrow);
+
+                    myState = NodeState.SUCCESS;
+                    return myState;
+                }
             }
+            // Else, return failure.
+            myState = NodeState.FAILURE;
+            return myState;
         }
-        // Else, return failure.
-        myState = NodeState.FAILURE;
-        return myState;
     }
 }

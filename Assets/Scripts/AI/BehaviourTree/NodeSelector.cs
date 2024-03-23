@@ -2,38 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// "?"
-public class NodeSelector : NodeBranch
+namespace CharacterAI
 {
-    // CONSTRUCTORS
-    public NodeSelector(BehaviourTree parentTree, List<Node> childNodes = null) : base(parentTree, childNodes) { }
-
-
-    // METHODS.
-    override public NodeState Execute()
+    // "?"
+    public class NodeSelector : NodeBranch
     {
-        foreach (Node child in myChildNodes)
+        // CONSTRUCTORS
+        public NodeSelector(BehaviourTree parentTree, List<Node> childNodes = null) : base(parentTree, childNodes) { }
+
+
+        // METHODS.
+        override public NodeState Execute()
         {
-            switch(child.Execute())
+            foreach (Node child in myChildNodes)
             {
-                case NodeState.SUCCESS:
-                    myState = NodeState.SUCCESS;
-                    return myState;
+                switch (child.Execute())
+                {
+                    case NodeState.SUCCESS:
+                        myState = NodeState.SUCCESS;
+                        return myState;
 
-                case NodeState.FAILURE:
-                    continue;
+                    case NodeState.FAILURE:
+                        continue;
 
-                case NodeState.RUNNING:
-                    myState = NodeState.RUNNING;
-                    return myState;
+                    case NodeState.RUNNING:
+                        myState = NodeState.RUNNING;
+                        return myState;
 
-                default:
-                    continue;
+                    default:
+                        continue;
+                }
             }
-        }
 
-        // Should they all fail, return false.
-        myState = NodeState.FAILURE;
-        return myState;
+            // Should they all fail, return false.
+            myState = NodeState.FAILURE;
+            return myState;
+        }
     }
 }

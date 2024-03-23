@@ -2,30 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node_SeekEnemyGoalpost : Node
+namespace CharacterAI
 {
-    // CONSTRUCTORS
-    public Node_SeekEnemyGoalpost(BehaviourTree parentTree) : base(parentTree) { }
-
-    // METHODS
-    public override NodeState Execute()
+    public class Node_SeekEnemyGoalpost : Node
     {
-        //Debug.Log("Executing ArriveAtEnemyGoalpost");
+        // CONSTRUCTORS
+        public Node_SeekEnemyGoalpost(BehaviourTree parentTree) : base(parentTree) { }
 
-        // Find the goalpost.
-        GameObject theEnemyGoalpost = ReadFromBlackboard("enemyGoalpost") as GameObject;
-        if (theEnemyGoalpost == null)
+        // METHODS
+        public override NodeState Execute()
         {
-            theEnemyGoalpost = MyParentTree.MyGroupAI.EnemyGoalpost.gameObject;
-            WriteToBlackboard("enemyGoalpost", theEnemyGoalpost);
+            //Debug.Log("Executing ArriveAtEnemyGoalpost");
+
+            // Find the goalpost.
+            GameObject theEnemyGoalpost = ReadFromBlackboard("enemyGoalpost") as GameObject;
+            if (theEnemyGoalpost == null)
+            {
+                theEnemyGoalpost = MyParentTree.MyGroupAI.EnemyGoalpost.gameObject;
+                WriteToBlackboard("enemyGoalpost", theEnemyGoalpost);
+            }
+
+            // Seek it and return running.
+            Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(theEnemyGoalpost.transform.position, MyParentTree.MyMaxSpeed);
+            MyParentTree.SetVelocity(desiredVelocity);
+            // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
+
+            myState = NodeState.RUNNING;
+            return myState;
         }
-
-        // Seek it and return running.
-        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(theEnemyGoalpost.transform.position, MyParentTree.MyMaxSpeed);
-        MyParentTree.SetVelocity(desiredVelocity);
-        // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
-
-        myState = NodeState.RUNNING;
-        return myState;
     }
 }
+

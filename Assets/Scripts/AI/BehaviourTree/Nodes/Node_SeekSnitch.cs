@@ -2,33 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node_SeekSnitch : Node
+namespace CharacterAI
 {
-    // CONSTRUCTORS
-    public Node_SeekSnitch(BehaviourTree parentTree)
-        : base(parentTree) { }
-
-    // METHODS
-    public override NodeState Execute()
+    public class Node_SeekSnitch : Node
     {
-        //Debug.Log("Executing SeekSnitch");
+        // CONSTRUCTORS
+        public Node_SeekSnitch(BehaviourTree parentTree)
+            : base(parentTree) { }
 
-        // Find the snitch.
-        GameObject theSnitch = ReadFromBlackboard("snitch") as GameObject;
-        if (theSnitch == null)
+        // METHODS
+        public override NodeState Execute()
         {
-            theSnitch = MyParentTree.MyGroupAI.TheSnitch.gameObject;
-            WriteToBlackboard("snitch", theSnitch);
+            //Debug.Log("Executing SeekSnitch");
+
+            // Find the snitch.
+            GameObject theSnitch = ReadFromBlackboard("snitch") as GameObject;
+            if (theSnitch == null)
+            {
+                theSnitch = MyParentTree.MyGroupAI.TheSnitch.gameObject;
+                WriteToBlackboard("snitch", theSnitch);
+            }
+
+            // Seek it and return running.
+            Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(theSnitch.transform.position, MyParentTree.MyMaxSpeed);
+            MyParentTree.SetVelocity(desiredVelocity);
+            // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
+
+
+
+            myState = NodeState.RUNNING;
+            return myState;
         }
-
-        // Seek it and return running.
-        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(theSnitch.transform.position, MyParentTree.MyMaxSpeed);
-        MyParentTree.SetVelocity(desiredVelocity);
-        // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
-
-
-        
-        myState = NodeState.RUNNING;
-        return myState;
     }
 }
+

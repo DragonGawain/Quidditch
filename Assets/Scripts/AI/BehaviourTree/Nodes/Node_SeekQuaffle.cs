@@ -2,31 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node_SeekQuaffle : Node
+namespace CharacterAI
 {
-    // CONSTRUCTORS
-    public Node_SeekQuaffle(BehaviourTree parentTree)
-        : base(parentTree) { }
-
-    // METHODS
-    public override NodeState Execute()
+    public class Node_SeekQuaffle : Node
     {
-        //Debug.Log("Executing SeekQuaffle");
+        // CONSTRUCTORS
+        public Node_SeekQuaffle(BehaviourTree parentTree)
+            : base(parentTree) { }
 
-        // Find the quaffle.
-        GameObject theQuaffle = ReadFromBlackboard("quaffle") as GameObject;
-        if (theQuaffle == null)
+        // METHODS
+        public override NodeState Execute()
         {
-            theQuaffle = MyParentTree.MyGroupAI.TheQuaffle.gameObject;
-            WriteToBlackboard("quaffle", theQuaffle);
+            //Debug.Log("Executing SeekQuaffle");
+
+            // Find the quaffle.
+            GameObject theQuaffle = ReadFromBlackboard("quaffle") as GameObject;
+            if (theQuaffle == null)
+            {
+                theQuaffle = MyParentTree.MyGroupAI.TheQuaffle.gameObject;
+                WriteToBlackboard("quaffle", theQuaffle);
+            }
+
+            // Seek it and return running.
+            Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(theQuaffle.transform.position, MyParentTree.MyMaxSpeed);
+            MyParentTree.SetVelocity(desiredVelocity);
+            // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
+
+            myState = NodeState.RUNNING;
+            return myState;
         }
-
-        // Seek it and return running.
-        Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(theQuaffle.transform.position, MyParentTree.MyMaxSpeed);
-        MyParentTree.SetVelocity(desiredVelocity);
-        // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
-
-        myState = NodeState.RUNNING;
-        return myState;
     }
 }
+
