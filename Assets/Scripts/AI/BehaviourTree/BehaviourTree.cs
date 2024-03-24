@@ -80,16 +80,23 @@ namespace CharacterAI
 
         // Path to follow.
         protected int currentWaypointIndex = -1;
-        protected Vector3[] waypoints; // Change the format when we get the pathfinding nodes proper.
-        public void IncreaseCurrentWaypointIndex()
+        protected Vector3[] waypoints; // TODO: Change the format when we get the pathfinding nodes proper.
+        public void IncreaseCurrentWaypointIndex(bool loop = false)
         {
-            currentWaypointIndex++;
+            if (loop)
+            {
+                currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
+            }
+            else
+            {
+                currentWaypointIndex = (currentWaypointIndex + 1) > waypoints.Length ? waypoints.Length : (currentWaypointIndex + 1);
+            }
         }
-        public Vector3 returnCurrentWaypoint()
+        public Vector3 ReturnCurrentWaypoint()
         {
             return waypoints[currentWaypointIndex];
         }
-        public Vector3 returnNextWaypoint()
+        public Vector3 ReturnNextWaypoint()
         {
             return waypoints[currentWaypointIndex + 1];
         }
