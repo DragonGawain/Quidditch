@@ -4,35 +4,33 @@ using UnityEngine;
 
 namespace CharacterAI
 {
-    public class Node_SetClosestBludgerAsTarget : Node
+    public class Node_HasReachedClosestBludger : Node
     {
         // CONSTRUCTORS
-        public Node_SetClosestBludgerAsTarget(BehaviourTree parentTree) : base(parentTree) { }
+        public Node_HasReachedClosestBludger(BehaviourTree parentTree) : base(parentTree) { }
 
 
         // METHODS
         public override NodeState Execute()
         {
-            //Debug.Log("Executing SetClosestBludgerAsTarget");
+            Debug.Log("Executing HasReachedClosestBludger?");
 
-            // Find the closest bludger.
+            // Find the snitch.
             GameObject closestBludger = ReadFromBlackboard("closestBludger") as GameObject;
             closestBludger = MyParentTree.LocateClosestBludger(closestBludger).Item1;
             WriteToBlackboard("closestBludger", closestBludger);
 
-            // Set and return.
-            if (closestBludger)
+            // Do the check.
+            // To do: set the distance threshold to something legit.
+            if (Vector3.Distance(MyParentTree.gameObject.transform.position, closestBludger.transform.position) <= MyParentTree.GenericHasReachedDistance)
             {
-                WriteToBlackboard("targetBludger", closestBludger);
                 myState = NodeState.SUCCESS;
-                return myState;
             }
             else
             {
                 myState = NodeState.FAILURE;
-                return myState;
             }
+            return myState;
         }
     }
 }
-

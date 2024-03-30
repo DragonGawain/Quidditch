@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tree_Seeker : BehaviourTree
+namespace CharacterAI
 {
-    // VARIABLES
-
-
-    // METHODS
-    override protected Node PlantTheTree(BehaviourTree self)
+    public class Tree_Seeker : BehaviourTree
     {
-        Node rootNode = new NodeSelector(self,
-                                         new List<Node> {  new NodeSequence( self,
+        // VARIABLES
+
+
+        // METHODS
+        override protected Node PlantTheTree(BehaviourTree self)
+        {
+            Node rootNode = new NodeSelector(self,
+                                             new List<Node> {  new NodeSequence( self,
                                                                              new List<Node> { new Node_IsClosestBludgerTooClose(self), new Node_FleeClosestBludger(this) }),
                                          new Node_SeekSnitch(this) });
-        return rootNode;
+            return rootNode;
+        }
     }
 }

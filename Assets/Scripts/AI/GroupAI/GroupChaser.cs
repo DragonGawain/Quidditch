@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GroupChaser : GroupAI
 {
-    GroupAI[] chaserFormation = new GroupAI[] { null, null, null }; // list of the chasers in order - pos 0 = leader
+    // static GroupAI[] chaserFormation = new GroupAI[] { null, null, null }; // list of the chasers in order - pos 0 = leader
+    // static GroupAI closestBeater = null;
 
     protected override void OnAwake()
     {
@@ -29,17 +30,122 @@ public class GroupChaser : GroupAI
     void Update()
     {
         // check if the team has the ball
-        if (theQuaffle.GetTeam() == team)
+        //     if (theQuaffle.GetTeam() == team)
+        //     {
+        //         if (hasBall)
+        //             chaserFormation[0] = this;
+        //         else if (chaserFormation[1] == null)
+        //             chaserFormation[1] = this;
+        //         else
+        //             chaserFormation[2] = this;
+        //     }
+        //     else
+        //         for (int i = 0; i < 3; i++)
+        //             chaserFormation[i] = null;
+    }
+
+    private void FixedUpdate()
+    {
+        if (team == Team.AI && hasBall)
         {
-            if (hasBall)
-                chaserFormation[0] = this;
-            else if (chaserFormation[1] == null)
-                chaserFormation[1] = this;
-            else
-                chaserFormation[2] = this;
+            switch (AIFormation.GetFormationType())
+            {
+                case FormationType.NONE:
+                    break;
+                case FormationType.WINGMEN:
+                    Debug.Log("hit 2");
+                    GroupAI[] chaserFormation = AIFormation.GetChasers();
+                    GroupAI[] beaterFormation = AIFormation.GetBeaters();
+                    // offset back and to the left
+                    chaserFormation[1].transform.position =
+                        chaserFormation[0].transform.position
+                        - (
+                            chaserFormation[0].GetForwardRef() * 5
+                            + chaserFormation[0].GetRightRef() * 3
+                        );
+                    // offset back and to the right
+                    chaserFormation[2].transform.position =
+                        chaserFormation[0].transform.position
+                        - chaserFormation[0].GetForwardRef() * 5
+                        + chaserFormation[0].GetRightRef() * 3;
+                    // offset in front
+                    beaterFormation[0].transform.position =
+                        chaserFormation[0].transform.position
+                        + chaserFormation[0].GetForwardRef() * 4;
+
+                    break;
+            }
+        }
+        else if (team == Team.PLAYER && hasBall)
+        {
+            switch (PlayerFormation.GetFormationType())
+            {
+                case FormationType.NONE:
+                    break;
+                case FormationType.WINGMEN:
+                    Debug.Log("hit 3");
+                    GroupAI[] chaserFormation = PlayerFormation.GetChasers();
+                    GroupAI[] beaterFormation = PlayerFormation.GetBeaters();
+                    // offset back and to the left
+                    chaserFormation[1].transform.position =
+                        chaserFormation[0].transform.position
+                        - (
+                            chaserFormation[0].GetForwardRef() * 5
+                            + chaserFormation[0].GetRightRef() * 3
+                        );
+                    // offset back and to the right
+                    chaserFormation[2].transform.position =
+                        chaserFormation[0].transform.position
+                        - chaserFormation[0].GetForwardRef() * 5
+                        + chaserFormation[0].GetRightRef() * 3;
+                    // offset in front
+                    beaterFormation[0].transform.position =
+                        chaserFormation[0].transform.position
+                        + chaserFormation[0].GetForwardRef() * 4;
+
+                    break;
+            }
+        }
+    }
+
+    protected override void OnTeamObtainedQuaffle()
+    {
+        Debug.Log("HIT");
+        // base.OnTeamObtainedQuaffle();
+        if (team == Team.AI)
+        {
+            AIFormation.SetChasers(this, friendlyChasers[0], friendlyChasers[1]);
+            AIFormation.SetBeaters(FindClosestAlliedBeater());
+            AIFormation.SetFormationType(FormationType.WINGMEN);
         }
         else
-            for (int i = 0; i < 3; i++)
-                chaserFormation[i] = null;
+        {
+            PlayerFormation.SetChasers(this, friendlyChasers[0], friendlyChasers[1]);
+            PlayerFormation.SetBeaters(FindClosestAlliedBeater());
+            PlayerFormation.SetFormationType(FormationType.WINGMEN);
+        }
+    }
+
+    protected override void OnTeamLostQuaffle()
+    {
+        if (team == Team.AI)
+            AIFormation.ResetAll();
+        else
+            PlayerFormation.ResetAll();
+    }
+
+    GroupAI FindClosestAlliedBeater()
+    {
+        GroupAI closestBeater = null;
+        float minDist = 2147483647; // integer limit
+        foreach (GroupAI beater in friendlyBeaters)
+        {
+            if (Vector3.Distance(transform.position, beater.transform.position) < minDist)
+            {
+                minDist = Vector3.Distance(transform.position, beater.transform.position);
+                closestBeater = beater;
+            }
+        }
+        return closestBeater;
     }
 }
