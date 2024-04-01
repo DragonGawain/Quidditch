@@ -192,6 +192,7 @@ public class NPCMovement : MonoBehaviour
 
     Quaternion LookWhereYouAreGoing()
     {
+        //turn in movement directiohn
         return Quaternion.FromToRotation(
             transform.forward,
             KinematicLookWhereYouAreGoing() * Vector3.forward
@@ -211,6 +212,7 @@ public class NPCMovement : MonoBehaviour
 
     Quaternion Align(Transform target)
     {
+        // align with where target is facing
         return Quaternion.FromToRotation(
             transform.forward,
             KinematicAlign(target) * Vector3.forward
@@ -234,6 +236,7 @@ public class NPCMovement : MonoBehaviour
 
     Quaternion Face(Transform target)
     {
+        //Turn to look at target
         return Quaternion.FromToRotation(
             transform.forward,
             KinematicFace(target) * Vector3.forward
