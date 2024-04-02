@@ -27,6 +27,8 @@ namespace CharacterAI
                 return myState;
             }
 
+            // TODO: Check if the enemy player is holding the quaffle.
+
             WriteToBlackboard("enemyHoldingQuaffle", null);
 
             myState = NodeState.FAILURE;

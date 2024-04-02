@@ -14,7 +14,7 @@ namespace CharacterAI
         {
             Node rootNode = new NodeSelector(self,
                                              new List<Node> {  new NodeSequence( self,
-                                                                             new List<Node> { new Node_IsClosestBludgerTooClose(self), new Node_FleeClosestBludger(this) }),
+                                                                             new List<Node> { new Node_IsClosestBludgerTooClose(self), new Node_IsClosestBludgerTargettingMe(this), new Node_HitBludgerAwayFromSelf(this) }),
                                          new Node_SeekClosestBludger(this) });
             return rootNode;
         }

@@ -26,11 +26,11 @@ namespace CharacterAI
                 // Fetch protected target.
                 GameObject enemyTarget = ReadFromBlackboard("attackTarget") as GameObject;
 
-                if (enemyTarget != null && theBludgerGO != null && theBludger != null && theBludger.MyHitter == MyParentTree.gameObject)
+                if (enemyTarget != null && theBludgerGO != null && theBludger != null) // && theBludger.MyHitter == MyParentTree.gameObject)
                 {
                     // Determine hit force vector.
                     Vector3 desiredThrow = enemyTarget.transform.position - MyParentTree.gameObject.transform.position;
-                    theBludger.Throw(desiredThrow.normalized * MyParentTree.BallAddedForceMultiplier);
+                    theBludger.Throw(desiredThrow.normalized * MyParentTree.BallAddedForceMultiplier, MyParentTree.gameObject);
 
                     myState = NodeState.SUCCESS;
                     return myState;

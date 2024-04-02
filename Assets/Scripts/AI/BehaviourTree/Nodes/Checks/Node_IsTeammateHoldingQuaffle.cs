@@ -29,7 +29,7 @@ namespace CharacterAI
             //if (MyParentTree.MyGroupAI.
             //    && MyParentTree.MyGroupAI.PlayersRole == PlayerRole.CHASER)
             //{
-            // To do: check if the player is in the same team and holding the ball.
+            // TODO: check if the player is in the same team and holding the ball.
             //}
 
             myState = NodeState.FAILURE;
