@@ -14,14 +14,10 @@ public class Bludger : Ball
 
     [SerializeField]
     Transform target;
+    public Transform Target { get { return target; } }
 
     // Tags corresponding to the possible targets for the bludger.
     private string[] tags = { "seeker", "keeper", "beater", "chaser" };
-
-    // Beater currently able to hit.
-    [SerializeField] private GameObject myHitter;
-    public GameObject MyHitter
-    { get { return myHitter; } set { myHitter = value; } }
 
     // Beater who previously hit.
     [SerializeField] private GameObject myPreviousHitter;
@@ -62,30 +58,26 @@ public class Bludger : Ball
     {
         Debug.Log(string.Format("Bludger {1} collided with {0}.", collision.gameObject, this.gameObject));
 
-        // TODO: Make sure the beater was seeking the bludger, not hit by an enemy one.
-        GroupAI theBeater = collision.gameObject.GetComponent<GroupAI>();
-        if (theBeater != null && collision.gameObject.CompareTag("beater"))
-        {
-            // TODO: set beater GroupAI variable.
-            //theBeater.SetHasBall(true);
-            myHitter = collision.gameObject;
-            myPreviousHitter = null;
-            // SetTeam(myHitter.Team);
+        //// TODO: Make sure the beater was seeking the bludger, not hit by an enemy one.
+        //GroupAI theBeater = collision.gameObject.GetComponent<GroupAI>();
+        //if (theBeater != null && collision.gameObject.CompareTag("beater"))
+        //{
+        //    // TODO: set beater GroupAI variable.
+        //    //theBeater.SetHasBall(true);
+        //    myHitter = collision.gameObject;
+        //    myPreviousHitter = null;
+        //    // SetTeam(myHitter.Team);
 
-            MyRigidbody.velocity = Vector3.zero;
-            MyRigidbody.isKinematic = true;
-            gameObject.transform.parent = collision.gameObject.transform;
-        }
+        //    MyRigidbody.velocity = Vector3.zero;
+        //    MyRigidbody.isKinematic = true;
+        //    gameObject.transform.parent = collision.gameObject.transform;
+        //}
     }
 
     // Actions.
-    public void Throw(Vector3 force)
+    public void Throw(Vector3 force, GameObject hitter)
     {
-        GroupAI theBeater = myHitter.GetComponent<GroupAI>();
-        //theBeater.SetHasBall(false); TO DO: add an "AbleToHit" variable to the beater group AI.
-        myPreviousHitter = myHitter;
-        myHitter = null;
-        //SetTeam(null);
+        myPreviousHitter = hitter;
 
         MyRigidbody.isKinematic = false;
         gameObject.transform.parent = null;

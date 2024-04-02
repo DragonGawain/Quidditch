@@ -23,11 +23,13 @@ namespace CharacterAI
                 GameObject theBludgerGO = ReadFromBlackboard("targetBludger") as GameObject;
                 Bludger theBludger = theBludgerGO.GetComponent<Bludger>();
 
-                if (theBludgerGO != null && theBludger != null && theBludger.MyHitter == MyParentTree.gameObject)
+                if (theBludgerGO != null && theBludger != null) // && theBludger.MyHitter == MyParentTree.gameObject)
                 {
+                    Debug.Log(string.Format("{0} kicking the bludger {1}!", MyParentTree.gameObject, theBludgerGO));
+
                     // Determine hit force vector.
                     Vector3 desiredThrow = -1 * theBludger.MyRigidbody.velocity;
-                    theBludger.Throw(desiredThrow.normalized * MyParentTree.BallAddedForceMultiplier);
+                    theBludger.Throw(desiredThrow.normalized * MyParentTree.BallAddedForceMultiplier, MyParentTree.gameObject);
 
                     myState = NodeState.SUCCESS;
                     return myState;

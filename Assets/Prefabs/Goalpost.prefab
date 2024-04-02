@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8638422132861042266}
   - component: {fileID: 6466684042027280818}
   - component: {fileID: 3898138100551983172}
+  - component: {fileID: 5483734331751665912}
   - component: {fileID: 3166617950736109130}
   m_Layer: 0
   m_Name: Goalpost
@@ -108,6 +109,29 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!136 &5483734331751665912
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5095933023005550074}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 40
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: -1.35525175e-20, z: -0.00000008940697}
 --- !u!114 &3166617950736109130
 MonoBehaviour:
   m_ObjectHideFlags: 0

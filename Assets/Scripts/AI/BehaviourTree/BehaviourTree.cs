@@ -10,6 +10,9 @@ namespace CharacterAI
         [SerializeField]
         private Node myRootNode = null;
 
+        protected Dictionary<string, object> blackboard = new Dictionary<string, object>();
+        public Dictionary<string, object> Blackboard { get { return blackboard; } }
+
         // References.
         [SerializeField]
         protected NPCMovement myNPCMovement;

@@ -25,7 +25,7 @@ namespace CharacterAI
         protected Node myParentNode;
         public Node MyParentNode { get { return myParentNode; } set { myParentNode = value; } }
 
-        protected Dictionary<string, object> blackboard = new Dictionary<string, object>();
+        //protected Dictionary<string, object> blackboard = new Dictionary<string, object>();
 
 
 
@@ -47,26 +47,15 @@ namespace CharacterAI
         // Blackboard / Data Context.
         public void WriteToBlackboard(string key, object value)
         {
-            blackboard[key] = value;
+            MyParentTree.Blackboard[key] = value;
         }
         public object ReadFromBlackboard(string key)
         {
             object value = null;
 
-            if (blackboard.TryGetValue(key, out value))
+            if (MyParentTree.Blackboard.TryGetValue(key, out value))
             {
                 return value;
-            }
-
-            Node currentNode = myParentNode;
-            while (currentNode != null)
-            {
-                value = currentNode.ReadFromBlackboard(key);
-                if (value != null)
-                {
-                    return value;
-                }
-                currentNode = currentNode.MyParentNode;
             }
 
             return null;
@@ -74,22 +63,12 @@ namespace CharacterAI
 
         public bool ClearFromBlackboard(string key)
         {
-            if (blackboard.ContainsKey(key))
+            if (MyParentTree.Blackboard.ContainsKey(key))
             {
-                blackboard.Remove(key);
+                MyParentTree.Blackboard.Remove(key);
                 return true;
             }
 
-            Node currentNode = myParentNode;
-            while (currentNode != null)
-            {
-                bool cleared = currentNode.ClearFromBlackboard(key);
-                if (cleared)
-                {
-                    return true;
-                }
-                currentNode = currentNode.myParentNode;
-            }
             return false;
         }
 
