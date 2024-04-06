@@ -67,6 +67,13 @@ namespace CharacterAI
             get { return followHasReachedDistance; }
         }
 
+        [SerializeField, Range(0, 50)] // At what distance does this character consider the enemy goalpost as having been reached?
+        protected float goalpostHasReachedDistance = 20f;
+        public float GoalpostHasReachedDistance
+        {
+            get { return goalpostHasReachedDistance; }
+        }
+
         [SerializeField, Range(1, 50)] // At what distance from a bludger should the character begin to flee it?
         protected float bludgerFleeDistance = 5f;
         public float BludgerFleeDistance

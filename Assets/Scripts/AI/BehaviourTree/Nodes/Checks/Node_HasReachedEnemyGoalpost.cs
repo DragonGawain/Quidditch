@@ -26,7 +26,7 @@ namespace CharacterAI
 
             // Do the check.
             // TODO: set the distance threshold to something legit.
-            if (Vector3.Distance(MyParentTree.gameObject.transform.position, theEnemyGoalpost.transform.position) <= 10f)
+            if (Vector3.Distance(MyParentTree.gameObject.transform.position, theEnemyGoalpost.transform.position) <= MyParentTree.GoalpostHasReachedDistance)
             {
                 myState = NodeState.SUCCESS;
             }
