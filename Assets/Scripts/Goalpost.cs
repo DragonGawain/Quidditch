@@ -8,12 +8,20 @@ public class Goalpost : MonoBehaviour
 {
     // TODO: add colliders for the various scoring zones, handle collision detection.
     // TODO: add waypoints that the keeper and chasers will use.
+    // TODO: add the event proper.
 
     // VARIABLES
     [SerializeField] private Team owningTeam = Team.NONE;
     public Team OwningTeam { get { return owningTeam; } }
 
     private ScoreManager scoreManager;
+
+
+
+    // EVENTS
+    public event GameManager.GoalScored OnGoalScored;
+
+
 
     // METHODS
     private void Start()
@@ -35,6 +43,8 @@ public class Goalpost : MonoBehaviour
             {
                 // Update score for the corresponding team using the ScoreManager
                 scoreManager.IncrementScore(owningTeam);
+
+                OnGoalScored?.Invoke(owningTeam, theChaser);
             }
         }
     }

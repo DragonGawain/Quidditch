@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // EVENTS
+    public delegate void SnitchCaught(GroupAI characterResponsible);
+
+    public delegate void GoalScored(Team owningTeam, GroupAI characterResponsible);
+
+
+
     // Start is called before the first frame update
     void Start()
     {

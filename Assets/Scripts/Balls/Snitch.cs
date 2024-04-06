@@ -19,6 +19,10 @@ public class Snitch : Ball
     private string[] tags = {"seeker"};
 
 
+    // EVENTS
+    public event GameManager.SnitchCaught OnSnitchCaught;
+
+
     // METHODS.
     // Start is called before the first frame update
     void Start() { }
@@ -50,5 +54,21 @@ public class Snitch : Ball
             maxSpeed
         );
         myRigidbody.velocity = desiredVelocity;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(string.Format("The Snitch collided with {0}.", collision.gameObject));
+
+        GroupAI theSeeker = collision.gameObject.GetComponent<GroupAI>();
+        if (collision.gameObject.CompareTag("seeker") && theSeeker != null)
+        {
+            Debug.Log(string.Format("The Snitch was caught by {0}.", theSeeker.gameObject));
+
+            // TODO: handle player seeker, and make sure everything is fine with the AI one.
+
+            // Throw the event.
+            OnSnitchCaught?.Invoke(theSeeker);
+        }
     }
 }
