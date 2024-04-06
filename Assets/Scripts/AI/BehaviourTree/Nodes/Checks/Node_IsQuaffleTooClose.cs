@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace CharacterAI
 {
-    public class Node_IsEnemyQuaffleTooClose : Node
+    public class Node_IsQuaffleTooClose : Node
     {
         // CONSTRUCTORS
-        public Node_IsEnemyQuaffleTooClose(BehaviourTree parentTree) : base(parentTree) { }
+        public Node_IsQuaffleTooClose(BehaviourTree parentTree) : base(parentTree) { }
 
 
         // METHODS

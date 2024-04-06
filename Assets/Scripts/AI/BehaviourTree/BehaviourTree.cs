@@ -53,6 +53,13 @@ namespace CharacterAI
             get { return genericHasReachedDistance; }
         }
 
+        [SerializeField, Range(0, 5)] // At what distance does this character consider a waypoint as having been reached?
+        protected float waypointHasReachedDistance = 2f;
+        public float WaypointHasReachedDistance
+        {
+            get { return waypointHasReachedDistance; }
+        }
+
         [SerializeField, Range(0, 50)] // From what distance should this character follow a target?
         protected float followHasReachedDistance = 5f;
         public float FollowHasReachedDistance
@@ -82,26 +89,44 @@ namespace CharacterAI
         }
 
         // Path to follow.
-        protected int currentWaypointIndex = -1;
-        protected Vector3[] waypoints; // TODO: Change the format when we get the pathfinding nodes proper.
-        public void IncreaseCurrentWaypointIndex(bool loop = false)
+        [SerializeField] protected int lastWaypointIndex = -1;
+        [SerializeField] protected int nextWaypointIndex = -1;
+        [SerializeField] protected Transform[] waypoints; // TODO: Change the format when we get the pathfinding nodes proper.
+        public void UpdateNextWaypointIndex(bool loop = false)
         {
+            lastWaypointIndex = nextWaypointIndex;
+            nextWaypointIndex++;
+
             if (loop)
             {
-                currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
+                nextWaypointIndex = nextWaypointIndex % waypoints.Length;
+            }
+        }
+        public Transform ReturnLastWaypoint()
+        {
+            if (-1 < lastWaypointIndex && lastWaypointIndex < waypoints.Length)
+            {
+                return waypoints[lastWaypointIndex];
             }
             else
             {
-                currentWaypointIndex = (currentWaypointIndex + 1) > waypoints.Length ? waypoints.Length : (currentWaypointIndex + 1);
+                return null;
             }
         }
-        public Vector3 ReturnCurrentWaypoint()
+        public Transform ReturnNextWaypoint()
         {
-            return waypoints[currentWaypointIndex];
+            if (-1 < nextWaypointIndex && nextWaypointIndex < waypoints.Length)
+            {
+                return waypoints[nextWaypointIndex];
+            }
+            else
+            { 
+                return null;
+            }
         }
-        public Vector3 ReturnNextWaypoint()
+        public Transform ReturnFinalWaypoint()
         {
-            return waypoints[currentWaypointIndex + 1];
+            return waypoints[waypoints.Length - 1];
         }
 
 

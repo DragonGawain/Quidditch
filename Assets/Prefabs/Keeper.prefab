@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 6917040913184237002}
   - component: {fileID: 7649387782780533037}
   - component: {fileID: -9085637441831441164}
+  - component: {fileID: 798737869491299560}
   m_Layer: 0
   m_Name: Keeper
   m_TagString: keeper
@@ -256,3 +257,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899fde094087a2b42a6f02223ac0575a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &798737869491299560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8201108882217859800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e969dbfefb870bd488ed4ff4612c67a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myNPCMovement: {fileID: 0}
+  myGroupAI: {fileID: 0}
+  myMaxSpeed: 5
+  genericHasReachedDistance: 1
+  followHasReachedDistance: 5
+  bludgerFleeDistance: 5
+  quaffleConcernDistance: 10
+  ballAddedForceMultiplier: 1
+  currentWaypointIndex: -1
+  waypoints: []
