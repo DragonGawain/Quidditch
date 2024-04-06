@@ -47,9 +47,7 @@ public class Bludger : Ball
 
         if (target != null)
         {
-            Vector3 desiredVelocity = Vector3.ClampMagnitude(
-            myNPCMovement.Seek(target.position, acceleration) + myRigidbody.velocity,
-            maxSpeed);
+            Vector3 desiredVelocity = Vector3.ClampMagnitude(myNPCMovement.Seek(target.position, maxSpeed) + myRigidbody.velocity, maxSpeed);
             myRigidbody.velocity = desiredVelocity;
         }
     }
@@ -58,31 +56,18 @@ public class Bludger : Ball
     {
         Debug.Log(string.Format("Bludger {1} collided with {0}.", collision.gameObject, this.gameObject));
 
-        //// TODO: Make sure the beater was seeking the bludger, not hit by an enemy one.
-        //GroupAI theBeater = collision.gameObject.GetComponent<GroupAI>();
-        //if (theBeater != null && collision.gameObject.CompareTag("beater"))
-        //{
-        //    // TODO: set beater GroupAI variable.
-        //    //theBeater.SetHasBall(true);
-        //    myHitter = collision.gameObject;
-        //    myPreviousHitter = null;
-        //    // SetTeam(myHitter.Team);
-
-        //    MyRigidbody.velocity = Vector3.zero;
-        //    MyRigidbody.isKinematic = true;
-        //    gameObject.transform.parent = collision.gameObject.transform;
-        //}
+        // TODO: handle actually hitting a player.
     }
 
     // Actions.
     public void Throw(Vector3 force, GameObject hitter)
     {
         myPreviousHitter = hitter;
-
-        MyRigidbody.isKinematic = false;
-        gameObject.transform.parent = null;
+        target = null;
 
         // Should this partly exist in the parent Ball class?
         myRigidbody.AddForce(force, ForceMode.Impulse);
+
+        // TODO: Stop it from imediately seeking a new target.
     }
 }

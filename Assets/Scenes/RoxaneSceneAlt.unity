@@ -134,7 +134,7 @@ PrefabInstance:
     - target: {fileID: 903335373440478070, guid: 3f83fe9398dbedd478ddc4b64125a006,
         type: 3}
       propertyPath: maxSpeed
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4120176992605187231, guid: 3f83fe9398dbedd478ddc4b64125a006,
         type: 3}
@@ -144,7 +144,7 @@ PrefabInstance:
     - target: {fileID: 4120176992605187231, guid: 3f83fe9398dbedd478ddc4b64125a006,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4542937404211876974, guid: 3f83fe9398dbedd478ddc4b64125a006,
         type: 3}
@@ -212,7 +212,7 @@ PrefabInstance:
     - target: {fileID: 903335373440478070, guid: 3f83fe9398dbedd478ddc4b64125a006,
         type: 3}
       propertyPath: maxSpeed
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4120176992605187231, guid: 3f83fe9398dbedd478ddc4b64125a006,
         type: 3}
@@ -222,7 +222,7 @@ PrefabInstance:
     - target: {fileID: 4120176992605187231, guid: 3f83fe9398dbedd478ddc4b64125a006,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4542937404211876974, guid: 3f83fe9398dbedd478ddc4b64125a006,
         type: 3}
@@ -290,7 +290,17 @@ PrefabInstance:
     - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
       propertyPath: myMaxSpeed
-      value: 2.5
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
+        type: 3}
+      propertyPath: bludgerHitDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
+        type: 3}
+      propertyPath: ballAddedForceMultiplier
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3166536417323224294, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
@@ -300,7 +310,7 @@ PrefabInstance:
     - target: {fileID: 3166536417323224294, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5889319036024056515, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
@@ -1582,6 +1592,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Keeper
+      objectReference: {fileID: 0}
+    - target: {fileID: 8201108882217859800, guid: 66ad662807acf314d9cc8d86db7a7397,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

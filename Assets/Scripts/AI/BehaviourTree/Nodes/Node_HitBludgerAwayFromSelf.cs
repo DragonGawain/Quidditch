@@ -14,26 +14,21 @@ namespace CharacterAI
         // METHODS
         public override NodeState Execute()
         {
-            Debug.Log("Executing HitBludgerAwayFromSelf");
+            // First verify that a bludger actually exists.
+            GameObject theBludgerGO = ReadFromBlackboard("targetBludger") as GameObject;
+            Bludger theBludger = theBludgerGO.GetComponent<Bludger>();
 
-            // First verify that we are touching a bludger.
-            if (true) // TODO: incorporate bludger check.
+            if (theBludgerGO != null && theBludger != null)
             {
-                // Make sure it knows we are touching it.
-                GameObject theBludgerGO = ReadFromBlackboard("targetBludger") as GameObject;
-                Bludger theBludger = theBludgerGO.GetComponent<Bludger>();
+                // We are assuming it's already in hitting range.
+                Debug.Log(string.Format("{0} hit the bludger {1}!", MyParentTree.gameObject, theBludgerGO));
 
-                if (theBludgerGO != null && theBludger != null) // && theBludger.MyHitter == MyParentTree.gameObject)
-                {
-                    Debug.Log(string.Format("{0} kicking the bludger {1}!", MyParentTree.gameObject, theBludgerGO));
+                // Determine hit force vector.
+                Vector3 desiredThrow = -1 * theBludger.MyRigidbody.velocity.normalized;
+                theBludger.Throw(desiredThrow.normalized * MyParentTree.BallAddedForceMultiplier, MyParentTree.gameObject);
 
-                    // Determine hit force vector.
-                    Vector3 desiredThrow = -1 * theBludger.MyRigidbody.velocity;
-                    theBludger.Throw(desiredThrow.normalized * MyParentTree.BallAddedForceMultiplier, MyParentTree.gameObject);
-
-                    myState = NodeState.SUCCESS;
-                    return myState;
-                }
+                myState = NodeState.SUCCESS;
+                return myState;
             }
             // Else, return failure.
             myState = NodeState.FAILURE;

@@ -74,6 +74,13 @@ namespace CharacterAI
             get { return bludgerFleeDistance; }
         }
 
+        [SerializeField, Range(0, 5)] // At what distance from a bludger should the character be able to hit it?
+        protected float bludgerHitDistance = 1f;
+        public float BludgerHitDistance
+        {
+            get { return bludgerHitDistance; }
+        }
+
         [SerializeField, Range(1, 50)] // At what distance should the character feel concerned about an enemy held quaffle?
         protected float quaffleConcernDistance = 10f;
         public float QuaffleConcernDistance
@@ -81,12 +88,13 @@ namespace CharacterAI
             get { return quaffleConcernDistance; }
         }
 
-        [SerializeField, Range(0, 5)] // Modulates the force of a throw on hit ball.
-        protected float ballAddedForceMultiplier = 1f;
+        [SerializeField, Range(1, 100)] // Modulates the force of a throw on hit ball.
+        protected float ballAddedForceMultiplier = 10f;
         public float BallAddedForceMultiplier
         {
             get { return ballAddedForceMultiplier; }
         }
+
 
         // Path to follow.
         [SerializeField] protected int lastWaypointIndex = -1;

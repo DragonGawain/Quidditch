@@ -22,7 +22,7 @@ namespace CharacterAI
             if (currentFrame < framesToWaitFor)
             {
                 currentFrame++;
-                //Debug.Log(currentFrame);
+                Debug.Log("Waiting...");
 
                 myState = NodeState.RUNNING;
                 return myState;
