@@ -13,9 +13,15 @@ namespace CharacterAI
         override protected Node PlantTheTree(BehaviourTree self)
         {
             Node rootNode = new NodeSelector(self,
-                                             new List<Node> {  new NodeSequence( self,
-                                                                             new List<Node> { new Node_IsClosestBludgerTooClose(self), new Node_FleeClosestBludger(this) }),
-                                         new Node_SeekSnitch(this) });
+                                                new List<Node> {
+                                                    new NodeSequence(self,
+                                                        new List<Node> {
+                                                            new Node_IsClosestBludgerTooClose(this),
+                                                            new Node_FleeClosestBludger(this)
+                                                        }
+                                                    ),
+                                                    new Node_SeekSnitch(this)
+                                                });
             return rootNode;
         }
     }

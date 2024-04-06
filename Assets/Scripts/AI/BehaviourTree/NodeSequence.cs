@@ -14,7 +14,7 @@ namespace CharacterAI
         // METHODS.
         override public NodeState Execute()
         {
-            bool anyChildIsRunning = false;
+            //bool anyChildIsRunning = false;
 
             foreach (Node child in myChildNodes)
             {
@@ -28,8 +28,10 @@ namespace CharacterAI
                         return myState;
 
                     case NodeState.RUNNING:
-                        anyChildIsRunning = true;
-                        continue;
+                        //anyChildIsRunning = true;
+                        //continue;
+                        myState = NodeState.RUNNING;
+                        return myState;
 
                     default:
                         myState = NodeState.SUCCESS;
@@ -38,7 +40,8 @@ namespace CharacterAI
             }
 
             // Should they all succeed, return true.
-            myState = anyChildIsRunning ? NodeState.RUNNING : NodeState.SUCCESS;
+            //myState = anyChildIsRunning ? NodeState.RUNNING : NodeState.SUCCESS;
+            myState = NodeState.SUCCESS;
             return myState;
         }
     }
