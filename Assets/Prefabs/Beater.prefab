@@ -12,7 +12,7 @@ GameObject:
   m_Layer: 0
   m_Name: upRef
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -210,7 +210,17 @@ MonoBehaviour:
   myNPCMovement: {fileID: 2184890760978156404}
   myGroupAI: {fileID: 5900669114287057368}
   myMaxSpeed: 5
-  acceleration: 1
+  genericHasReachedDistance: 1
+  waypointHasReachedDistance: 2
+  followHasReachedDistance: 5
+  goalpostHasReachedDistance: 20
+  bludgerFleeDistance: 5
+  bludgerHitDistance: 1
+  quaffleConcernDistance: 10
+  ballAddedForceMultiplier: 10
+  lastWaypointIndex: -1
+  nextWaypointIndex: -1
+  waypoints: []
 --- !u!1 &7117604625097347279
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +233,7 @@ GameObject:
   m_Layer: 0
   m_Name: forwardRef
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -254,7 +264,7 @@ GameObject:
   m_Layer: 0
   m_Name: rightRef
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

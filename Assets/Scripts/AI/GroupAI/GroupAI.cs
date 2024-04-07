@@ -99,7 +99,6 @@ public abstract class GroupAI : MonoBehaviour
     protected Formation MyFormation = new();
 
     protected Vector3 prevPos;
-    bool isFacing = false;
 
     public AIState GetState()
     {
@@ -280,10 +279,9 @@ public abstract class GroupAI : MonoBehaviour
 
     private void Update()
     {
+        // AI will face away from the point they were at last update tick (i.e. they will look in the direction they are moving)
         transform.rotation = this.GetComponent<BehaviourTree>()
-            .MyNPCMovement.KinematicFace(-prevPos);
+            .MyNPCMovement.KinematicFaceAway(prevPos);
         prevPos = transform.position;
-
-        // isFacing = !isFacing;
     }
 }

@@ -256,11 +256,17 @@ public class NPCMovement : MonoBehaviour
         return Quaternion.LookRotation(direction);
     }
 
-    public Quaternion Face(Vector3 target)
+    public Quaternion KinematicFaceAway(Vector3 target)
     {
-        return Quaternion.FromToRotation(
-            transform.forward,
-            KinematicFace(target) * Vector3.forward
-        );
+        Vector3 direction = transform.position - target;
+
+        if (
+            direction.normalized == transform.forward || Mathf.Approximately(direction.magnitude, 0)
+        )
+        {
+            return transform.rotation;
+        }
+
+        return Quaternion.LookRotation(direction);
     }
 }
