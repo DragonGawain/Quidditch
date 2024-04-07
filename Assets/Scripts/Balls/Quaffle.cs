@@ -6,8 +6,13 @@ public class Quaffle : Ball
 {
     // VARIABLES
     // Should speed and the like be defined here, or by the parent classe?
-    [SerializeField] private GameObject myHolder;
-    public GameObject MyHolder { get { return myHolder; } set { myHolder = value; } }
+    [SerializeField]
+    private GameObject myHolder;
+    public GameObject MyHolder
+    {
+        get { return myHolder; }
+        set { myHolder = value; }
+    }
 
     // private Team teamWithQuaffle = Team.NONE;
     // public void SetTeam(Team team)
@@ -27,9 +32,13 @@ public class Quaffle : Ball
     {
         Debug.Log(string.Format("The quaffle collided with {0}.", collision.gameObject));
 
+        // TODO:: verification that a chaser collided with the quaffle?
         GroupAI theChaser = collision.gameObject.GetComponent<GroupAI>();
         if (theChaser != null && collision.gameObject.CompareTag("chaser"))
         {
+            if (myHolder != null && myHolder != theChaser.gameObject)
+                myHolder.GetComponent<GroupAI>().SetHasBall(false);
+
             theChaser.SetHasBall(true);
             myHolder = collision.gameObject;
             // SetTeam(theChaser.Team);
@@ -41,7 +50,7 @@ public class Quaffle : Ball
     }
 
     // Actions.
-    public void Throw(Vector3 force) 
+    public void Throw(Vector3 force)
     {
         GroupAI theChaser = myHolder.GetComponent<GroupAI>();
         theChaser.SetHasBall(false);

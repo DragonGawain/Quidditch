@@ -31,6 +31,7 @@ public class NPCMovement : MonoBehaviour
         Vector3 desiredVelocity = targetPosition - gameObject.transform.position;
         return desiredVelocity.normalized * maxVelocity;
     }
+
     public Vector3 Seek(Vector3 targetPosition, float maxVelocity)
     {
         return KinematicSeek(targetPosition, maxVelocity) - myRigidbody.velocity;
@@ -42,6 +43,7 @@ public class NPCMovement : MonoBehaviour
         Vector3 desiredVelocity = gameObject.transform.position - targetPosition;
         return desiredVelocity.normalized * maxVelocity;
     }
+
     public Vector3 Flee(Vector3 targetPosition, float maxVelocity)
     {
         return KinematicFlee(targetPosition, maxVelocity) - myRigidbody.velocity;
@@ -71,6 +73,7 @@ public class NPCMovement : MonoBehaviour
 
         return desiredVelocity;
     }
+
     public Vector3 Arrive(
         Vector3 targetPosition,
         float maxVelocity,
@@ -78,7 +81,8 @@ public class NPCMovement : MonoBehaviour
         float slowRadius
     )
     {
-        return KinematicArrive(targetPosition, maxVelocity, stopRadius, slowRadius) - myRigidbody.velocity;
+        return KinematicArrive(targetPosition, maxVelocity, stopRadius, slowRadius)
+            - myRigidbody.velocity;
     }
 
     // Pursue
@@ -101,11 +105,7 @@ public class NPCMovement : MonoBehaviour
     }
 
     // Evade
-    public Vector3 KinematicEvade(
-        Vector3 targetPosition,
-        Vector3 targetVelocity,
-        float maxVelocity
-    )
+    public Vector3 KinematicEvade(Vector3 targetPosition, Vector3 targetVelocity, float maxVelocity)
     {
         float distance = Vector3.Distance(targetPosition, gameObject.transform.position);
         float ahead = distance / 10; // should the 10 be a parameter?
@@ -113,6 +113,7 @@ public class NPCMovement : MonoBehaviour
 
         return KinematicFlee(futurePosition, maxVelocity);
     }
+
     public Vector3 Evade(Vector3 targetPosition, Vector3 targetVelocity, float maxVelocity)
     {
         return KinematicEvade(targetPosition, targetVelocity, maxVelocity) - myRigidbody.velocity;
@@ -233,6 +234,29 @@ public class NPCMovement : MonoBehaviour
     }
 
     Quaternion Face(Transform target)
+    {
+        return Quaternion.FromToRotation(
+            transform.forward,
+            KinematicFace(target) * Vector3.forward
+        );
+    }
+
+    // Face overloads to use Vector3 instead of Transform
+    public Quaternion KinematicFace(Vector3 target)
+    {
+        Vector3 direction = target - transform.position;
+
+        if (
+            direction.normalized == transform.forward || Mathf.Approximately(direction.magnitude, 0)
+        )
+        {
+            return transform.rotation;
+        }
+
+        return Quaternion.LookRotation(direction);
+    }
+
+    public Quaternion Face(Vector3 target)
     {
         return Quaternion.FromToRotation(
             transform.forward,

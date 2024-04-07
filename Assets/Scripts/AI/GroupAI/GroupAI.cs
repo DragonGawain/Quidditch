@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using CharacterAI;
 using UnityEngine;
 
 public enum AIType
@@ -95,6 +96,10 @@ public abstract class GroupAI : MonoBehaviour
 
     static protected Formation AIFormation = new();
     static protected Formation PlayerFormation = new();
+    protected Formation MyFormation = new();
+
+    protected Vector3 prevPos;
+    bool isFacing = false;
 
     public AIState GetState()
     {
@@ -257,6 +262,7 @@ public abstract class GroupAI : MonoBehaviour
                 freindlySeeker = ai;
         }
 
+        prevPos = transform.position;
         OnAwake();
     }
 
@@ -270,5 +276,14 @@ public abstract class GroupAI : MonoBehaviour
     protected virtual void OnTeamLostQuaffle()
     {
         return;
+    }
+
+    private void Update()
+    {
+        transform.rotation = this.GetComponent<BehaviourTree>()
+            .MyNPCMovement.KinematicFace(-prevPos);
+        prevPos = transform.position;
+
+        // isFacing = !isFacing;
     }
 }

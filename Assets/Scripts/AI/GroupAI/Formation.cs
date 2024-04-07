@@ -93,3 +93,10 @@ public class Formation
         return formationType;
     }
 }
+
+// experimental, not sure if I'll do this
+// public class FormationPosition
+// {
+//     public GroupAI groupAI;
+//     public Vector3 position;
+// }
