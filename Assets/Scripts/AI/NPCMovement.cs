@@ -267,6 +267,7 @@ public class NPCMovement : MonoBehaviour
             return transform.rotation;
         }
 
-        return Quaternion.LookRotation(direction);
+        return Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime);
+        // return Quaternion.LookRotation(direction);
     }
 }

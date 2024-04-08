@@ -99,6 +99,8 @@ public abstract class GroupAI : MonoBehaviour
     protected Formation MyFormation = new();
 
     protected Vector3 prevPos; // used to make AI face the direction that it's moving
+    protected Vector3 prevPos2;
+    protected Vector3 prevPos3;
 
     protected Vector3 formationPosition;
 
@@ -274,6 +276,8 @@ public abstract class GroupAI : MonoBehaviour
         }
 
         prevPos = transform.position;
+        prevPos2 = transform.position;
+        prevPos3 = transform.position;
         OnAwake();
     }
 
@@ -294,11 +298,16 @@ public abstract class GroupAI : MonoBehaviour
         return MyFormation;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         // AI will face away from the point they were at last update tick (i.e. they will look in the direction they are moving)
-        transform.rotation = this.GetComponent<BehaviourTree>()
-            .MyNPCMovement.KinematicFaceAway(prevPos);
+        if (prevPos2 == prevPos3)
+            transform.rotation = Quaternion.LookRotation(transform.position - prevPos);
+        else
+            transform.rotation = this.GetComponent<BehaviourTree>()
+                .MyNPCMovement.KinematicFaceAway(prevPos3);
+        prevPos3 = prevPos2;
+        prevPos2 = prevPos;
         prevPos = transform.position;
     }
 }

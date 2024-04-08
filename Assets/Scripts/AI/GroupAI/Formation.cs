@@ -56,7 +56,7 @@ public class Formation
 
     public void ResetAll()
     {
-        formationType = FormationType.NONE;
+        // formationType = FormationType.NONE;
         for (int i = 0; i < chasers.Length; i++)
         {
             // if (chasers[i] != null)
@@ -132,6 +132,7 @@ public class Formation
             }
         }
         formationType = FormationType.NONE;
+        this.ResetAll();
     }
 }
 
