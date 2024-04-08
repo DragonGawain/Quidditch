@@ -204,5 +204,37 @@ namespace CharacterAI
 
             return (closestBludger, distanceToClosestBludger);
         }
+
+        public (GameObject, float) LocateClosestBludgerToTarget(GameObject closestBludger, Transform target)
+        {
+            float distanceToClosestBludger =
+                (closestBludger != null)
+                    ? Vector3.Distance(
+                        target.position,
+                        closestBludger.transform.position
+                    )
+                    : float.MaxValue;
+            foreach (Bludger bludger in this.MyGroupAI.TheBludgers)
+            {
+                // Assuming that we have only two bludgers.
+                if (
+                    bludger.gameObject != closestBludger
+                    && Vector3.Distance(
+                        target.position,
+                        bludger.gameObject.transform.position
+                    ) < distanceToClosestBludger
+                )
+                {
+                    closestBludger = bludger.gameObject;
+                    distanceToClosestBludger = Vector3.Distance(
+                        target.position,
+                        bludger.gameObject.transform.position
+                    );
+                    break;
+                }
+            }
+
+            return (closestBludger, distanceToClosestBludger);
+        }
     }
 }
