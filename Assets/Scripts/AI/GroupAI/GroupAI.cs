@@ -289,6 +289,11 @@ public abstract class GroupAI : MonoBehaviour
         return;
     }
 
+    public Formation GetMyFormation()
+    {
+        return MyFormation;
+    }
+
     private void Update()
     {
         // AI will face away from the point they were at last update tick (i.e. they will look in the direction they are moving)

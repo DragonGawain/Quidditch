@@ -44,7 +44,7 @@ public class GroupChaser : GroupAI
                 GroupAI[] beaterFormation = MyFormation.GetBeaters();
                 // offset back and to the left
                 // The AI at the index chaserFormation[1] should seek towards this point
-                chaserFormation[1].SetFormationPosition(
+                chaserFormation[1].GetMyFormation().SetFormationPosition(
                     chaserFormation[0].transform.position
                         - (
                             chaserFormation[0].GetForwardRef() * 5
@@ -52,13 +52,13 @@ public class GroupChaser : GroupAI
                         )
                 );
                 // offset back and to the right
-                chaserFormation[2].SetFormationPosition(
+                chaserFormation[2].GetMyFormation().SetFormationPosition(
                     chaserFormation[0].transform.position
                         - chaserFormation[0].GetForwardRef() * 5
                         + chaserFormation[0].GetRightRef() * 3
                 );
                 // offset in front
-                beaterFormation[0].SetFormationPosition(
+                beaterFormation[0].GetMyFormation().SetFormationPosition(
                     chaserFormation[0].transform.position + chaserFormation[0].GetForwardRef() * 4
                 );
                 break;
