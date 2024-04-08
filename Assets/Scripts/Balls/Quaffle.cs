@@ -15,6 +15,7 @@ public class Quaffle : Ball
     }
 
     // Important for tracking who is the chaser (and what is the team) that scored
+    [SerializeField]
     private GameObject lastHolder;
     public GameObject LastHolder
     {
@@ -72,5 +73,14 @@ public class Quaffle : Ball
 
         // Should this partly exist in the parent Ball class?
         myRigidbody.AddForce(force, ForceMode.Impulse);
+    }
+
+    public void ResetQuaffle()
+    {
+        transform.position = Vector3.zero;
+        MyRigidbody.velocity = Vector3.zero;
+
+        myHolder = null;
+        lastHolder = null;
     }
 }
