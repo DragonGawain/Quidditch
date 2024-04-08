@@ -36,13 +36,13 @@ public class Goalpost : MonoBehaviour
         if (other.CompareTag("quaffle"))
         {
             Quaffle q = other.GetComponent<Quaffle>();
-            GroupAI theChaser = q.MyHolder.GetComponent<GroupAI>();
+            GroupAI theChaser = q.LastHolder.GetComponent<GroupAI>();
 
             // Ensure that a goal is registered only when the goalpost is triggered by the enemy team!
             if (owningTeam != theChaser.GetTeam())
             {
                 // Update score for the corresponding team using the ScoreManager
-                scoreManager.IncrementScore(owningTeam);
+                scoreManager.IncrementScore(theChaser.GetTeam());
 
                 OnGoalScored?.Invoke(owningTeam, theChaser);
             }

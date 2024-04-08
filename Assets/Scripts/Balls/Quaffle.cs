@@ -14,6 +14,14 @@ public class Quaffle : Ball
         set { myHolder = value; }
     }
 
+    // Important for tracking who is the chaser (and what is the team) that scored
+    private GameObject lastHolder;
+    public GameObject LastHolder
+    {
+        get { return lastHolder; }
+        set { lastHolder = value; }
+    }
+
     // private Team teamWithQuaffle = Team.NONE;
     // public void SetTeam(Team team)
     // {
@@ -41,6 +49,7 @@ public class Quaffle : Ball
 
             theChaser.SetHasBall(true);
             myHolder = collision.gameObject;
+            lastHolder = myHolder;
             // SetTeam(theChaser.Team);
 
             MyRigidbody.velocity = Vector3.zero;
