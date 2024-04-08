@@ -17,7 +17,7 @@ namespace CharacterAI
 
             // Do the check.
             GameObject quafflesCurrentHolderGO = MyParentTree.MyGroupAI.TheQuaffle.MyHolder;
-            GroupAI quafflesCurrentHolder = quafflesCurrentHolderGO.GetComponent<GroupAI>();
+            GroupAI quafflesCurrentHolder = quafflesCurrentHolderGO != null ? quafflesCurrentHolderGO.GetComponent<GroupAI>() : null;
 
             if (quafflesCurrentHolderGO != null && quafflesCurrentHolder != null && quafflesCurrentHolder.GetTeam() != myParentTree.MyGroupAI.GetTeam())
             {
