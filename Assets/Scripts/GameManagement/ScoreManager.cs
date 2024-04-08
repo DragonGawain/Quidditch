@@ -17,7 +17,7 @@ public class ScoreManager : MonoBehaviour
     {
         // Increment the score for the specified team
         teamScores[team]++;
-        Debug.Log("Goal scored for " + team.ToString());
+        Debug.Log("Goal scored by " + team.ToString());
         Debug.Log("New score: Team 1 (Player): " + teamScores[Team.PLAYER] + " vs Team 2 (AI): " + teamScores[Team.AI]);
     }
 }
