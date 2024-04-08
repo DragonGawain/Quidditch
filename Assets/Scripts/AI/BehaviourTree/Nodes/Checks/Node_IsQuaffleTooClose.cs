@@ -13,7 +13,7 @@ namespace CharacterAI
         // METHODS
         public override NodeState Execute()
         {
-            //Debug.Log("Executing IsEnemyQuaffleTooClose");
+            //Debug.Log("Executing IsQuaffleTooClose");
 
             GameObject theQuaffle = MyParentTree.MyGroupAI.TheQuaffle.gameObject;
             float distanceFromQuaffle = Vector3.Distance(MyParentTree.gameObject.transform.position, theQuaffle.transform.position);

@@ -13,7 +13,7 @@ namespace CharacterAI
         // METHODS
         public override NodeState Execute()
         {
-            Debug.Log("Executing IncreateCurrentWaypointLooping");
+            //Debug.Log("Executing IncreaseCurrentWaypointLooping");
 
             // Increase the waypoint counter.
             MyParentTree.UpdateNextWaypointIndex(true);

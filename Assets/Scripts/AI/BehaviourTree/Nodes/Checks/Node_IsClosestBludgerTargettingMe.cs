@@ -20,8 +20,6 @@ namespace CharacterAI
             (GameObject, float) closestBludgerAndDistance = MyParentTree.LocateClosestBludger(closestBludger);
             WriteToBlackboard("closestBludger", closestBludgerAndDistance.Item1);
 
-            WriteToBlackboard("targetBludger", closestBludgerAndDistance.Item1);
-
             Bludger closestBludgerBludger = closestBludgerAndDistance.Item1.GetComponent<Bludger>();
 
             // Do the check.

@@ -7,7 +7,7 @@ public class Quaffle : Ball
     // VARIABLES
     // Should speed and the like be defined here, or by the parent classe?
     [SerializeField]
-    private GameObject myHolder;
+    private GameObject myHolder = null;
     public GameObject MyHolder
     {
         get { return myHolder; }

@@ -23,7 +23,8 @@ public class Bludger : Ball
     [SerializeField] private GameObject myPreviousHitter;
     public GameObject MyPreviousHitter { get { return myPreviousHitter; } set { myPreviousHitter = value; } }
 
-
+    [SerializeField]
+    bool canChase = true;
 
 
 
@@ -43,12 +44,15 @@ public class Bludger : Ball
     void FixedUpdate()
     {
         // Get the closest seeker to flee away from them
-        target = GetClosestTarget(tags);
-
-        if (target != null)
+        if (canChase)
         {
-            Vector3 desiredVelocity = Vector3.ClampMagnitude(myNPCMovement.Seek(target.position, maxSpeed) + myRigidbody.velocity, maxSpeed);
-            myRigidbody.velocity = desiredVelocity;
+            target = GetClosestTarget(tags);
+
+            if (target != null)
+            {
+                Vector3 desiredVelocity = Vector3.ClampMagnitude(myNPCMovement.Seek(target.position, maxSpeed) + myRigidbody.velocity, maxSpeed);
+                myRigidbody.velocity = desiredVelocity;
+            }
         }
     }
 
@@ -69,5 +73,12 @@ public class Bludger : Ball
         myRigidbody.AddForce(force, ForceMode.Impulse);
 
         // TODO: Stop it from imediately seeking a new target.
+        canChase = false;
+        Invoke("CanChaseAgain", 1f);
+    }
+
+    private void CanChaseAgain()
+    {
+        canChase = true;
     }
 }

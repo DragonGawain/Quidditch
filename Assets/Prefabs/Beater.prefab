@@ -217,7 +217,7 @@ MonoBehaviour:
   bludgerFleeDistance: 5
   bludgerHitDistance: 1
   quaffleConcernDistance: 10
-  ballAddedForceMultiplier: 10
+  ballAddedForceMultiplier: 3
   lastWaypointIndex: -1
   nextWaypointIndex: -1
   waypoints: []
