@@ -229,5 +229,22 @@ namespace CharacterAI
 
             return (closestBludger, distanceToClosestBludger);
         }
+
+        public (GameObject, float) LocateClosestBludgerToTarget(GameObject target)
+        {
+            GameObject closestBludger = null;
+            float distanceToClosestBludger = float.MaxValue;
+
+            foreach (Bludger bludger in this.MyGroupAI.TheBludgers)
+            {
+                if (Vector3.Distance(target.transform.position, bludger.gameObject.transform.position) < distanceToClosestBludger)
+                {
+                    closestBludger = bludger.gameObject;
+                    distanceToClosestBludger = Vector3.Distance(target.transform.position,bludger.gameObject.transform.position);
+                }
+            }
+
+            return (closestBludger, distanceToClosestBludger);
+        }
     }
 }
