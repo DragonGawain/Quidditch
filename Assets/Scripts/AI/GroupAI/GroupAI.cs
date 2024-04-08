@@ -98,7 +98,9 @@ public abstract class GroupAI : MonoBehaviour
     static protected Formation PlayerFormation = new();
     protected Formation MyFormation = new();
 
-    protected Vector3 prevPos;
+    protected Vector3 prevPos; // used to make AI face the direction that it's moving
+
+    protected Vector3 formationPosition = null;
 
     public AIState GetState()
     {
@@ -138,6 +140,16 @@ public abstract class GroupAI : MonoBehaviour
             OnTeamObtainedQuaffle();
         else
             OnTeamLostQuaffle();
+    }
+
+    public void SetFormationPosition(Vector3 fPos)
+    {
+        formationPosition = fPos;
+    }
+
+    public Vector3 GetFormationPosition()
+    {
+        return formationPosition;
     }
 
     private void Awake()
