@@ -63,8 +63,9 @@ public class Quaffle : Ball
     {
         GroupAI theChaser = myHolder.GetComponent<GroupAI>();
         theChaser.SetHasBall(false);
+
+        lastHolder = myHolder;
         myHolder = null;
-        //SetTeam(null);
 
         MyRigidbody.isKinematic = false;
         gameObject.transform.parent = null;
