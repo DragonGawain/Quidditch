@@ -23,6 +23,9 @@ public class Quaffle : Ball
         set { lastHolder = value; }
     }
 
+    int wasCaughtTimer = 0;
+    bool wasCaught = false;
+
     // private Team teamWithQuaffle = Team.NONE;
     // public void SetTeam(Team team)
     // {
@@ -40,22 +43,24 @@ public class Quaffle : Ball
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log(string.Format("The quaffle collided with {0}.", collision.gameObject));
-
-        // TODO:: verification that a chaser collided with the quaffle?
-        GroupAI theChaser = collision.gameObject.GetComponent<GroupAI>();
-        if (theChaser != null && collision.gameObject.CompareTag("chaser"))
+        if (!wasCaught)
         {
-            if (myHolder != null && myHolder != theChaser.gameObject)
-                myHolder.GetComponent<GroupAI>().SetHasBall(false);
+            // TODO:: verification that a chaser collided with the quaffle?
+            GroupAI theChaser = collision.gameObject.GetComponent<GroupAI>();
+            if (theChaser != null && collision.gameObject.CompareTag("chaser"))
+            {
+                if (myHolder != null && myHolder != theChaser.gameObject)
+                    myHolder.GetComponent<GroupAI>().SetHasBall(false);
 
-            theChaser.SetHasBall(true);
-            myHolder = collision.gameObject;
-            lastHolder = myHolder;
-            // SetTeam(theChaser.Team);
+                theChaser.SetHasBall(true);
+                myHolder = collision.gameObject;
+                lastHolder = myHolder;
+                // SetTeam(theChaser.Team);
 
-            MyRigidbody.velocity = Vector3.zero;
-            MyRigidbody.isKinematic = true;
-            gameObject.transform.parent = collision.gameObject.transform;
+                MyRigidbody.velocity = Vector3.zero;
+                MyRigidbody.isKinematic = true;
+                gameObject.transform.parent = collision.gameObject.transform;
+            }
         }
     }
 
@@ -72,6 +77,9 @@ public class Quaffle : Ball
         MyRigidbody.isKinematic = false;
         gameObject.transform.parent = null;
 
+        wasCaught = true;
+        wasCaughtTimer = 3;
+
         // Should this partly exist in the parent Ball class?
         myRigidbody.AddForce(force, ForceMode.Impulse);
     }
@@ -83,5 +91,15 @@ public class Quaffle : Ball
 
         myHolder = null;
         lastHolder = null;
+    }
+
+    private void FixedUpdate()
+    {
+        if (wasCaught)
+        {
+            if (wasCaughtTimer <= 0)
+                wasCaught = false;
+            wasCaughtTimer--;
+        }
     }
 }

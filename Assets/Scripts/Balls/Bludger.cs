@@ -80,7 +80,7 @@ namespace CharacterAI
             // Check if the other has a Behaviour tree
             if (collision.gameObject.GetComponent<BehaviourTree>())
             {
-                Debug.Log("BLUDGER HIT");
+                Debug.Log("BLUDGER HIT: " + collision.gameObject);
                 collision.gameObject.GetComponent<BehaviourTree>().GotHitByBludger();
             }
             // loop through all the children to see if this object is holding the quaffle
@@ -90,7 +90,7 @@ namespace CharacterAI
             {
                 if (collision.gameObject.transform.GetChild(i).GetComponent<Quaffle>())
                 {
-                    Debug.Log("BLUDGE HIT PARENT WITH QUAFFLE");
+                    Debug.Log("BLUDGER HIT PARENT WITH QUAFFLE");
                     // shoot quaffle away from bludger hit
                     Quaffle quaffle = collision.gameObject.transform
                         .GetChild(i)
