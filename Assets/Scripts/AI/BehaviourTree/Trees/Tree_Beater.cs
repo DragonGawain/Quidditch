@@ -13,26 +13,26 @@ namespace CharacterAI
         override protected Node PlantTheTree(BehaviourTree self)
         {
             Node rootNode = new NodeSelector(self,
-                                             new List<Node> {  
+                                             new List<Node> {
                                                  new NodeSequence( self,
-                                                     new List<Node> { 
-                                                         new Node_IsClosestBludgerTooClose(this), 
+                                                     new List<Node> {
+                                                         new Node_IsClosestBludgerTooClose(this),
                                                          new Node_IsClosestBludgerTargettingMe(this),
                                                          new Node_SetClosestBludgerAsTarget(this),
                                                          new Node_IsTargetBludgerWithinHitDistance(this),
                                                          new Node_HitBludgerAwayFromSelf(this),
                                                          new Node_Wait60Frames(this)}),
                                                  new NodeSelector(self,
-                                                     new List<Node> 
+                                                     new List<Node>
                                                      {
                                                          new NodeSequence(self,
-                                                            new List<Node> 
+                                                            new List<Node>
                                                             {
                                                                 // Am I playing agressively?
                                                                 // Determine enemy target
-                                                                // Determine closest bludger to target
+                                                                new Node_SetClosestBludgerFromTargetAsTarget(this),
                                                                 new Node_SeekTargetBludger(this),
-                                                                // Orient bludger and target
+                                                                // Orient bludger and target. Not sure if needed.
                                                                 new Node_IsTargetBludgerWithinHitDistance(this),
                                                                 new Node_HitBludgerTowardsTarget(this),
                                                                 new Node_Wait60Frames(this)
@@ -42,7 +42,8 @@ namespace CharacterAI
                                                             {
                                                                 // Am I playing defensively?
                                                                 // Determine target to protect.
-                                                                // Seek/tail protected target
+                                                                new Node_SeekTarget(this),
+                                                                new Node_IsNearTarget(this),
                                                                 new Node_IsClosestBludgerTooClose(this),
                                                                 new Node_SeekClosestBludger(this),
                                                                 new Node_SetClosestBludgerAsTarget(this),
