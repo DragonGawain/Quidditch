@@ -21,7 +21,7 @@ namespace CharacterAI
             if (theBludgerGO != null && theBludger != null)
             {
                 // We are assuming it's already in hitting range.
-                Debug.Log(string.Format("{0} hit the bludger {1}!", MyParentTree.gameObject, theBludgerGO));
+                Debug.Log(string.Format("{0} hit the Bludger {1}!", MyParentTree.gameObject, theBludgerGO));
 
                 // Determine hit force vector.
                 Vector3 desiredThrow = -1 * theBludger.MyRigidbody.velocity.normalized;

@@ -49,7 +49,7 @@ namespace CharacterAI
                                                             new List<Node>
                                                             {
                                                                 new Node_IsTeammateHoldingQuaffle(this),
-                                                                // Seek point in formation
+                                                                new Node_SeekFormationSpot(this)
                                                             }),
                                                         new NodeSelector(self,
                                                             new List<Node>
