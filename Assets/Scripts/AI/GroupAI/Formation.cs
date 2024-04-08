@@ -36,22 +36,36 @@ public class Formation
         chasers[0] = c0;
         chasers[1] = c1;
         chasers[2] = c2;
+        if (c0 != null)
+            chasers[0].SetIsinFormation(true);
+        if (c1 != null)
+            chasers[1].SetIsinFormation(true);
+        if (c2 != null)
+            chasers[2].SetIsinFormation(true);
     }
 
     public void SetBeaters(GroupAI b0 = null, GroupAI b1 = null)
     {
         beaters[0] = b0;
         beaters[1] = b1;
+        if (b0 != null)
+            beaters[0].SetIsinFormation(true);
+        if (b1 != null)
+            beaters[1].SetIsinFormation(true);
     }
 
     public void SetKeeper(GroupAI k = null)
     {
         keeper = k;
+        if (k != null)
+            keeper.SetIsinFormation(true);
     }
 
     public void SetSeeker(GroupAI s = null)
     {
         seeker = s;
+        if (s != null)
+            seeker.SetIsinFormation(true);
     }
 
     public void ResetAll()
@@ -59,23 +73,23 @@ public class Formation
         // formationType = FormationType.NONE;
         for (int i = 0; i < chasers.Length; i++)
         {
-            // if (chasers[i] != null)
-            //     chasers[i].SetFormationPosition(null);
+            if (chasers[i] != null)
+                chasers[i].SetIsinFormation(false);
             chasers[i] = null;
         }
 
         for (int i = 0; i < beaters.Length; i++)
         {
-            // if (beaters[i] != null)
-            //     beaters[i].SetFormationPosition(null);
+            if (beaters[i] != null)
+                beaters[i].SetIsinFormation(false);
             beaters[i] = null;
         }
 
-        // if (keeper != null)
-        //     keeper.SetFormationPosition(null);
+        if (keeper != null)
+            keeper.SetIsinFormation(false);
         keeper = null;
-        // if (seeker != null)
-        //     seeker.SetFormationPosition(null);
+        if (seeker != null)
+            seeker.SetIsinFormation(false);
         seeker = null;
     }
 
