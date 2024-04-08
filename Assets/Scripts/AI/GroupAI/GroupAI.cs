@@ -104,6 +104,18 @@ public abstract class GroupAI : MonoBehaviour
 
     protected Vector3 formationPosition;
 
+    protected bool isInFormation = false;
+
+    public void SetIsinFormation(bool val)
+    {
+        isInFormation = val;
+    }
+
+    public bool GetIsInFormation()
+    {
+        return isInFormation;
+    }
+
     public AIState GetState()
     {
         return state;
