@@ -44,6 +44,10 @@ public class Goalpost : MonoBehaviour
                 // Update score for the corresponding team using the ScoreManager
                 scoreManager.IncrementScore(theChaser.GetTeam());
 
+                // After a goal, reposition the quaffle at the center of the "pitch" and ensure there is no velocity acting on it!
+                q.transform.position = Vector3.zero;
+                q.MyRigidbody.velocity = Vector3.zero;
+
                 OnGoalScored?.Invoke(owningTeam, theChaser);
             }
         }
