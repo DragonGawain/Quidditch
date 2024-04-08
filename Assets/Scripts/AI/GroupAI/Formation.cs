@@ -132,6 +132,7 @@ public class Formation
                 return;
             }
         }
+        Debug.Log("THERE IS NO FORMATION");
         formationType = FormationType.NONE;
         this.ResetAll();
     }

@@ -62,6 +62,7 @@ public class Quaffle : Ball
     // Actions.
     public void Throw(Vector3 force)
     {
+        Debug.Log("thrown");
         GroupAI theChaser = myHolder.GetComponent<GroupAI>();
         theChaser.SetHasBall(false);
 

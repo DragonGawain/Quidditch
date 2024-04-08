@@ -35,16 +35,32 @@ namespace CharacterAI
         }
         public void SetVRigidbodyVelocity(Vector3 desiredVelocity)
         {
-            myRigidbody.velocity = Vector3.ClampMagnitude(desiredVelocity + myRigidbody.velocity, myMaxSpeed);
+            myRigidbody.velocity = Vector3.ClampMagnitude(desiredVelocity + myRigidbody.velocity, actualSpeed);
         }
 
+        protected float bludgerTimer = 0; 
+        protected bool hitByBludger = false; // don't really need this bool but it helps my sanity
         // Per role or character information.
         [SerializeField, Range(0, 15)] // Edit these ranges if needed.
         protected float myMaxSpeed = 5f;
+        protected float actualSpeed = 5f;
+        // I'm cheating here. Hush. 
         public float MyMaxSpeed
         {
-            get { return myMaxSpeed; }
+            get { return actualSpeed; }
         }
+        public void GotHitByBludger()
+        {
+            actualSpeed = myMaxSpeed / 2f;
+            bludgerTimer = 150; // 50 FixedUpdate's per second -> 150 FUs = 3 seconds
+            hitByBludger = true;
+        }
+        public void RecoveredFromBludgerHit()
+        {
+            actualSpeed = myMaxSpeed; 
+            hitByBludger = false;
+        }
+
 
         [SerializeField, Range(0, 5)] // At what distance does this character consider a target as having been reached?
         protected float genericHasReachedDistance = 1f;
@@ -155,6 +171,7 @@ namespace CharacterAI
             myNPCMovement = gameObject.GetComponent<NPCMovement>();
             myGroupAI = gameObject.GetComponent<GroupAI>();
             myRigidbody = GetComponent<Rigidbody>(); // Extra note from Craig: you don't need to say gameObject.GetComponent<>, the gameObject is implied) // Roxane: I like being explicit my dude :P
+            actualSpeed = myMaxSpeed;
         }
 
         protected void Start()
@@ -169,6 +186,14 @@ namespace CharacterAI
             if (myRootNode != null)
             {
                 myRootNode.Execute();
+            }
+            if (hitByBludger)
+            {
+                bludgerTimer--;
+                if (bludgerTimer <= 0)
+                {
+                    RecoveredFromBludgerHit();
+                }
             }
         }
 
