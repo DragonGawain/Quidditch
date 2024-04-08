@@ -30,12 +30,14 @@ namespace CharacterAI
                                                                 new NodeSelector(self,
                                                                     new List<Node>
                                                                     {
-                                                                        //new NodeSequence(self,
-                                                                        //    new List<Node>
-                                                                        //    {
-                                                                        //        // Is teammate in a good spot for a pass?
-                                                                        //        // Pass to teammate
-                                                                        //    }),
+                                                                        new NodeSequence(self,
+                                                                            new List<Node>
+                                                                            {
+                                                                                // Is teammate in a good spot for a pass?
+                                                                                new Node_CheckTeammateForPass(this),
+
+                                                                                // Pass to teammate
+                                                                            }),
                                                                         new NodeSequence(self,
                                                                             new List<Node>
                                                                             {
