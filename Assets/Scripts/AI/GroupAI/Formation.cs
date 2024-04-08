@@ -127,6 +127,7 @@ public class Formation
         {
             if (flag.Value == true)
             {
+                Debug.Log("SETTING FORMATION TO: " + flag.Key);
                 formationType = flag.Key;
                 return;
             }

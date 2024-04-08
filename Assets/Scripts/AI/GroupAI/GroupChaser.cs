@@ -84,6 +84,10 @@ public class GroupChaser : GroupAI
 
         MyFormation.SetChasers(this, friendlyChasers[0], friendlyChasers[1]);
         MyFormation.SetBeaters(FindClosestAlliedBeater());
+        if (team == Team.AI)
+            AIFormation = MyFormation;
+        else
+            PlayerFormation = MyFormation;
         // MyFormation.SetFormationType(FormationType.WINGMEN);
     }
 
