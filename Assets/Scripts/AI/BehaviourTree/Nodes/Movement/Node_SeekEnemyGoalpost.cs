@@ -28,6 +28,8 @@ namespace CharacterAI
             MyParentTree.SetVRigidbodyVelocity(desiredVelocity);
             // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
 
+            Debug.Log(MyParentTree.gameObject + " is seeking the enemy Goalpost.");
+
             myState = NodeState.RUNNING;
             return myState;
         }

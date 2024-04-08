@@ -18,7 +18,7 @@ namespace CharacterAI
             // Do the check.
             if (MyParentTree.MyGroupAI.HasBall)
             {
-                //Debug.Log(MyParentTree.gameObject + " is holding the Quaffle.");
+                Debug.Log(MyParentTree.gameObject + " is holding the Quaffle.");
 
                 myState = NodeState.SUCCESS;
             }

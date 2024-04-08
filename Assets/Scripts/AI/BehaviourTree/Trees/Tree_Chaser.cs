@@ -41,7 +41,8 @@ namespace CharacterAI
                                                                             {
                                                                                 new Node_HasReachedEnemyGoalpost(this),
                                                                                 new Node_ThrowQuaffleAtGoalpost(this)
-                                                                            })
+                                                                            }),
+                                                                        new Node_SeekEnemyGoalpost(this)
                                                                     }),
                                                                 new Node_SeekEnemyGoalpost(this)
                                                             }),
