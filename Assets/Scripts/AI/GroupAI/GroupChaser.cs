@@ -61,7 +61,6 @@ public class GroupChaser : GroupAI
                 beaterFormation[0].SetFormationPosition(
                     chaserFormation[0].transform.position + chaserFormation[0].GetForwardRef() * 4
                 );
-
                 break;
         }
     }

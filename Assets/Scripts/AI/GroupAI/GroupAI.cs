@@ -100,7 +100,7 @@ public abstract class GroupAI : MonoBehaviour
 
     protected Vector3 prevPos; // used to make AI face the direction that it's moving
 
-    protected Vector3 formationPosition = null;
+    protected Vector3 formationPosition;
 
     public AIState GetState()
     {
@@ -137,9 +137,9 @@ public abstract class GroupAI : MonoBehaviour
     {
         hasBall = state;
         if (state)
-            OnTeamObtainedQuaffle();
+            MyFormation.SetFormationFlag(FormationType.WINGMEN, true);
         else
-            OnTeamLostQuaffle();
+            MyFormation.SetFormationFlag(FormationType.WINGMEN, false);
     }
 
     public void SetFormationPosition(Vector3 fPos)
