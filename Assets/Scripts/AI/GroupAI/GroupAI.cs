@@ -138,10 +138,12 @@ public abstract class GroupAI : MonoBehaviour
     public void SetHasBall(bool state)
     {
         hasBall = state;
+            // MyFormation.SetFormationFlag(FormationType.WINGMEN, true);
+            // MyFormation.SetFormationFlag(FormationType.WINGMEN, false);
         if (state)
-            MyFormation.SetFormationFlag(FormationType.WINGMEN, true);
+            OnTeamObtainedQuaffle();
         else
-            MyFormation.SetFormationFlag(FormationType.WINGMEN, false);
+            OnTeamLostQuaffle();
     }
 
     public void SetFormationPosition(Vector3 fPos)
@@ -298,16 +300,16 @@ public abstract class GroupAI : MonoBehaviour
         return MyFormation;
     }
 
-    private void LateUpdate()
-    {
-        // AI will face away from the point they were at last update tick (i.e. they will look in the direction they are moving)
-        if (prevPos2 == prevPos3)
-            transform.rotation = Quaternion.LookRotation(transform.position - prevPos);
-        else
-            transform.rotation = this.GetComponent<BehaviourTree>()
-                .MyNPCMovement.KinematicFaceAway(prevPos3);
-        prevPos3 = prevPos2;
-        prevPos2 = prevPos;
-        prevPos = transform.position;
-    }
+    // private void LateUpdate()
+    // {
+    //     // AI will face away from the point they were at last update tick (i.e. they will look in the direction they are moving)
+    //     if (prevPos2 == prevPos3)
+    //         transform.rotation = Quaternion.LookRotation(transform.position - prevPos);
+    //     else
+    //         transform.rotation = this.GetComponent<BehaviourTree>()
+    //             .MyNPCMovement.KinematicFaceAway(prevPos3);
+    //     prevPos3 = prevPos2;
+    //     prevPos2 = prevPos;
+    //     prevPos = transform.position;
+    // }
 }
