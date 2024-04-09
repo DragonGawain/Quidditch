@@ -43,7 +43,6 @@ public class GroupChaser : GroupAI
                 case FormationType.NONE:
                     break;
                 case FormationType.WINGMEN:
-                    Debug.Log("hit 2: " + MyFormation.GetChasers());
                     // offset back and to the left
                     // The AI at the index chaserFormation[1] should seek towards this point
                     chaserFormation[1].SetFormationPosition(
@@ -76,7 +75,6 @@ public class GroupChaser : GroupAI
                     );
                     break;
                 case FormationType.ALIGN:
-                    Debug.Log("hit 2: " + MyFormation.GetChasers());
                     // offset right
                     chaserFormation[1].SetFormationPosition(
                         chaserFormation[0].transform.position
