@@ -11,7 +11,10 @@ namespace CharacterAI
         private Node myRootNode = null;
 
         protected Dictionary<string, object> blackboard = new Dictionary<string, object>();
-        public Dictionary<string, object> Blackboard { get { return blackboard; } }
+        public Dictionary<string, object> Blackboard
+        {
+            get { return blackboard; }
+        }
 
         // References.
         [SerializeField]
@@ -29,38 +32,63 @@ namespace CharacterAI
         }
 
         protected Rigidbody myRigidbody;
+
         public Rigidbody GetRigidbody()
         {
             return myRigidbody;
         }
+
         public void SetVRigidbodyVelocity(Vector3 desiredVelocity)
         {
-            myRigidbody.velocity = Vector3.ClampMagnitude(desiredVelocity + myRigidbody.velocity, actualSpeed);
+            myRigidbody.velocity = Vector3.ClampMagnitude(
+                desiredVelocity + myRigidbody.velocity,
+                actualSpeed
+            );
         }
 
-        protected float bludgerTimer = 0; 
+        protected float bludgerTimer = 0;
         protected bool hitByBludger = false; // don't really need this bool but it helps my sanity
+
+        protected float quaffleTimer = 0;
+        protected bool collectedQuaffle = false;
+
         // Per role or character information.
         [SerializeField, Range(0, 15)] // Edit these ranges if needed.
         protected float myMaxSpeed = 5f;
         protected float actualSpeed = 5f;
-        // I'm cheating here. Hush. 
+
+        // I'm cheating here. Hush.
         public float MyMaxSpeed
         {
             get { return actualSpeed; }
         }
+
         public void GotHitByBludger()
         {
             actualSpeed = myMaxSpeed / 2f;
             bludgerTimer = 150; // 50 FixedUpdate's per second -> 150 FUs = 3 seconds
             hitByBludger = true;
         }
+
         public void RecoveredFromBludgerHit()
         {
-            actualSpeed = myMaxSpeed; 
+            actualSpeed = myMaxSpeed;
             hitByBludger = false;
         }
 
+        public void CollectedQuaffle()
+        {
+            actualSpeed = myMaxSpeed + 2f;
+            quaffleTimer = 150; // 50 FixedUpdate's per second -> 150 FUs = 3 seconds
+            collectedQuaffle = true;
+        }
+
+        public void QuaffleBoostEnd()
+        {
+            actualSpeed = myMaxSpeed;
+            collectedQuaffle = false;
+            quaffleTimer = 0;
+        }
 
         [SerializeField, Range(0, 5)] // At what distance does this character consider a target as having been reached?
         protected float genericHasReachedDistance = 1f;
@@ -118,11 +146,16 @@ namespace CharacterAI
             get { return ballAddedForceMultiplier; }
         }
 
-
         // Path to follow.
-        [SerializeField] protected int lastWaypointIndex = -1;
-        [SerializeField] protected int nextWaypointIndex = -1;
-        [SerializeField] protected Transform[] waypoints; // TODO: Change the format when we get the pathfinding nodes proper.
+        [SerializeField]
+        protected int lastWaypointIndex = -1;
+
+        [SerializeField]
+        protected int nextWaypointIndex = -1;
+
+        [SerializeField]
+        protected Transform[] waypoints; // TODO: Change the format when we get the pathfinding nodes proper.
+
         public void UpdateNextWaypointIndex(bool loop = false)
         {
             lastWaypointIndex = nextWaypointIndex;
@@ -133,6 +166,7 @@ namespace CharacterAI
                 nextWaypointIndex = nextWaypointIndex % waypoints.Length;
             }
         }
+
         public Transform ReturnLastWaypoint()
         {
             if (-1 < lastWaypointIndex && lastWaypointIndex < waypoints.Length)
@@ -144,6 +178,7 @@ namespace CharacterAI
                 return null;
             }
         }
+
         public Transform ReturnNextWaypoint()
         {
             if (-1 < nextWaypointIndex && nextWaypointIndex < waypoints.Length)
@@ -151,16 +186,15 @@ namespace CharacterAI
                 return waypoints[nextWaypointIndex];
             }
             else
-            { 
+            {
                 return null;
             }
         }
+
         public Transform ReturnFinalWaypoint()
         {
             return waypoints[waypoints.Length - 1];
         }
-
-
 
         // METHODS
         protected abstract Node PlantTheTree(BehaviourTree self);
@@ -170,7 +204,7 @@ namespace CharacterAI
             // Collect other references.
             myNPCMovement = gameObject.GetComponent<NPCMovement>();
             myGroupAI = gameObject.GetComponent<GroupAI>();
-            myRigidbody = GetComponent<Rigidbody>(); // Extra note from Craig: you don't need to say gameObject.GetComponent<>, the gameObject is implied) // Roxane: I like being explicit my dude :P
+            myRigidbody = GetComponent<Rigidbody>(); // Extra note from Craig: you don't need to say gameObject.GetComponent<>, the gameObject is implied) // Roxane: I like being explicit my dude :P // all good!
             actualSpeed = myMaxSpeed;
         }
 
@@ -193,6 +227,15 @@ namespace CharacterAI
                 if (bludgerTimer <= 0)
                 {
                     RecoveredFromBludgerHit();
+                }
+            }
+
+            if (collectedQuaffle)
+            {
+                quaffleTimer--;
+                if (quaffleTimer <= 0)
+                {
+                    QuaffleBoostEnd();
                 }
             }
         }
@@ -237,10 +280,18 @@ namespace CharacterAI
 
             foreach (Bludger bludger in this.MyGroupAI.TheBludgers)
             {
-                if (Vector3.Distance(target.transform.position, bludger.gameObject.transform.position) < distanceToClosestBludger)
+                if (
+                    Vector3.Distance(
+                        target.transform.position,
+                        bludger.gameObject.transform.position
+                    ) < distanceToClosestBludger
+                )
                 {
                     closestBludger = bludger.gameObject;
-                    distanceToClosestBludger = Vector3.Distance(target.transform.position,bludger.gameObject.transform.position);
+                    distanceToClosestBludger = Vector3.Distance(
+                        target.transform.position,
+                        bludger.gameObject.transform.position
+                    );
                 }
             }
 

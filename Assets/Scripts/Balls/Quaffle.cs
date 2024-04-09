@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using CharacterAI;
 using UnityEngine;
 
 public class Quaffle : Ball
@@ -24,6 +25,7 @@ public class Quaffle : Ball
     }
 
     int wasCaughtTimer = 0;
+
     [SerializeField]
     bool wasCaught = false;
 
@@ -53,10 +55,17 @@ public class Quaffle : Ball
                 lastHolder = myHolder;
 
                 if (myHolder != null && myHolder != theChaser.gameObject)
+                {
                     myHolder.GetComponent<GroupAI>().SetHasBall(false);
+                    myHolder.GetComponent<BehaviourTree>().QuaffleBoostEnd();
+                }
 
                 myHolder = collision.gameObject;
                 theChaser.SetHasBall(true);
+
+                // check if the myHolder has a Behaviour tree -> if it does, give them a speed boost
+                if (myHolder.GetComponent<BehaviourTree>())
+                    myHolder.GetComponent<BehaviourTree>().CollectedQuaffle();
 
                 // SetTeam(theChaser.Team);
 
