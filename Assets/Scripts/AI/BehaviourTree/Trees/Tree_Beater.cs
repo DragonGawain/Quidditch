@@ -36,13 +36,11 @@ namespace CharacterAI
                                 new List<Node>
                                 {
                                     new Node_IsStanceAggressive(this),
-                                    // Determine enemy target
-                                    //new Node_SetClosestBludgerFromTargetAsTarget(this),
-                                    //new Node_SeekTargetBludger(this),
-                                    //// Orient bludger and target. Not sure if needed.
-                                    //new Node_IsTargetBludgerWithinHitDistance(this),
-                                    //new Node_HitBludgerTowardsTarget(this),
-                                    new Node_Wait60Frames(this)
+                                    new Node_DetermineEnemyTarget(this),
+                                    new Node_SetClosestBludgerFromTargetAsTarget(this),
+                                    new Node_SeekTargetBludger(this),
+                                    new Node_IsTargetBludgerWithinHitDistance(this),
+                                    new Node_HitBludgerTowardsTarget(this),
                                 }
                             ),
                             new NodeSequence(
@@ -50,18 +48,23 @@ namespace CharacterAI
                                 new List<Node>
                                 {
                                     new Node_IsStanceDefensive(this),
-                                    new Node_SeekFormationSpot(this),
-                                    new Node_IsClosestBludgerTooClose(this),
-                                    new Node_SetClosestBludgerAsTarget(this),
-                                    new Node_SeekTargetBludger(this),
-                                    new Node_HitBludgerAwayFromTarget(this),
-                                    new Node_Wait60Frames(this)
-                                }
-                            )
-                        }
-                    )
-                }
-            );
+                                    new NodeSelector(self,
+                                        new List<Node>
+                                        {
+                                            new NodeSequence(self,
+                                                new List<Node>
+                                                {
+                                                    new Node_IsClosestBludgerTooClose(this),
+                                                    new Node_SetClosestBludgerAsTarget(this),
+                                                    new Node_SeekTargetBludger(this),
+                                                    new Node_IsTargetBludgerWithinHitDistance(this),
+                                                    new Node_HitBludgerAwayFromTarget(this),
+                                                }),
+                                            new Node_SeekFormationSpot(this)
+                                        })
+                                })
+                        })
+                });
             return rootNode;
         }
     }

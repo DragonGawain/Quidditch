@@ -16,7 +16,7 @@ namespace CharacterAI
             //Debug.Log("Executing Node_SetClosestBludgerFromTargetAsTarget");
 
             // Find the closest bludger.
-            GameObject target = ReadFromBlackboard("target") as GameObject;
+            GameObject target = ReadFromBlackboard("attackTarget") as GameObject;
             if (target != null)
             {
                 GameObject closestBludger = MyParentTree.LocateClosestBludgerToTarget(target).Item1;

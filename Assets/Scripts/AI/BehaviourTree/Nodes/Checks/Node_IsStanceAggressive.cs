@@ -16,9 +16,9 @@ namespace CharacterAI
             //Debug.Log("Executing Node_IsStanceAggressive?");
 
             // Do the check.
-            if (MyParentTree.MyGroupAI.GetIsInFormation() == false || MyParentTree.MyGroupAI.GetStance() == AIStance.AGGRESSIVE)
+            if (!MyParentTree.MyGroupAI.GetIsInFormation())
             {
-                // Debug.Log(string.Format("{0}'s stance is Aggressive.", MyParentTree.gameObject));
+                Debug.LogWarning(string.Format("{0}'s stance is Aggressive.", MyParentTree.gameObject));
 
                 myState = NodeState.SUCCESS;
                 return myState;

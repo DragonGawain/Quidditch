@@ -16,10 +16,18 @@ namespace CharacterAI
             //Debug.Log("Executing Node_IsStanceDefensive?");
 
             // Do the check.
-            if (MyParentTree.MyGroupAI.GetIsInFormation() == true || MyParentTree.MyGroupAI.GetStance() == AIStance.DEFENSIVE)
+            if (MyParentTree.MyGroupAI.GetIsInFormation())
             {
-                // Debug.Log(string.Format("{0}'s stance is Defensive.", MyParentTree.gameObject));
+                Debug.LogWarning(string.Format("{0}'s stance is Defensive.", MyParentTree.gameObject));
 
+                // Let's just set the protectedTarget here for ease of use.
+                GroupAI headChaser = MyParentTree.MyGroupAI.GetMyFormation().GetChasers()[0];
+
+                Debug.LogWarning(headChaser);
+
+                GameObject headChaserGO = headChaser.gameObject;
+
+                //WriteToBlackboard("protectedTarget", MyParentTree.MyGroupAI.GetMyFormation().GetChasers()[0].gameObject);
                 myState = NodeState.SUCCESS;
                 return myState;
             }
