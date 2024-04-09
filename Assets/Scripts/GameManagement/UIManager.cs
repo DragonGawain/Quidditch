@@ -40,7 +40,7 @@ public class UIManager : MonoBehaviour
     {
         // Temporary for timer testing
         //SceneManager.LoadScene("CristianScene");
-
+        Time.timeScale = 1;
         switch (playerRole)
         {
             case PlayerRole.CHASER:
@@ -104,7 +104,8 @@ public class UIManager : MonoBehaviour
                 pauseMenu.SetActive(false);*/
         endGame.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        Cursor.visible = true
+        Time.timeScale = 0;;
     }
 
     public void ChoosePlayerRole(TMP_Dropdown playerRoleInput)
