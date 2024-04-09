@@ -36,7 +36,7 @@ namespace CharacterAI
                                 self,
                                 new List<Node>
                                 {
-                                    // Am I playing agressively?
+                                    new Node_IsStanceAggressive(this),
                                     // Determine enemy target
                                     new Node_SetClosestBludgerFromTargetAsTarget(this),
                                     new Node_SeekTargetBludger(this),
@@ -50,7 +50,7 @@ namespace CharacterAI
                                 self,
                                 new List<Node>
                                 {
-                                    // Am I playing defensively?
+                                    new Node_IsStanceDefensive(this),
                                     // Determine target to protect.
                                     new Node_SeekTarget(this),
                                     new Node_IsNearTarget(this),

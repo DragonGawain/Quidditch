@@ -45,7 +45,8 @@ namespace CharacterAI
                                                     // Is teammate in a good spot for a pass?
                                                     new Node_CheckTeammateForPass(this),
                                                     // Pass to teammate
-                                                    new Node_PassQuaffleToTeammate(this)
+                                                    new Node_PassQuaffleToTeammate(this),
+                                                    new Node_Wait60Frames(this)
                                                 }
                                             ),
                                             new NodeSequence(
@@ -54,7 +55,8 @@ namespace CharacterAI
                                                 {
                                                     // TODO: determine best goalpost.
                                                     new Node_HasReachedEnemyGoalpost(this),
-                                                    new Node_ThrowQuaffleAtGoalpost(this)
+                                                    new Node_ThrowQuaffleAtGoalpost(this),
+                                                    new Node_Wait60Frames(this)
                                                 }
                                             ),
                                             new Node_SeekEnemyGoalpost(this)
