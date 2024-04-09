@@ -35,6 +35,8 @@ namespace CharacterAI
 
         [SerializeField]
         bool canChase = true;
+        [SerializeField]
+        GameObject lastHit = null;
 
         // METHODS.
         // Start is called before the first frame update
@@ -53,7 +55,7 @@ namespace CharacterAI
             // Get the closest seeker to flee away from them
             if (canChase)
             {
-                target = GetClosestTarget(tags);
+                target = GetClosestTarget(tags, lastHit);
 
                 if (target != null)
                 {
@@ -82,6 +84,8 @@ namespace CharacterAI
             {
                 Debug.Log("BLUDGER HIT: " + collision.gameObject);
                 collision.gameObject.GetComponent<BehaviourTree>().GotHitByBludger();
+
+                lastHit = collision.gameObject;
             }
             // loop through all the children to see if this object is holding the quaffle
             // doing it this way cause it'll just automatically work with a player as well
@@ -129,7 +133,9 @@ namespace CharacterAI
         public void Throw(Vector3 force, GameObject hitter)
         {
             myPreviousHitter = hitter;
+            lastHit = hitter;
             target = null;
+
 
             // Should this partly exist in the parent Ball class?
             myRigidbody.AddForce(force, ForceMode.Impulse);
