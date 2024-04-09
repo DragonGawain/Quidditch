@@ -70,7 +70,8 @@ public class Quaffle : Ball
                 // SetTeam(theChaser.Team);
 
                 MyRigidbody.velocity = Vector3.zero;
-                MyRigidbody.isKinematic = true;
+                // MyRigidbody.isKinematic = true;
+                myRigidbody.constraints = RigidbodyConstraints.FreezeAll;
                 this.gameObject.transform.parent = collision.gameObject.transform;
             }
         }
@@ -86,7 +87,8 @@ public class Quaffle : Ball
         lastHolder = myHolder;
         myHolder = null;
 
-        MyRigidbody.isKinematic = false;
+        // MyRigidbody.isKinematic = false;
+        myRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         gameObject.transform.parent = null;
 
         wasCaught = true;

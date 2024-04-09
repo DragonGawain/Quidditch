@@ -214,7 +214,6 @@ public abstract class GroupAI : MonoBehaviour
         GameObject[] potentialGoalpostGOs = GameObject.FindGameObjectsWithTag("goalpost");
         if (potentialGoalpostGOs != null && potentialGoalpostGOs.Length > 0)
         {
-            // We assume that there are at most two goalposts.
             foreach (GameObject potentialGoalpostGO in potentialGoalpostGOs)
             {
                 Goalpost potentialGoalpost = potentialGoalpostGO.GetComponent<Goalpost>();

@@ -96,10 +96,15 @@ public class Formation
             seeker.SetIsinFormation(false);
         seeker = null;
 
-        foreach (KeyValuePair<FormationType, bool> flag in formationFlags)
-        {
-            formationFlags[flag.Key] = false;
-        }
+        formationFlags[FormationType.WINGMEN] = false;
+        formationFlags[FormationType.BEATFLANK] = false;
+        formationFlags[FormationType.ALIGN] = false;
+        formationType = FormationType.NONE;
+
+        // foreach (KeyValuePair<FormationType, bool> flag in formationFlags)
+        // {
+        //     formationFlags[flag.Key] = false;
+        // }
     }
 
     public GroupAI[] GetChasers()
