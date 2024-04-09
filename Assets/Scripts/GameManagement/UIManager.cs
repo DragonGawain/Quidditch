@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     GameObject endGame;
 
+    PlayerRole playerRole;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -39,7 +41,24 @@ public class UIManager : MonoBehaviour
         // Temporary for timer testing
         //SceneManager.LoadScene("CristianScene");
 
-        SceneManager.LoadScene("MainGame");
+        switch (playerRole)
+        {
+            case PlayerRole.CHASER:
+                SceneManager.LoadScene("MainGameChaser");
+                break;
+            case PlayerRole.BEATER:
+                SceneManager.LoadScene("MainGameBeater");
+                break;
+            case PlayerRole.SEEKER:
+                SceneManager.LoadScene("MainGameSeeker");
+                break;
+            case PlayerRole.KEEPER:
+                SceneManager.LoadScene("MainGameKeeper");
+                break;
+            default:
+                SceneManager.LoadScene("MainGameChaser");
+                break;
+        }
         mainMenu.SetActive(false);
         HUD.SetActive(true);
         Debug.Log("start game");
@@ -74,29 +93,29 @@ public class UIManager : MonoBehaviour
     // Enable the End Game Panel
     public void EndGame()
     {
-        SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene("EndGame");
         mainMenu.SetActive(false);
         HUD.SetActive(false);
         pauseMenu.SetActive(false);
         endGame.SetActive(true);
     }
 
-    public void ChoosePlayerRole(TMP_Dropdown playerRole)
+    public void ChoosePlayerRole(TMP_Dropdown playerRoleInput)
     {
-        int pr = playerRole.value;
+        int pr = playerRoleInput.value;
         switch (pr)
         {
             case 0:
-                GameManager.staticPlayerRole = PlayerRole.CHASER;
+                playerRole = PlayerRole.CHASER;
                 break;
             case 1:
-                GameManager.staticPlayerRole = PlayerRole.BEATER;
+                playerRole = PlayerRole.BEATER;
                 break;
             case 2:
-                GameManager.staticPlayerRole = PlayerRole.SEEKER;
+                playerRole = PlayerRole.SEEKER;
                 break;
             case 3:
-                GameManager.staticPlayerRole = PlayerRole.KEEPER;
+                playerRole = PlayerRole.KEEPER;
                 break;
             default:
                 break;
