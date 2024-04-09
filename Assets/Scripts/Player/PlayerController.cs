@@ -26,7 +26,8 @@ public class PlayerController : MonoBehaviour
     Vector2 offset = new Vector2(0, 0);
 
     //TODO:: I'm making the playerRole a SerializeField for now to make debugging easier, but it should be set via a UI option at the start
-    [SerializeField] PlayerRole playerRole; 
+    [SerializeField]
+    PlayerRole playerRole;
 
     public static float playerMaxSpeed = 3f;
 
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         currentMousePos = inputs.Player.MousePosition.ReadValue<Vector2>();
+        inputs.Player.Fire.performed += Fire;
     }
 
     // FixedUpdate is called 50 times per second
@@ -132,5 +134,41 @@ public class PlayerController : MonoBehaviour
     public PlayerRole GetPlayerRole()
     {
         return playerRole;
+    }
+
+    private void Fire(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    {
+        for (int i = 0; i < transform.GetChild(0).childCount; i++)
+        {
+            if (transform.GetChild(0).GetChild(i).GetComponent<Quaffle>())
+            {
+                // player shoot quaffle
+                transform
+                    .GetChild(0)
+                    .gameObject.transform.GetChild(i)
+                    .GetComponent<Quaffle>()
+                    .Throw(
+                        transform.GetChild(0).GetChild(2).position
+                            - transform.GetChild(0).position * 105
+                    );
+
+                // quaffle
+                // quaffle.Throw(
+                // (
+                //     (
+                //         collision.gameObject.transform.position - this.transform.position
+                //     ).normalized
+                //     + (
+                //         quaffle.transform.position - collision.gameObject.transform.position
+                //     ).normalized
+                // ).normalized
+                // );
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        inputs.Player.Fire.performed -= Fire;
     }
 }
