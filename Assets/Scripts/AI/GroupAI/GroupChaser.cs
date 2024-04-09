@@ -124,10 +124,10 @@ public class GroupChaser : GroupAI
     protected override void OnTeamObtainedQuaffle()
     {
         Debug.Log("HIT");
-        foreach (var item in friendlyChasers)
-        {
-            Debug.Log(item.name);
-        }
+        // foreach (var item in friendlyChasers)
+        // {
+        //     Debug.Log(item.name);
+        // }
         // base.OnTeamObtainedQuaffle();
         int selector = Mathf.FloorToInt(Random.Range(0, 2.99f));
         switch (selector)
@@ -164,6 +164,13 @@ public class GroupChaser : GroupAI
                 MyFormation.SetFormationFlag(FormationType.ALIGN, true);
                 MyFormation.SetChasers(this, friendlyChasers[0], friendlyChasers[1]);
                 MyFormation.SetBeaters();
+                MyFormation.SetKeeper();
+                MyFormation.SetSeeker();
+                break;
+            default:
+                MyFormation.SetFormationFlag(FormationType.WINGMEN, true);
+                MyFormation.SetChasers(this, friendlyChasers[0], friendlyChasers[1]);
+                MyFormation.SetBeaters(FindClosestAlliedBeater());
                 MyFormation.SetKeeper();
                 MyFormation.SetSeeker();
                 break;
