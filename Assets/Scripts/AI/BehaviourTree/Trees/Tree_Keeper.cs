@@ -29,31 +29,9 @@ namespace CharacterAI
                         new List<Node>
                         {
                             new Node_IsQuaffleTooClose(this),
-                            new NodeSelector(
-                                self,
-                                new List<Node>
-                                {
-                                    new NodeSequence(
-                                        self,
-                                        new List<Node>
-                                        {
-                                            new Node_IsQuaffleFree(this),
-                                            new Node_SeekQuaffle(this)
-                                        }
-                                    ),
-                                    new NodeSequence(
-                                        self,
-                                        new List<Node>
-                                        {
-                                            // Estimate enemy's target
-                                            // Seek enemy's target ring
-                                            // Guard target ring
-                                        }
-                                    )
-                                }
-                            )
-                        }
-                    ),
+                            new Node_IsQuaffleFree(this),
+                            new Node_SeekQuaffle(this)
+                        }),
                     new NodeSequence(
                         self,
                         new List<Node>
