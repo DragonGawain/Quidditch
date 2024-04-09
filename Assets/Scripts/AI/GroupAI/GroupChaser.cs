@@ -137,7 +137,13 @@ public class GroupChaser : GroupAI
     protected override void OnTeamLostQuaffle()
     {
         MyFormation.SetFormationFlag(FormationType.WINGMEN, false);
-        // MyFormation.ResetAll();
+
+        MyFormation.SetFormationFlag(FormationType.ALIGN, true);
+        MyFormation.ResetAll();
+        if (team == Team.AI)
+            AIFormation = MyFormation;
+        else
+            PlayerFormation = MyFormation;
     }
 
     GroupAI FindClosestAlliedBeater()
