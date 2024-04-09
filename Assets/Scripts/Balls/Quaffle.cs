@@ -100,7 +100,8 @@ public class Quaffle : Ball
 
     public void ResetQuaffle()
     {
-        MyRigidbody.isKinematic = false;
+        // MyRigidbody.isKinematic = false;
+        myRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         gameObject.transform.parent = null;
 
         transform.position = Vector3.zero;
@@ -119,6 +120,10 @@ public class Quaffle : Ball
             if (wasCaughtTimer <= 0)
                 wasCaught = false;
             wasCaughtTimer--;
+        }
+        if (myHolder == null)
+        {
+            MyRigidbody.velocity = MyRigidbody.velocity - (MyRigidbody.velocity.normalized * 0.05f);
         }
     }
 }

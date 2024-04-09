@@ -36,6 +36,10 @@ public class GroupChaser : GroupAI
     {
         if (hasBall)
         {
+            if (team == Team.AI)
+                AIFormation = MyFormation;
+            else
+                PlayerFormation = MyFormation;
             GroupAI[] chaserFormation = MyFormation.GetChasers();
             GroupAI[] beaterFormation = MyFormation.GetBeaters();
             switch (MyFormation.GetFormationType())
