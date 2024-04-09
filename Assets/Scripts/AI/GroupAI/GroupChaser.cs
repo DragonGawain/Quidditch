@@ -101,7 +101,8 @@ public class GroupChaser : GroupAI
     {
         Debug.Log("HIT");
         // base.OnTeamObtainedQuaffle();
-        int selector = (int)Random.Range(0, 3.99f);
+        int selector = Mathf.FloorToInt(Random.Range(0, 2.99f));
+
         switch (selector)
         {
             case 0:
