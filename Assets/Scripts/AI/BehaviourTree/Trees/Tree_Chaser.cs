@@ -37,6 +37,7 @@ namespace CharacterAI
                                                                                 new Node_CheckTeammateForPass(this),
 
                                                                                 // Pass to teammate
+                                                                                new Node_PassQuaffleToTeammate(this)
                                                                             }),
                                                                         new NodeSequence(self,
                                                                             new List<Node>
