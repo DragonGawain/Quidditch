@@ -149,6 +149,12 @@ public class Quaffle : Ball
         transform.position = Vector3.zero;
         MyRigidbody.velocity = Vector3.zero;
 
+        if (myHolder != null)
+        {
+            if (myHolder.GetComponent<GroupAI>())
+                myHolder.GetComponent<GroupAI>().SetHasBall(false);
+        }
+
         myHolder = null;
         lastHolder = null;
 
