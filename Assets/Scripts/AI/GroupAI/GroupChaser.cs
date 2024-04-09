@@ -116,6 +116,11 @@ public class GroupChaser : GroupAI
                 MyFormation.SetBeaters(FindClosestAlliedBeater());
                 MyFormation.SetKeeper();
                 MyFormation.SetSeeker();
+                GroupAI[] beaterFormation1 = MyFormation.GetBeaters();
+                foreach (GroupAI beater in beaterFormation1)
+                {
+                    beater.SetStance(AIStance.DEFENSIVE);
+                }
                 // Set beater to aggressive/defensive
                 break;
             case 1:
@@ -124,6 +129,11 @@ public class GroupChaser : GroupAI
                 MyFormation.SetBeaters(friendlyBeaters[0], friendlyBeaters[1]);
                 MyFormation.SetKeeper();
                 MyFormation.SetSeeker();
+                GroupAI[] beaterFormation2 = MyFormation.GetBeaters();
+                foreach (GroupAI beater in beaterFormation2)
+                {
+                    beater.SetStance(AIStance.DEFENSIVE);
+                }
                 // Set beaters to aggressive/defensive
                 break;
             case 2:
