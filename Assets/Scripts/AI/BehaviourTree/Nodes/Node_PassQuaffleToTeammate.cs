@@ -35,7 +35,7 @@ namespace CharacterAI
                     Vector3 desiredPass = targetTeammate.gameObject.transform.position - MyParentTree.gameObject.transform.position;
                     theQuaffle.Throw(desiredPass.normalized * MyParentTree.BallAddedForceMultiplier);
 
-                    Debug.Log(string.Format("{0} should have passed to {1}.", MyParentTree.gameObject, targetTeammate));
+                    //Debug.Log(string.Format("{0} should have passed to {1}.", MyParentTree.gameObject, targetTeammate));
 
                     myState = NodeState.SUCCESS;
                     return myState;

@@ -50,13 +50,14 @@ public class Quaffle : Ball
             GroupAI theChaser = collision.gameObject.GetComponent<GroupAI>();
             if (theChaser != null && collision.gameObject.CompareTag("chaser"))
             {
+                lastHolder = myHolder;
+
                 if (myHolder != null && myHolder != theChaser.gameObject)
                     myHolder.GetComponent<GroupAI>().SetHasBall(false);
 
+                myHolder = collision.gameObject;
                 theChaser.SetHasBall(true);
 
-                myHolder = collision.gameObject;
-                lastHolder = myHolder;
                 // SetTeam(theChaser.Team);
 
                 MyRigidbody.velocity = Vector3.zero;
