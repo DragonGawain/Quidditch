@@ -22,7 +22,7 @@ namespace CharacterAI
         }
 
         // Tags corresponding to the possible targets for the bludger.
-        private string[] tags = { "seeker", "keeper", "beater", "chaser" };
+        private string[] tags = { "seeker", "beater", "chaser" }; //
 
         // Beater who previously hit.
         [SerializeField]
