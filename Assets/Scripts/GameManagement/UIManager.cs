@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     GameObject endGame;
 
-    PlayerRole playerRole;
+    public static PlayerRole playerRole;
 
     // Start is called before the first frame update
     void Awake()

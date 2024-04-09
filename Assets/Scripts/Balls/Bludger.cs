@@ -35,6 +35,7 @@ namespace CharacterAI
 
         [SerializeField]
         bool canChase = true;
+
         [SerializeField]
         GameObject lastHit = null;
 
@@ -77,6 +78,20 @@ namespace CharacterAI
                     this.gameObject
                 )
             );
+
+            if (collision.gameObject.GetComponent<PlayerController>())
+            {
+                if (UIManager.playerRole == PlayerRole.BEATER)
+                {
+                    this.Throw(
+                        (
+                            collision.gameObject.transform.GetChild(0).GetChild(3).position
+                            - collision.gameObject.transform.GetChild(0).position
+                        ).normalized * 15,
+                        collision.gameObject
+                    );
+                }
+            }
             // TODO:: add extra logic for actual player (I'm assuming that an actual player won't have have a BehaviourTree script on it?)
 
             // Check if the other has a Behaviour tree
@@ -135,7 +150,6 @@ namespace CharacterAI
             myPreviousHitter = hitter;
             lastHit = hitter;
             target = null;
-
 
             // Should this partly exist in the parent Ball class?
             myRigidbody.AddForce(force, ForceMode.Impulse);
