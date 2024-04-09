@@ -80,4 +80,26 @@ public class UIManager : MonoBehaviour
         pauseMenu.SetActive(false);
         endGame.SetActive(true);
     }
+
+    public void ChoosePlayerRole(TMP_Dropdown playerRole)
+    {
+        int pr = playerRole.value;
+        switch (pr)
+        {
+            case 0:
+                GameManager.staticPlayerRole = PlayerRole.CHASER;
+                break;
+            case 1:
+                GameManager.staticPlayerRole = PlayerRole.BEATER;
+                break;
+            case 2:
+                GameManager.staticPlayerRole = PlayerRole.SEEKER;
+                break;
+            case 3:
+                GameManager.staticPlayerRole = PlayerRole.KEEPER;
+                break;
+            default:
+                break;
+        }
+    }
 }

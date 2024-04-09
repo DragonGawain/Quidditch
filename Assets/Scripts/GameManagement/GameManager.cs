@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 
     public delegate void GoalScored(Team owningTeam, GroupAI characterResponsible);
 
+    public static PlayerRole staticPlayerRole;
+
 
 
     // Start is called before the first frame update
