@@ -314,8 +314,9 @@ public abstract class GroupAI : MonoBehaviour
         return MyFormation;
     }
 
-    private void LateUpdate()
+    protected virtual void FixedUpdate()
     {
+        Debug.Log("CALL");
         // AI will face away from the point they were at last update tick (i.e. they will look in the direction they are moving)
         if (prevPos2 == prevPos3)
             transform.rotation = Quaternion.LookRotation(transform.position - prevPos);

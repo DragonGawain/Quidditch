@@ -32,7 +32,7 @@ public class GroupChaser : GroupAI
         // Debug.Log(output);
     }
 
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
         if (hasBall)
         {
@@ -117,6 +117,8 @@ public class GroupChaser : GroupAI
             else
                 PlayerFormation = MyFormation;
         }
+
+        base.FixedUpdate();
     }
 
     protected override void OnTeamObtainedQuaffle()
