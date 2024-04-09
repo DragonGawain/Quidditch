@@ -569,10 +569,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7712827955913624980, guid: b38d94eff2bfcb043bfda94029a8de29,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3fec52964f3d0459a91c940fedf34797, type: 2}
     - target: {fileID: 7981417123366933304, guid: b38d94eff2bfcb043bfda94029a8de29,
         type: 3}
       propertyPath: m_Name
-      value: Chaser (1)
+      value: Chaser_PlayerA
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -657,10 +662,15 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 87d49a4f355e54e6f8afaa8f71b09ee0, type: 2}
+    - target: {fileID: 7712827955913624980, guid: b38d94eff2bfcb043bfda94029a8de29,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3fec52964f3d0459a91c940fedf34797, type: 2}
     - target: {fileID: 7981417123366933304, guid: b38d94eff2bfcb043bfda94029a8de29,
         type: 3}
       propertyPath: m_Name
-      value: Chaser (4)
+      value: Chaser_PlayerB
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -772,7 +782,7 @@ PrefabInstance:
     - target: {fileID: 7981417123366933304, guid: b38d94eff2bfcb043bfda94029a8de29,
         type: 3}
       propertyPath: m_Name
-      value: Chaser (2)
+      value: Chaser_AIB
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1133,7 +1143,7 @@ PrefabInstance:
     - target: {fileID: 7981417123366933304, guid: b38d94eff2bfcb043bfda94029a8de29,
         type: 3}
       propertyPath: m_Name
-      value: Chaser
+      value: Chaser_AIA
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1296,9 +1306,9 @@ SceneRoots:
   - {fileID: 1710149272}
   - {fileID: 1599112809}
   - {fileID: 2034041984}
+  - {fileID: 787625735}
   - {fileID: 228979549}
   - {fileID: 525922016}
-  - {fileID: 787625735}
   - {fileID: 2061015592}
   - {fileID: 5886623126983875273}
   - {fileID: 154931338}

@@ -30,6 +30,7 @@ namespace CharacterAI
                                                                 new NodeSelector(self,
                                                                     new List<Node>
                                                                     {
+                                                                        // TODO: determine what goalpost to target
                                                                         new NodeSequence(self,
                                                                             new List<Node>
                                                                             {

@@ -62,7 +62,7 @@ public class Quaffle : Ball
 
                 MyRigidbody.velocity = Vector3.zero;
                 MyRigidbody.isKinematic = true;
-                gameObject.transform.parent = collision.gameObject.transform;
+                this.gameObject.transform.parent = collision.gameObject.transform;
             }
         }
     }

@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e15dddabbc658a544b340b9bee37a7cf, type: 2}
+  - {fileID: 2100000, guid: 90ed0e600ea2cc14aaeb31b38062a4bb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -161,3 +161,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myNPCMovement: {fileID: 1141202747643391102}
   myHolder: {fileID: 0}
+  lastHolder: {fileID: 0}
+  wasCaught: 0

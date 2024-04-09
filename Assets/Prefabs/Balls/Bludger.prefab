@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 98415e50c183ee74d9acdec636d829d5, type: 2}
+  - {fileID: 2100000, guid: 030f99268c31e1441bfcf4382dfa7874, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -160,6 +160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myNPCMovement: {fileID: 1504161166958851053}
-  target: {fileID: 0}
   maxSpeed: 4
   acceleration: 1
+  target: {fileID: 0}
+  myPreviousHitter: {fileID: 0}
+  canChase: 1
