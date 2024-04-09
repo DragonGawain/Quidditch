@@ -9,14 +9,20 @@ using UnityEngine.InputSystem.Controls;
 public class MouseLookRotate : MonoBehaviour
 {
     [Tooltip("Maximum speed in degrees/second. To flip an axis, multiply its value by -1")]
-    [SerializeField] private Vector2 sensitivity = new Vector2(200,-200);//y is negative to not have inverted control
+    [SerializeField] private Vector2 sensitivity = new Vector2(500,-500);//y is negative to not have inverted control
     [Tooltip("Rotation acceleration in degrees/second")]
-    [SerializeField] private Vector2 acceleration = new Vector2(200, 200);
+    [SerializeField] private Vector2 acceleration = new Vector2(500,500);
     [Tooltip("The maximum angle the player can rotate to look upwards")]
     [SerializeField] private float maxY = 60;
     [Tooltip("The maximum angle the player can rotate to look downwards")]
     [SerializeField] private float minY = -60;
     public float MAX_Y = 60;//maximum Y value (cant go directly up)
+
+    //Unity's input update rate is slower than frame rate
+    private float inputLagWait = 0.005f;//set this as low as possible without seeing any stuttering
+    private Vector2 lastValidInput;
+    //Keeps track of last time we received usable non-zero input value from unity
+    private float inputLagTimer = 0;
 
     //current rotation in degrees
     private Vector2 rotation;
@@ -30,11 +36,26 @@ public class MouseLookRotate : MonoBehaviour
     }
 
     private Vector2 getInput() {
+        //increment Lag timer for smoothing
+        inputLagTimer += Time.deltaTime;
         //useing the mouse position x and y 
         //Vector3 mouseInput = Mouse.current.position.ReadValue();
         //return new Vector2(mouseInput.x, mouseInput.y);
-        return new Vector2( Mouse.current.delta.x.ReadValue(),
+        Vector2 input= new Vector2( Mouse.current.delta.x.ReadValue(),
                             Mouse.current.delta.y.ReadValue());
+
+        //smoothing to account for the lag 
+        //unity fetches inputs at a rate much less than the frame rate
+        //those zero inputs cause stuttering that makes the turning look choppy
+        bool isZeroInput = Mathf.Approximately(0, input.x) && Mathf.Approximately(0, input.y);
+        if ( !isZeroInput || inputLagTimer >= inputLagWait)
+        {   
+            //if the input is not zero or the lag timer has elapsed(meaning the player actually means to give zero input)
+            lastValidInput = input;
+            inputLagTimer = 0;
+        }
+
+        return lastValidInput;
     }
 
     private void Update()
