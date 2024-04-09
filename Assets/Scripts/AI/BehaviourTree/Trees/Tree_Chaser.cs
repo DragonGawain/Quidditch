@@ -82,6 +82,7 @@ namespace CharacterAI
                                         {
                                             new Node_IsEnemyHoldingQuaffle(this),
                                             // Seek the point between the enemy and their target
+                                            new Node_SeekQuaffle(this)
                                         }
                                     ),
                                     new Node_SeekQuaffle(this)
