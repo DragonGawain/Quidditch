@@ -18,7 +18,7 @@ namespace CharacterAI
             // Do the check.
             if (MyParentTree.MyGroupAI.GetStance() == AIStance.AGGRESSIVE)
             {
-                Debug.Log(string.Format("{0}'s stance is Aggressive.", MyParentTree.gameObject));
+                // Debug.Log(string.Format("{0}'s stance is Aggressive.", MyParentTree.gameObject));
 
                 myState = NodeState.SUCCESS;
                 return myState;
