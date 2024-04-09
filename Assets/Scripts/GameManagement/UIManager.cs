@@ -104,8 +104,8 @@ public class UIManager : MonoBehaviour
                 pauseMenu.SetActive(false);*/
         endGame.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true
-        Time.timeScale = 0;;
+        Cursor.visible = true;
+        Time.timeScale = 0;
     }
 
     public void ChoosePlayerRole(TMP_Dropdown playerRoleInput)
