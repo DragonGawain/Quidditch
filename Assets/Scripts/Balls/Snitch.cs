@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Snitch : Ball
 {
@@ -17,6 +18,8 @@ public class Snitch : Ball
 
     // Tags corresponding to the possible targets for the snitch
     private string[] tags = { "seeker" };
+
+    private TextMeshProUGUI finalResult;
 
     // EVENTS
     public event GameManager.SnitchCaught OnSnitchCaught;
@@ -67,6 +70,14 @@ public class Snitch : Ball
 
             // Throw the event.
             EndGame();
+
+            finalResult = GameObject.Find("Game Result Text (TMP)").GetComponent<TextMeshProUGUI>();
+            
+            if (theSeeker.GetTeam() == Team.AI)
+                finalResult.SetText("Team 2 (AI) caught the snitch and WON!");
+            else if (theSeeker.GetTeam() == Team.PLAYER)
+                finalResult.SetText("Team 1 (PLAYER) caught the snitch and WON!");
+            
             // OnSnitchCaught?.Invoke(theSeeker);
         }
         if (collision.gameObject.CompareTag("Player"))
@@ -85,6 +96,7 @@ public class Snitch : Ball
 
                     // Throw the event.
                     EndGame();
+                    finalResult.SetText("Team 1 (PLAYER) caught the snitch and WON!");
                     // OnSnitchCaught?.Invoke(theSeeker);
                 }
             }

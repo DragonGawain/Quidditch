@@ -93,10 +93,10 @@ public class UIManager : MonoBehaviour
     // Enable the End Game Panel
     public void EndGame()
     {
-        SceneManager.LoadScene("EndGame");
+/*        SceneManager.LoadScene("EndGame");
         mainMenu.SetActive(false);
         HUD.SetActive(false);
-        pauseMenu.SetActive(false);
+        pauseMenu.SetActive(false);*/
         endGame.SetActive(true);
     }
 
