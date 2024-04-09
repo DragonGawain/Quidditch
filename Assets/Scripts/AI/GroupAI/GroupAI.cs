@@ -80,6 +80,7 @@ public abstract class GroupAI : MonoBehaviour
     {
         get { return ourGoalposts; }
     }
+
     [SerializeField]
     protected List<Goalpost> enemyGoalposts = new();
     public List<Goalpost> EnemyGoalposts
@@ -182,12 +183,12 @@ public abstract class GroupAI : MonoBehaviour
 
         // Find the player.
         // Roxane: add to add a check to keep it from glitching in my test scene.
-        GameObject potentialPlayer = GameObject.FindGameObjectWithTag("Player");
-        if (potentialPlayer != null)
-        {
-            player = potentialPlayer.GetComponent<PlayerController>();
-            playerRole = player.GetPlayerRole();
-        }
+        // GameObject potentialPlayer = GameObject.FindGameObjectWithTag("Player");
+        // if (potentialPlayer != null)
+        // {
+        //     player = potentialPlayer.GetComponent<PlayerController>();
+        //     playerRole = player.GetPlayerRole();
+        // }
 
         // Find the balls.
         GameObject potentialSnitch = GameObject.FindGameObjectWithTag("snitch");
@@ -317,15 +318,24 @@ public abstract class GroupAI : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        Debug.Log("CALL");
-        // AI will face away from the point they were at last update tick (i.e. they will look in the direction they are moving)
-        if (prevPos2 == prevPos3)
-            transform.rotation = Quaternion.LookRotation(transform.position - prevPos);
-        else
-            transform.rotation = this.GetComponent<BehaviourTree>()
-                .MyNPCMovement.KinematicFaceAway(prevPos3);
-        prevPos3 = prevPos2;
-        prevPos2 = prevPos;
-        prevPos = transform.position;
+        // only do rotaion stuff if it's not the player
+        // if (
+        //     !gameObject.name.Equals("PlayerChaser")
+        //     && !gameObject.name.Equals("PlayerBeater")
+        //     && !gameObject.name.Equals("PlayerKeeper")
+        //     && !gameObject.name.Equals("PlayerSeeker")
+        // )
+        if (!gameObject.name.Equals("Player"))
+        {
+            // AI will face away from the point they were at last update tick (i.e. they will look in the direction they are moving)
+            if (prevPos2 == prevPos3)
+                transform.rotation = Quaternion.LookRotation(transform.position - prevPos);
+            else
+                transform.rotation = this.GetComponent<BehaviourTree>()
+                    .MyNPCMovement.KinematicFaceAway(prevPos3);
+            prevPos3 = prevPos2;
+            prevPos2 = prevPos;
+            prevPos = transform.position;
+        }
     }
 }

@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
     //TODO:: I'm making the playerRole a SerializeField for now to make debugging easier, but it should be set via a UI option at the start
     [SerializeField] PlayerRole playerRole; 
 
+    public static float playerMaxSpeed = 3f;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -63,11 +65,11 @@ public class PlayerController : MonoBehaviour
         {
             // body.velocity += new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
             Vector3 movementVector =
-                transform.GetChild(0).GetChild(0).position - transform.GetChild(0).position;
+                transform.GetChild(0).GetChild(2).position - transform.GetChild(0).position;
             movementVector.Normalize();
             movementVector /= 2;
             body.velocity += movementVector;
-            body.velocity = Vector3.ClampMagnitude(body.velocity, 2);
+            body.velocity = Vector3.ClampMagnitude(body.velocity, playerMaxSpeed);
         }
         else if (movementInput < 0)
         {

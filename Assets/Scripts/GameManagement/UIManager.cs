@@ -44,18 +44,23 @@ public class UIManager : MonoBehaviour
         switch (playerRole)
         {
             case PlayerRole.CHASER:
+                PlayerController.playerMaxSpeed = 3f;
                 SceneManager.LoadScene("MainGameChaser");
                 break;
             case PlayerRole.BEATER:
+                PlayerController.playerMaxSpeed = 5f;
                 SceneManager.LoadScene("MainGameBeater");
                 break;
             case PlayerRole.SEEKER:
+                PlayerController.playerMaxSpeed = 2.25f;
                 SceneManager.LoadScene("MainGameSeeker");
                 break;
             case PlayerRole.KEEPER:
+                PlayerController.playerMaxSpeed = 5f;
                 SceneManager.LoadScene("MainGameKeeper");
                 break;
             default:
+                PlayerController.playerMaxSpeed = 3f;
                 SceneManager.LoadScene("MainGameChaser");
                 break;
         }
@@ -93,10 +98,10 @@ public class UIManager : MonoBehaviour
     // Enable the End Game Panel
     public void EndGame()
     {
-/*        SceneManager.LoadScene("EndGame");
-        mainMenu.SetActive(false);
-        HUD.SetActive(false);
-        pauseMenu.SetActive(false);*/
+        /*        SceneManager.LoadScene("EndGame");
+                mainMenu.SetActive(false);
+                HUD.SetActive(false);
+                pauseMenu.SetActive(false);*/
         endGame.SetActive(true);
     }
 

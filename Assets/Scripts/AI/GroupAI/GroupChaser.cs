@@ -15,21 +15,21 @@ public class GroupChaser : GroupAI
         else
             MyFormation = PlayerFormation;
 
-        // string output = "CHASER " + this.gameObject.name + ", - chasers: ";
-        // foreach (GroupAI chaser in friendlyChasers)
-        // {
-        //     output += chaser.gameObject.name + ", ";
-        // }
-        // output += "beaters: ";
-        // foreach (GroupAI beater in friendlyBeaters)
-        // {
-        //     output += beater.gameObject.name + ", ";
-        // }
-        // if (freindlySeeker != null)
-        //     output += "seeker: " + freindlySeeker.gameObject.name;
-        // if (freindlyKeeper != null)
-        //     output += ", keeper: " + freindlyKeeper.gameObject.name;
-        // Debug.Log(output);
+        string output = "CHASER " + this.gameObject.name + ", - chasers: ";
+        foreach (GroupAI chaser in friendlyChasers)
+        {
+            output += chaser.gameObject.name + ", ";
+        }
+        output += "beaters: ";
+        foreach (GroupAI beater in friendlyBeaters)
+        {
+            output += beater.gameObject.name + ", ";
+        }
+        if (freindlySeeker != null)
+            output += "seeker: " + freindlySeeker.gameObject.name;
+        if (freindlyKeeper != null)
+            output += ", keeper: " + freindlyKeeper.gameObject.name;
+        Debug.Log(output);
     }
 
     protected override void FixedUpdate()
@@ -124,6 +124,10 @@ public class GroupChaser : GroupAI
     protected override void OnTeamObtainedQuaffle()
     {
         Debug.Log("HIT");
+        foreach (var item in friendlyChasers)
+        {
+            Debug.Log(item.name);
+        }
         // base.OnTeamObtainedQuaffle();
         int selector = Mathf.FloorToInt(Random.Range(0, 2.99f));
         switch (selector)
