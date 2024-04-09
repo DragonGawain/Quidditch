@@ -48,19 +48,19 @@ public class Quaffle : Ball
         Debug.Log(string.Format("The quaffle collided with {0}.", collision.gameObject));
         if (!wasCaught)
         {
-            GroupAI theChaser = collision.gameObject.GetComponent<GroupAI>();
-            if (theChaser != null && collision.gameObject.CompareTag("chaser"))
+            GroupAI theCatcher = collision.gameObject.GetComponent<GroupAI>();
+            if (theCatcher != null && collision.gameObject.CompareTag("chaser"))
             {
                 lastHolder = myHolder;
 
-                if (myHolder != null && myHolder != theChaser.gameObject)
+                if (myHolder != null && myHolder != theCatcher.gameObject)
                 {
                     myHolder.GetComponent<GroupAI>().SetHasBall(false);
                     myHolder.GetComponent<BehaviourTree>().QuaffleBoostEnd();
                 }
 
                 myHolder = collision.gameObject;
-                theChaser.SetHasBall(true);
+                theCatcher.SetHasBall(true);
 
                 // check if the myHolder has a Behaviour tree -> if it does, give them a speed boost
                 if (myHolder.GetComponent<BehaviourTree>())
@@ -72,6 +72,11 @@ public class Quaffle : Ball
                 // MyRigidbody.isKinematic = true;
                 myRigidbody.constraints = RigidbodyConstraints.FreezeAll;
                 this.gameObject.transform.parent = collision.gameObject.transform;
+            }
+
+            if (theCatcher != null && collision.gameObject.CompareTag("keeper"))
+            {
+                ResetQuaffle();
             }
         }
     }
