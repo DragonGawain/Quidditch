@@ -246,6 +246,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 1
+  stance: 0
+  enemyGoalposts: []
 --- !u!114 &-5419026697407101027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,7 +279,7 @@ MonoBehaviour:
   waypointHasReachedDistance: 2
   followHasReachedDistance: 5
   goalpostHasReachedDistance: 20
-  bludgerFleeDistance: 5
+  bludgerFleeDistance: 10
   bludgerHitDistance: 1
   quaffleConcernDistance: 10
   ballAddedForceMultiplier: 10
