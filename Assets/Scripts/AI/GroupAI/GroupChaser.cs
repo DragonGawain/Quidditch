@@ -182,6 +182,10 @@ public class GroupChaser : GroupAI
         // MyFormation.SetFormationFlag(FormationType.BEATFLANK, false);
         // MyFormation.SetFormationFlag(FormationType.ALIGN, false);
         MyFormation.ResetAll();
+        if (team == Team.AI)
+            AIFormation = MyFormation;
+        else
+            PlayerFormation = MyFormation;
     }
 
     GroupAI FindClosestAlliedBeater()
