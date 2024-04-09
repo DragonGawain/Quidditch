@@ -55,6 +55,13 @@ public abstract class GroupAI : MonoBehaviour
     protected List<GroupAI> friendlyBeaters = new();
     protected GroupAI freindlySeeker;
     protected GroupAI freindlyKeeper;
+    
+    protected GroupAI enemySeeker;
+
+    public GroupAI GetEnemySeeker()
+    {
+        return enemySeeker;
+    }
 
     [SerializeField]
     protected AIStance stance;
@@ -291,6 +298,8 @@ public abstract class GroupAI : MonoBehaviour
             // If the target is on the same team, assign it (there should only be 1 seeker)
             if (ai.GetTeam() == this.team)
                 freindlySeeker = ai;
+            else if (ai.GetTeam() != this.team)
+                enemySeeker = ai;
         }
 
         prevPos = transform.position;
