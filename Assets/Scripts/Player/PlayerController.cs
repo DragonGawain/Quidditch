@@ -7,7 +7,7 @@ public enum PlayerRole
     CHASER,
     BEATER,
     KEEPER,
-    SEAKER
+    SEEKER
 }
 
 public class PlayerController : MonoBehaviour
