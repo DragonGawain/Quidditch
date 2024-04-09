@@ -48,9 +48,46 @@ public class Quaffle : Ball
         Debug.Log(string.Format("The quaffle collided with {0}.", collision.gameObject));
         if (!wasCaught)
         {
-            // TODO:: verification that a chaser collided with the quaffle?
             GroupAI theChaser = collision.gameObject.GetComponent<GroupAI>();
             if (theChaser != null && collision.gameObject.CompareTag("chaser"))
+            {
+                lastHolder = myHolder;
+
+                if (myHolder != null && myHolder != theChaser.gameObject)
+                {
+                    myHolder.GetComponent<GroupAI>().SetHasBall(false);
+                    myHolder.GetComponent<BehaviourTree>().QuaffleBoostEnd();
+                }
+
+                myHolder = collision.gameObject;
+                theChaser.SetHasBall(true);
+
+                // check if the myHolder has a Behaviour tree -> if it does, give them a speed boost
+                if (myHolder.GetComponent<BehaviourTree>())
+                    myHolder.GetComponent<BehaviourTree>().CollectedQuaffle();
+
+                // SetTeam(theChaser.Team);
+
+                MyRigidbody.velocity = Vector3.zero;
+                // MyRigidbody.isKinematic = true;
+                myRigidbody.constraints = RigidbodyConstraints.FreezeAll;
+                this.gameObject.transform.parent = collision.gameObject.transform;
+            }
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (!wasCaught)
+        {
+            Debug.Log(
+                string.Format(
+                    "The quaffle is colliding  with {0} continuously.",
+                    collision.gameObject
+                )
+            );
+            GroupAI theChaser = collision.gameObject.GetComponent<GroupAI>();
+            if (theChaser != null && collision.gameObject.CompareTag("chaser") && myHolder == null)
             {
                 lastHolder = myHolder;
 
