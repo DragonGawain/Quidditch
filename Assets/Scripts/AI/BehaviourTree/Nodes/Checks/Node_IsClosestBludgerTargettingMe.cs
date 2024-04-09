@@ -25,6 +25,7 @@ namespace CharacterAI
             // Do the check.
             if (closestBludgerBludger != null && closestBludgerBludger.Target != null && closestBludgerBludger.Target.gameObject == MyParentTree.gameObject)
             { // TODO: Test whether this works as intended.
+                //Debug.Log(string.Format("The Bludger {0} is targeting {1}.", closestBludgerBludger.gameObject, closestBludgerBludger.Target));
                 myState = NodeState.SUCCESS;
             }
             else

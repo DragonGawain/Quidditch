@@ -16,7 +16,7 @@ namespace CharacterAI
             //Debug.Log("Executing Node_IsStanceDefensive?");
 
             // Do the check.
-            if (MyParentTree.MyGroupAI.GetStance() == AIStance.DEFENSIVE)
+            if (MyParentTree.MyGroupAI.GetIsInFormation() == true || MyParentTree.MyGroupAI.GetStance() == AIStance.DEFENSIVE)
             {
                 // Debug.Log(string.Format("{0}'s stance is Defensive.", MyParentTree.gameObject));
 

@@ -24,6 +24,8 @@ namespace CharacterAI
             if (closestBludger)
             {
                 WriteToBlackboard("targetBludger", closestBludger);
+                //Debug.Log(string.Format("{0} was set as {1}'s targetBludger.", closestBludger, MyParentTree.gameObject));
+
                 myState = NodeState.SUCCESS;
                 return myState;
             }

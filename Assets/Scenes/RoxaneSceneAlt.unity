@@ -295,7 +295,7 @@ PrefabInstance:
     - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
       propertyPath: bludgerHitDistance
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
@@ -705,7 +705,7 @@ PrefabInstance:
     - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
       propertyPath: bludgerHitDistance
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}

@@ -1016,6 +1016,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: ead0b5e47df396c4d89bc0387889885f, type: 2}
+    - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
+        type: 3}
+      propertyPath: bludgerHitDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
+        type: 3}
+      propertyPath: bludgerFleeDistance
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
+        type: 3}
+      propertyPath: ballAddedForceMultiplier
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3166536417323224294, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
       propertyPath: m_Name
@@ -1024,7 +1039,7 @@ PrefabInstance:
     - target: {fileID: 5889319036024056515, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.67
+      value: -6.7
       objectReference: {fileID: 0}
     - target: {fileID: 5889319036024056515, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
@@ -1034,7 +1049,7 @@ PrefabInstance:
     - target: {fileID: 5889319036024056515, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.4799995
+      value: 21.1
       objectReference: {fileID: 0}
     - target: {fileID: 5889319036024056515, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
@@ -1074,7 +1089,7 @@ PrefabInstance:
     - target: {fileID: 5900669114287057368, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
       propertyPath: stance
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1177,6 +1192,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: ead0b5e47df396c4d89bc0387889885f, type: 2}
+    - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
+        type: 3}
+      propertyPath: bludgerHitDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
+        type: 3}
+      propertyPath: bludgerFleeDistance
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
+        type: 3}
+      propertyPath: ballAddedForceMultiplier
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3166536417323224294, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
       propertyPath: m_Name
@@ -1649,7 +1679,7 @@ PrefabInstance:
     - target: {fileID: 4542937404211876974, guid: 3f83fe9398dbedd478ddc4b64125a006,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -60.64
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 4542937404211876974, guid: 3f83fe9398dbedd478ddc4b64125a006,
         type: 3}
@@ -2898,6 +2928,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
+        type: 3}
+      propertyPath: bludgerHitDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
+        type: 3}
+      propertyPath: bludgerFleeDistance
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
+        type: 3}
+      propertyPath: ballAddedForceMultiplier
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3166536417323224294, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
       propertyPath: m_Name
@@ -3076,6 +3121,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
+        type: 3}
+      propertyPath: bludgerHitDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
+        type: 3}
+      propertyPath: bludgerFleeDistance
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937506345326557243, guid: 4b76321c66219e4429965dad0a6a5539,
+        type: 3}
+      propertyPath: ballAddedForceMultiplier
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3166536417323224294, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
       propertyPath: m_Name
@@ -3139,7 +3199,7 @@ PrefabInstance:
     - target: {fileID: 5900669114287057368, guid: 4b76321c66219e4429965dad0a6a5539,
         type: 3}
       propertyPath: stance
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
