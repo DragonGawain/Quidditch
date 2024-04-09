@@ -72,22 +72,23 @@ namespace CharacterAI
                                     new Node_SeekFormationSpot(this)
                                 }
                             ),
-                            new NodeSelector(
-                                self,
-                                new List<Node>
-                                {
-                                    new NodeSequence(
-                                        self,
-                                        new List<Node>
-                                        {
-                                            new Node_IsEnemyHoldingQuaffle(this),
-                                            // Seek the point between the enemy and their target
-                                            new Node_SeekQuaffle(this)
-                                        }
-                                    ),
-                                    new Node_SeekQuaffle(this)
-                                }
-                            )
+                            new Node_SeekQuaffle(this)
+                            //new NodeSelector(
+                            //    self,
+                            //    new List<Node>
+                            //    {
+                            //        new NodeSequence(
+                            //            self,
+                            //            new List<Node>
+                            //            {
+                            //                new Node_IsEnemyHoldingQuaffle(this),
+                            //                // Seek the point between the enemy and their target
+                            //                new Node_SeekQuaffle(this)
+                            //            }
+                            //        ),
+                            //        new Node_SeekQuaffle(this)
+                            //    }
+                            //)
                         }
                     )
                 }
