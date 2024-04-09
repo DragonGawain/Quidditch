@@ -47,7 +47,12 @@ public class GroupChaser : GroupAI
                 case FormationType.NONE:
                     break;
                 case FormationType.WINGMEN:
-                    Debug.Log("hit 2: " + MyFormation.GetChasers());
+                    // Debug.Log(
+                    //     "hit W chase: "
+                    //         + MyFormation.GetChasers()
+                    //         + ", hit W beat: "
+                    //         + MyFormation.GetBeaters()
+                    // );
                     // offset back and to the left
                     // The AI at the index chaserFormation[1] should seek towards this point
                     chaserFormation[1].SetFormationPosition(
@@ -70,6 +75,12 @@ public class GroupChaser : GroupAI
                     );
                     break;
                 case FormationType.BEATFLANK:
+                    // Debug.Log(
+                    //     "hit B chase: "
+                    //         + MyFormation.GetChasers()
+                    //         + ", hit B beat: "
+                    //         + MyFormation.GetBeaters()
+                    // );
                     beaterFormation[0].SetFormationPosition(
                         chaserFormation[0].transform.position
                             + chaserFormation[0].GetRightRef() * 2.5f
@@ -80,7 +91,12 @@ public class GroupChaser : GroupAI
                     );
                     break;
                 case FormationType.ALIGN:
-                    Debug.Log("hit 2: " + MyFormation.GetChasers());
+                    // Debug.Log(
+                    //     "hit A chase: "
+                    //         + MyFormation.GetChasers()
+                    //         + ", hit A beat: "
+                    //         + MyFormation.GetBeaters()
+                    // );
                     // offset right
                     chaserFormation[1].SetFormationPosition(
                         chaserFormation[0].transform.position
@@ -116,11 +132,12 @@ public class GroupChaser : GroupAI
                 MyFormation.SetBeaters(FindClosestAlliedBeater());
                 MyFormation.SetKeeper();
                 MyFormation.SetSeeker();
-                GroupAI[] beaterFormation1 = MyFormation.GetBeaters();
-                foreach (GroupAI beater in beaterFormation1)
-                {
-                    beater.SetStance(AIStance.DEFENSIVE);
-                }
+                // GroupAI[] beaterFormation1 = MyFormation.GetBeaters();
+                // foreach (GroupAI beater in beaterFormation1)
+                // {
+                //     if (beater != null)
+                //         beater.SetStance(AIStance.DEFENSIVE);
+                // }
                 // Set beater to aggressive/defensive
                 break;
             case 1:
@@ -129,11 +146,12 @@ public class GroupChaser : GroupAI
                 MyFormation.SetBeaters(friendlyBeaters[0], friendlyBeaters[1]);
                 MyFormation.SetKeeper();
                 MyFormation.SetSeeker();
-                GroupAI[] beaterFormation2 = MyFormation.GetBeaters();
-                foreach (GroupAI beater in beaterFormation2)
-                {
-                    beater.SetStance(AIStance.DEFENSIVE);
-                }
+                // GroupAI[] beaterFormation2 = MyFormation.GetBeaters();
+                // foreach (GroupAI beater in beaterFormation2)
+                // {
+                //     if (beater != null)
+                //         beater.SetStance(AIStance.DEFENSIVE);
+                // }
                 // Set beaters to aggressive/defensive
                 break;
             case 2:
@@ -154,8 +172,10 @@ public class GroupChaser : GroupAI
 
     protected override void OnTeamLostQuaffle()
     {
-        MyFormation.SetFormationFlag(FormationType.WINGMEN, false);
-        // MyFormation.ResetAll();
+        // MyFormation.SetFormationFlag(FormationType.WINGMEN, false);
+        // MyFormation.SetFormationFlag(FormationType.BEATFLANK, false);
+        // MyFormation.SetFormationFlag(FormationType.ALIGN, false);
+        MyFormation.ResetAll();
     }
 
     GroupAI FindClosestAlliedBeater()
