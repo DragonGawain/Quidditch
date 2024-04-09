@@ -793,7 +793,7 @@ PrefabInstance:
     - target: {fileID: 4273821967308426057, guid: b38d94eff2bfcb043bfda94029a8de29,
         type: 3}
       propertyPath: goalpostHasReachedDistance
-      value: 35
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6067807081271793167, guid: b38d94eff2bfcb043bfda94029a8de29,
         type: 3}
@@ -876,7 +876,7 @@ PrefabInstance:
     - target: {fileID: 4273821967308426057, guid: b38d94eff2bfcb043bfda94029a8de29,
         type: 3}
       propertyPath: goalpostHasReachedDistance
-      value: 35
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6067807081271793167, guid: b38d94eff2bfcb043bfda94029a8de29,
         type: 3}
@@ -1384,7 +1384,7 @@ PrefabInstance:
     - target: {fileID: 4273821967308426057, guid: b38d94eff2bfcb043bfda94029a8de29,
         type: 3}
       propertyPath: goalpostHasReachedDistance
-      value: 35
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6067807081271793167, guid: b38d94eff2bfcb043bfda94029a8de29,
         type: 3}

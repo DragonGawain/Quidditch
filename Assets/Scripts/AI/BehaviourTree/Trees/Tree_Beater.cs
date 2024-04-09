@@ -51,9 +51,9 @@ namespace CharacterAI
                                 new List<Node>
                                 {
                                     new Node_IsStanceDefensive(this),
-                                    // Determine target to protect.
-                                    new Node_SeekTarget(this),
-                                    new Node_IsNearTarget(this),
+                                    new Node_SeekFormationSpot(this),
+                                    //new Node_SeekTarget(this),
+                                    //new Node_IsNearTarget(this),
                                     new Node_IsClosestBludgerTooClose(this),
                                     new Node_SeekClosestBludger(this),
                                     new Node_SetClosestBludgerAsTarget(this),

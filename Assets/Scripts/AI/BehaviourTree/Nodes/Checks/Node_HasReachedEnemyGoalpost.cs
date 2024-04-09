@@ -24,6 +24,8 @@ namespace CharacterAI
                 WriteToBlackboard("enemyGoalpost", theEnemyGoalpost);
             }
 
+            //Debug.Log(theEnemyGoalpost);
+
             // Do the check.
             if (Vector3.Distance(MyParentTree.gameObject.transform.position, theEnemyGoalpost.transform.position) <= MyParentTree.GoalpostHasReachedDistance)
             {
