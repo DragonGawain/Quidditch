@@ -75,15 +75,16 @@ public abstract class GroupAI : MonoBehaviour
         get { return theBludgers; }
     }
 
-    protected Goalpost ourGoalpost;
-    public Goalpost OurGoalpost
+    protected List<Goalpost> ourGoalposts = new();
+    public List<Goalpost> OurGoalposts
     {
-        get { return ourGoalpost; }
+        get { return ourGoalposts; }
     }
-    protected Goalpost enemyGoalpost;
-    public Goalpost EnemyGoalpost
+    [SerializeField]
+    protected List<Goalpost> enemyGoalposts = new();
+    public List<Goalpost> EnemyGoalposts
     {
-        get { return enemyGoalpost; }
+        get { return enemyGoalposts; }
     }
 
     protected Rigidbody rb;
@@ -223,11 +224,11 @@ public abstract class GroupAI : MonoBehaviour
 
                 if (potentialGoalpost.OwningTeam == team)
                 {
-                    ourGoalpost = potentialGoalpost;
+                    ourGoalposts.Add(potentialGoalpost);
                 }
                 else
                 {
-                    enemyGoalpost = potentialGoalpost;
+                    enemyGoalposts.Add(potentialGoalpost);
                 }
             }
         }

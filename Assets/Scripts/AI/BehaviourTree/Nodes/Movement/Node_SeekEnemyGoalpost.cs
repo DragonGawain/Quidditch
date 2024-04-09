@@ -16,15 +16,15 @@ namespace CharacterAI
             //Debug.Log("Executing SeekEnemyGoalpost");
 
             // Find the goalpost.
-            GameObject theEnemyGoalpost = ReadFromBlackboard("enemyGoalpost") as GameObject;
-            if (theEnemyGoalpost == null)
+            GameObject targetEnemyGoalpost = ReadFromBlackboard("enemyGoalpost") as GameObject;
+            if (targetEnemyGoalpost == null)
             {
-                theEnemyGoalpost = MyParentTree.MyGroupAI.EnemyGoalpost.gameObject;
-                WriteToBlackboard("enemyGoalpost", theEnemyGoalpost);
+                targetEnemyGoalpost = MyParentTree.LocateClosestEnemyGoalpost().Item1;
+                WriteToBlackboard("enemyGoalpost", targetEnemyGoalpost);
             }
 
             // Seek it and return running.
-            Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(theEnemyGoalpost.transform.position, MyParentTree.MyMaxSpeed);
+            Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(targetEnemyGoalpost.transform.position, MyParentTree.MyMaxSpeed);
             MyParentTree.SetVRigidbodyVelocity(desiredVelocity);
 
             Debug.Log(MyParentTree.gameObject + " is seeking the enemy Goalpost.");

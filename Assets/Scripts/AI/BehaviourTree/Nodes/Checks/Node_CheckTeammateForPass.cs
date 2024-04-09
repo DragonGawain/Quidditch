@@ -15,13 +15,13 @@ namespace CharacterAI
         {
             Debug.Log("Executing CheckTeammateForPass");
 
-            Transform enemyGoalpost = MyParentTree.MyGroupAI.EnemyGoalpost.transform;
             Vector3 myPosition = MyParentTree.gameObject.transform.position;
+            float myBestDistanceFromGoalpost = MyParentTree.LocateClosestEnemyGoalpost().Item2;
 
             // Debug.Log(MyParentTree.MyGroupAI.FriendlyChasers.Count);
 
             GameObject bestTeammate = null;
-            float bestDistanceToGoalpost = float.MaxValue;
+            float bestTeammateDistanceToGoalpost = float.MaxValue;
 
             // Check if any teammate is closer to the enemy goalpost than the current character
             foreach (GroupAI chaser in MyParentTree.MyGroupAI.FriendlyChasers)
@@ -29,17 +29,14 @@ namespace CharacterAI
                 // Calculate distance between myself and the teammate.
                 float distanceBetweenSelfAndTeammate = Vector3.Distance(chaser.transform.position, MyParentTree.transform.position);
 
-                //Debug.Log(string.Format("Distance between {0} and {1}: {2}", MyParentTree.gameObject, chaser.gameObject, distanceBetweenSelfAndTeammate));
-
                 // Calculate distance to enemy goalpost for the teammate
-                float distanceToGoalpost = Vector3.Distance(chaser.transform.position, enemyGoalpost.position);
-                float myDistanceToGoalpost = Vector3.Distance(myPosition, enemyGoalpost.position);
+                float teammatesDistanceToGoalpost = MyParentTree.DistanceBetweenTargetAndTheirClosestEnemyGoalpost(chaser.gameObject).Item2;
 
                 // Check if the teammate is closer to the enemy goalpost than the current character, the previous best target, and that they are distant enough from each other.
-                if (distanceToGoalpost < bestDistanceToGoalpost && distanceToGoalpost < myDistanceToGoalpost && distanceBetweenSelfAndTeammate >= 10)
+                if (teammatesDistanceToGoalpost < bestTeammateDistanceToGoalpost && teammatesDistanceToGoalpost < myBestDistanceFromGoalpost && distanceBetweenSelfAndTeammate >= 10)
                 {
                     bestTeammate = chaser.gameObject;
-                    bestDistanceToGoalpost = distanceToGoalpost;
+                    bestTeammateDistanceToGoalpost = teammatesDistanceToGoalpost;
                 }
             }
             if (bestTeammate != null)

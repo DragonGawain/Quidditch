@@ -17,17 +17,17 @@ namespace CharacterAI
             //Debug.Log("Executing HasReachedEnemyGoalpost?");
 
             // Find the goalpost.
-            GameObject theEnemyGoalpost = ReadFromBlackboard("enemyGoalpost") as GameObject;
-            if (theEnemyGoalpost == null)
+            GameObject targetEnemyGoalpost = ReadFromBlackboard("enemyGoalpost") as GameObject;
+            if (targetEnemyGoalpost == null)
             {
-                theEnemyGoalpost = MyParentTree.MyGroupAI.EnemyGoalpost.gameObject;
-                WriteToBlackboard("enemyGoalpost", theEnemyGoalpost);
+                targetEnemyGoalpost = MyParentTree.LocateClosestEnemyGoalpost().Item1;
+                WriteToBlackboard("enemyGoalpost", targetEnemyGoalpost);
             }
 
             //Debug.Log(theEnemyGoalpost);
 
             // Do the check.
-            if (Vector3.Distance(MyParentTree.gameObject.transform.position, theEnemyGoalpost.transform.position) <= MyParentTree.GoalpostHasReachedDistance)
+            if (Vector3.Distance(MyParentTree.gameObject.transform.position, targetEnemyGoalpost.transform.position) <= MyParentTree.GoalpostHasReachedDistance)
             {
                 myState = NodeState.SUCCESS;
             }

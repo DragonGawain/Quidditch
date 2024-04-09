@@ -297,5 +297,39 @@ namespace CharacterAI
 
             return (closestBludger, distanceToClosestBludger);
         }
+
+        public (GameObject, float) LocateClosestEnemyGoalpost()
+        {
+            GameObject closestEnemyGoalpost = null;
+            float distanceToClosestEnemyGoalpost = float.MaxValue;
+
+            foreach (Goalpost goalpost in this.MyGroupAI.EnemyGoalposts)
+            {
+                float distanceToThisGoalpost = Vector3.Distance(gameObject.transform.position, goalpost.gameObject.transform.position);
+                if (distanceToThisGoalpost < distanceToClosestEnemyGoalpost)
+                {
+                    closestEnemyGoalpost = goalpost.gameObject;
+                    distanceToClosestEnemyGoalpost = distanceToThisGoalpost;
+                }
+            }
+            return (closestEnemyGoalpost, distanceToClosestEnemyGoalpost);
+        }
+
+        public (GameObject, float) DistanceBetweenTargetAndTheirClosestEnemyGoalpost(GameObject target)
+        {
+            GameObject closestEnemyGoalpost = null;
+            float distanceToClosestEnemyGoalpost = float.MaxValue;
+
+            foreach (Goalpost goalpost in this.MyGroupAI.EnemyGoalposts)
+            {
+                float distanceToThisGoalpost = Vector3.Distance(target.gameObject.transform.position, goalpost.gameObject.transform.position);
+                if (distanceToThisGoalpost < distanceToClosestEnemyGoalpost)
+                {
+                    closestEnemyGoalpost = goalpost.gameObject;
+                    distanceToClosestEnemyGoalpost = distanceToThisGoalpost;
+                }
+            }
+            return (closestEnemyGoalpost, distanceToClosestEnemyGoalpost);
+        }
     }
 }
