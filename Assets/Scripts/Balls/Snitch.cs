@@ -16,12 +16,10 @@ public class Snitch : Ball
     float acceleration = 1f;
 
     // Tags corresponding to the possible targets for the snitch
-    private string[] tags = {"seeker"};
-
+    private string[] tags = { "seeker" };
 
     // EVENTS
     public event GameManager.SnitchCaught OnSnitchCaught;
-
 
     // METHODS.
     // Start is called before the first frame update
@@ -68,7 +66,34 @@ public class Snitch : Ball
             // TODO: handle player seeker, and make sure everything is fine with the AI one.
 
             // Throw the event.
-            OnSnitchCaught?.Invoke(theSeeker);
+            EndGame();
+            // OnSnitchCaught?.Invoke(theSeeker);
         }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // verify existence of component
+            if (collision.gameObject.GetComponent<PlayerController>())
+            {
+                if (
+                    collision.gameObject.GetComponent<PlayerController>().GetPlayerRole()
+                    == PlayerRole.SEEKER
+                )
+                {
+                    Debug.Log(string.Format("The Snitch was caught by the player."));
+
+                    // TODO: handle player seeker, and make sure everything is fine with the AI one.
+
+                    // Throw the event.
+                    EndGame();
+                    // OnSnitchCaught?.Invoke(theSeeker);
+                }
+            }
+        }
+    }
+
+    private void EndGame()
+    {
+        UIManager uim = GameObject.FindGameObjectWithTag("UI").GetComponent<UIManager>();
+        uim.EndGame();
     }
 }
