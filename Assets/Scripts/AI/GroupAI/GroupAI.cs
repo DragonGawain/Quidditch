@@ -12,14 +12,10 @@ public enum AIType
 }
 
 // TODO:: actually make these states make sense (each individual AI type should be represented in this enum. I just, made some stuff up for this)
-public enum AIState
+public enum AIStance
 {
     AGGRESSIVE,
-    PASSIVE,
-    STEALING,
     DEFENSIVE,
-    GOALIE,
-    SEEKING
 }
 
 public enum Team
@@ -59,7 +55,9 @@ public abstract class GroupAI : MonoBehaviour
     protected List<GroupAI> friendlyBeaters = new();
     protected GroupAI freindlySeeker;
     protected GroupAI freindlyKeeper;
-    protected AIState state;
+
+    [SerializeField]
+    protected AIStance stance;
 
     protected Snitch theSnitch;
     public Snitch TheSnitch
@@ -116,9 +114,9 @@ public abstract class GroupAI : MonoBehaviour
         return isInFormation;
     }
 
-    public AIState GetState()
+    public AIStance GetStance()
     {
-        return state;
+        return stance;
     }
 
     public AIType GetAIType()
