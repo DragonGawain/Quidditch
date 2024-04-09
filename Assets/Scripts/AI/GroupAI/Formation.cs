@@ -31,6 +31,8 @@ public class Formation
         // Add a flag for every type of formation
         // The order of the formations is order of precedence -> first true flag in the list will be the formation
         formationFlags.Add(FormationType.WINGMEN, false);
+        formationFlags.Add(FormationType.BEATFLANK, false);
+        formationFlags.Add(FormationType.ALIGN, false);
     }
 
     public void SetChasers(GroupAI c0 = null, GroupAI c1 = null, GroupAI c2 = null)
@@ -107,6 +109,11 @@ public class Formation
         if (seeker != null)
             seeker.SetIsinFormation(false);
         seeker = null;
+
+        foreach (KeyValuePair<FormationType, bool> flag in formationFlags)
+        {
+            formationFlags[flag.Key] = false;
+        }
     }
 
     public GroupAI[] GetChasers()

@@ -103,7 +103,7 @@ public class GroupChaser : GroupAI
     {
         Debug.Log("HIT");
         // base.OnTeamObtainedQuaffle();
-        int selector = (int)Random.Range(0, 3.99f);
+        int selector = Mathf.FloorToInt(Random.Range(0, 2.99f));
         switch (selector)
         {
             case 0:
@@ -112,6 +112,7 @@ public class GroupChaser : GroupAI
                 MyFormation.SetBeaters(FindClosestAlliedBeater());
                 MyFormation.SetKeeper();
                 MyFormation.SetSeeker();
+                // Set beater to aggressive/defensive
                 break;
             case 1:
                 MyFormation.SetFormationFlag(FormationType.BEATFLANK, true);
@@ -119,6 +120,7 @@ public class GroupChaser : GroupAI
                 MyFormation.SetBeaters(friendlyBeaters[0], friendlyBeaters[1]);
                 MyFormation.SetKeeper();
                 MyFormation.SetSeeker();
+                // Set beaters to aggressive/defensive
                 break;
             case 2:
                 MyFormation.SetFormationFlag(FormationType.ALIGN, true);
