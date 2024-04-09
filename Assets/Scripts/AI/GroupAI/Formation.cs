@@ -5,7 +5,9 @@ using UnityEngine;
 public enum FormationType
 {
     NONE,
-    WINGMEN
+    WINGMEN,
+    BEATFLANK,
+    ALIGN
 }
 
 public class Formation
@@ -38,10 +40,16 @@ public class Formation
         chasers[2] = c2;
         if (c0 != null)
             chasers[0].SetIsinFormation(true);
+        else
+            chasers[0].SetIsinFormation(false);
         if (c1 != null)
             chasers[1].SetIsinFormation(true);
+        else
+            chasers[1].SetIsinFormation(false);
         if (c2 != null)
             chasers[2].SetIsinFormation(true);
+        else
+            chasers[1].SetIsinFormation(false);
     }
 
     public void SetBeaters(GroupAI b0 = null, GroupAI b1 = null)
@@ -50,8 +58,12 @@ public class Formation
         beaters[1] = b1;
         if (b0 != null)
             beaters[0].SetIsinFormation(true);
+        else
+            beaters[0].SetIsinFormation(false);
         if (b1 != null)
             beaters[1].SetIsinFormation(true);
+        else
+            beaters[0].SetIsinFormation(false);
     }
 
     public void SetKeeper(GroupAI k = null)
@@ -59,6 +71,8 @@ public class Formation
         keeper = k;
         if (k != null)
             keeper.SetIsinFormation(true);
+        else
+            keeper.SetIsinFormation(false);
     }
 
     public void SetSeeker(GroupAI s = null)
@@ -66,6 +80,8 @@ public class Formation
         seeker = s;
         if (s != null)
             seeker.SetIsinFormation(true);
+        else
+            seeker.SetIsinFormation(false);
     }
 
     public void ResetAll()

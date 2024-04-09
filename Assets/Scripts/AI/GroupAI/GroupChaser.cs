@@ -34,16 +34,16 @@ public class GroupChaser : GroupAI
 
     private void FixedUpdate()
     {
-        switch (MyFormation.GetFormationType())
+        if (hasBall)
         {
-            case FormationType.NONE:
-                break;
-            case FormationType.WINGMEN:
-                if (hasBall)
-                {
+            GroupAI[] chaserFormation = MyFormation.GetChasers();
+            GroupAI[] beaterFormation = MyFormation.GetBeaters();
+            switch (MyFormation.GetFormationType())
+            {
+                case FormationType.NONE:
+                    break;
+                case FormationType.WINGMEN:
                     Debug.Log("hit 2: " + MyFormation.GetChasers());
-                    GroupAI[] chaserFormation = MyFormation.GetChasers();
-                    GroupAI[] beaterFormation = MyFormation.GetBeaters();
                     // offset back and to the left
                     // The AI at the index chaserFormation[1] should seek towards this point
                     chaserFormation[1].SetFormationPosition(
@@ -64,8 +64,31 @@ public class GroupChaser : GroupAI
                         chaserFormation[0].transform.position
                             + chaserFormation[0].GetForwardRef() * 4
                     );
-                }
-                break;
+                    break;
+                case FormationType.BEATFLANK:
+                    beaterFormation[0].SetFormationPosition(
+                        chaserFormation[0].transform.position
+                            + chaserFormation[0].GetRightRef() * 2.5f
+                    );
+                    beaterFormation[0].SetFormationPosition(
+                        chaserFormation[0].transform.position
+                            - chaserFormation[0].GetRightRef() * 2.5f
+                    );
+                    break;
+                case FormationType.ALIGN:
+                    Debug.Log("hit 2: " + MyFormation.GetChasers());
+                    // offset right
+                    chaserFormation[1].SetFormationPosition(
+                        chaserFormation[0].transform.position
+                            + chaserFormation[0].GetRightRef() * 3.25f
+                    );
+                    // offset the left
+                    chaserFormation[2].SetFormationPosition(
+                        chaserFormation[0].transform.position
+                            - chaserFormation[0].GetRightRef() * 3.25f
+                    );
+                    break;
+            }
         }
         if (MyFormation.GetFormationType() != FormationType.NONE)
         {
@@ -80,10 +103,32 @@ public class GroupChaser : GroupAI
     {
         Debug.Log("HIT");
         // base.OnTeamObtainedQuaffle();
-        MyFormation.SetFormationFlag(FormationType.WINGMEN, true);
+        int selector = (int)Random.Range(0, 3.99f);
+        switch (selector)
+        {
+            case 0:
+                MyFormation.SetFormationFlag(FormationType.WINGMEN, true);
+                MyFormation.SetChasers(this, friendlyChasers[0], friendlyChasers[1]);
+                MyFormation.SetBeaters(FindClosestAlliedBeater());
+                MyFormation.SetKeeper();
+                MyFormation.SetSeeker();
+                break;
+            case 1:
+                MyFormation.SetFormationFlag(FormationType.BEATFLANK, true);
+                MyFormation.SetChasers(this);
+                MyFormation.SetBeaters(friendlyBeaters[0], friendlyBeaters[1]);
+                MyFormation.SetKeeper();
+                MyFormation.SetSeeker();
+                break;
+            case 2:
+                MyFormation.SetFormationFlag(FormationType.ALIGN, true);
+                MyFormation.SetChasers(this, friendlyChasers[0], friendlyChasers[1]);
+                MyFormation.SetBeaters();
+                MyFormation.SetKeeper();
+                MyFormation.SetSeeker();
+                break;
+        }
 
-        MyFormation.SetChasers(this, friendlyChasers[0], friendlyChasers[1]);
-        MyFormation.SetBeaters(FindClosestAlliedBeater());
         if (team == Team.AI)
             AIFormation = MyFormation;
         else
