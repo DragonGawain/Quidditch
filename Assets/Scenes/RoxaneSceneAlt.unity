@@ -787,6 +787,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4273821967308426057, guid: b38d94eff2bfcb043bfda94029a8de29,
         type: 3}
+      propertyPath: ballAddedForceMultiplier
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4273821967308426057, guid: b38d94eff2bfcb043bfda94029a8de29,
+        type: 3}
       propertyPath: goalpostHasReachedDistance
       value: 35
       objectReference: {fileID: 0}
@@ -863,6 +868,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4273821967308426057, guid: b38d94eff2bfcb043bfda94029a8de29,
+        type: 3}
+      propertyPath: ballAddedForceMultiplier
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4273821967308426057, guid: b38d94eff2bfcb043bfda94029a8de29,
         type: 3}
       propertyPath: goalpostHasReachedDistance
@@ -1361,6 +1371,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4273821967308426057, guid: b38d94eff2bfcb043bfda94029a8de29,
+        type: 3}
+      propertyPath: ballAddedForceMultiplier
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4273821967308426057, guid: b38d94eff2bfcb043bfda94029a8de29,
         type: 3}
       propertyPath: goalpostHasReachedDistance

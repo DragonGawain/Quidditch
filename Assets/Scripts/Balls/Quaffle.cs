@@ -24,6 +24,7 @@ public class Quaffle : Ball
     }
 
     int wasCaughtTimer = 0;
+    [SerializeField]
     bool wasCaught = false;
 
     // private Team teamWithQuaffle = Team.NONE;
@@ -53,6 +54,7 @@ public class Quaffle : Ball
                     myHolder.GetComponent<GroupAI>().SetHasBall(false);
 
                 theChaser.SetHasBall(true);
+
                 myHolder = collision.gameObject;
                 lastHolder = myHolder;
                 // SetTeam(theChaser.Team);
@@ -86,11 +88,16 @@ public class Quaffle : Ball
 
     public void ResetQuaffle()
     {
+        MyRigidbody.isKinematic = false;
+        gameObject.transform.parent = null;
+
         transform.position = Vector3.zero;
         MyRigidbody.velocity = Vector3.zero;
 
         myHolder = null;
         lastHolder = null;
+
+        wasCaught = false;
     }
 
     private void FixedUpdate()

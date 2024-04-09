@@ -35,19 +35,18 @@ namespace CharacterAI
                                                                             {
                                                                                 // Is teammate in a good spot for a pass?
                                                                                 new Node_CheckTeammateForPass(this),
-
                                                                                 // Pass to teammate
                                                                                 new Node_PassQuaffleToTeammate(this)
                                                                             }),
                                                                         new NodeSequence(self,
                                                                             new List<Node>
                                                                             {
+                                                                                // TODO: determine best goalpost.
                                                                                 new Node_HasReachedEnemyGoalpost(this),
                                                                                 new Node_ThrowQuaffleAtGoalpost(this)
                                                                             }),
                                                                         new Node_SeekEnemyGoalpost(this)
-                                                                    }),
-                                                                new Node_SeekEnemyGoalpost(this)
+                                                                    })
                                                             }),
                                                         new NodeSequence(self,
                                                             new List<Node>

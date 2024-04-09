@@ -15,7 +15,7 @@ namespace CharacterAI
         // METHODS
         public override NodeState Execute()
         {
-            Debug.Log("Executing PassQuaffleToTeammate");
+            //Debug.Log("Executing PassQuaffleToTeammate");
 
             // First verify that we are holding the quaffle
             if (MyParentTree.MyGroupAI.HasBall)
@@ -23,14 +23,19 @@ namespace CharacterAI
                 GameObject theQuaffleGO = MyParentTree.MyGroupAI.TheQuaffle.gameObject;
                 Quaffle theQuaffle = theQuaffleGO.GetComponent<Quaffle>();
 
-                // Fetch the target goalpost
+                Debug.Log(theQuaffle);
+
+                // Fetch the target teammate
                 GameObject targetTeammate = ReadFromBlackboard("teammateInGoodSpot") as GameObject;
 
                 if (targetTeammate != null && theQuaffleGO != null && theQuaffle != null && theQuaffle.MyHolder == MyParentTree.gameObject)
                 {
+
                     // Determine hit force vector
                     Vector3 desiredPass = targetTeammate.gameObject.transform.position - MyParentTree.gameObject.transform.position;
                     theQuaffle.Throw(desiredPass.normalized * MyParentTree.BallAddedForceMultiplier);
+
+                    Debug.Log(string.Format("{0} should have passed to {1}.", MyParentTree.gameObject, targetTeammate));
 
                     myState = NodeState.SUCCESS;
                     return myState;
