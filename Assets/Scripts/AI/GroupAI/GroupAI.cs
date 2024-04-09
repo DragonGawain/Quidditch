@@ -119,6 +119,11 @@ public abstract class GroupAI : MonoBehaviour
         return stance;
     }
 
+    public void SetStance(AIStance input)
+    {
+        stance = input;
+    }
+
     public AIType GetAIType()
     {
         return aIType;
@@ -148,8 +153,8 @@ public abstract class GroupAI : MonoBehaviour
     public void SetHasBall(bool state)
     {
         hasBall = state;
-            // MyFormation.SetFormationFlag(FormationType.WINGMEN, true);
-            // MyFormation.SetFormationFlag(FormationType.WINGMEN, false);
+        // MyFormation.SetFormationFlag(FormationType.WINGMEN, true);
+        // MyFormation.SetFormationFlag(FormationType.WINGMEN, false);
         if (state)
             OnTeamObtainedQuaffle();
         else
