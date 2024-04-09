@@ -30,7 +30,7 @@ namespace CharacterAI
                 {
                     // Determine hit force vector.
                     Vector3 desiredThrow = enemyTarget.transform.position - MyParentTree.gameObject.transform.position;
-                    theBludger.Throw(desiredThrow.normalized * MyParentTree.BallAddedForceMultiplier, MyParentTree.gameObject);
+                    theBludger.Throw(desiredThrow.normalized * MyParentTree.BallAddedForceMultiplier, MyParentTree.gameObject, enemyTarget);
 
                     myState = NodeState.SUCCESS;
                     return myState;

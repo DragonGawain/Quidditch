@@ -18,24 +18,23 @@ namespace CharacterAI
             // Do the check.
             if (MyParentTree.MyGroupAI.GetIsInFormation())
             {
-                Debug.LogWarning(string.Format("{0}'s stance is Defensive.", MyParentTree.gameObject));
+                Debug.Log(string.Format("{0}'s stance is Defensive.", MyParentTree.gameObject));
 
                 // Let's just set the protectedTarget here for ease of use.
                 GroupAI headChaser = MyParentTree.MyGroupAI.GetMyFormation().GetChasers()[0];
 
-                Debug.LogWarning(headChaser);
+                if (headChaser != null)
+                {
+                    GameObject headChaserGO = headChaser.gameObject;
 
-                GameObject headChaserGO = headChaser.gameObject;
-
-                //WriteToBlackboard("protectedTarget", MyParentTree.MyGroupAI.GetMyFormation().GetChasers()[0].gameObject);
-                myState = NodeState.SUCCESS;
-                return myState;
+                    //WriteToBlackboard("protectedTarget", MyParentTree.MyGroupAI.GetMyFormation().GetChasers()[0].gameObject);
+                    myState = NodeState.SUCCESS;
+                    return myState;
+                }
             }
-            else
-            {
-                myState = NodeState.FAILURE;
-                return myState;
-            }
+            // Else
+            myState = NodeState.FAILURE;
+            return myState;
         }
     }
 }

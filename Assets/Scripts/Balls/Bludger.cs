@@ -145,11 +145,11 @@ namespace CharacterAI
         }
 
         // Actions.
-        public void Throw(Vector3 force, GameObject hitter)
+        public void Throw(Vector3 force, GameObject hitter, GameObject newTarget = null)
         {
             myPreviousHitter = hitter;
             lastHit = hitter;
-            target = null;
+            target = newTarget != null ? newTarget.transform : null;
 
             // Should this partly exist in the parent Ball class?
             myRigidbody.AddForce(force, ForceMode.Impulse);
