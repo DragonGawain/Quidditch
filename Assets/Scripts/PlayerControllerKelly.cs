@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerControllerKelly : MonoBehaviour
 {
+    //a broom is somewhat like a helicopter meets a plane
     public PlayerInputActions playerControls;
     private InputAction forward,yaw,pitch,roll;
     public float moveSpeed = 10f, pivotSpeed = 2f, verticalSpeed = 5f ;
@@ -12,11 +15,21 @@ public class PlayerControllerKelly : MonoBehaviour
     public float deltaZ = 75.0f;
     [Tooltip("")]
     public float responsiveness = 10f;
+    [Tooltip("Control speed at which the player rotates left or right ")]
+    public float yawResponsiveness=0.5f;
+    [Tooltip("Control speed at which the player rotates up or down ")]
+    public float pitchResponsiveness = 0.5f;
 
     private Rigidbody rb;
-    private float _throttle,_forward, _roll, _yaw, _pitch; //a broom is somewhat like a helicopter meets a plane
+    private float _throttle,_forward, _roll, _yaw, _pitch; 
     private float MAX_OFF = 10.5f, MIN_OFF = 9.0f;
     private float liftTimer = 0;
+    public Vector3 mouseScreenPos = Vector3.zero;
+    public Vector3 mouseViewportSpace = Vector3.zero;
+    public Vector3 mousePos= Vector3.zero;
+    public Vector3 deltaMouse = Vector3.zero;
+    public Vector3 viewportCenter = Vector3.zero;
+
 
     //TESTING
 
@@ -30,23 +43,20 @@ public class PlayerControllerKelly : MonoBehaviour
     //float movementInput = 0;
     //Rigidbody body;
 
-
-   
-
-
     void Awake()
     {
         playerControls = new PlayerInputActions();
         rb = GetComponent<Rigidbody>();
+
     //    inputs = new Inputs();
     //    inputs.Player.Enable();
     //    body = GetComponent<Rigidbody>();
+        
     }
 
     private void OnEnable()
     {//Required by Input system, can have issues if not included
         Debug.Log("PrintOnEnable: script was enabled");
-
         forward = playerControls.Player.Forward;
         yaw = playerControls.Player.Yaw;
         pitch = playerControls.Player.Pitch;
@@ -55,17 +65,18 @@ public class PlayerControllerKelly : MonoBehaviour
         yaw.Enable();
         pitch.Enable();
         roll.Enable();
+        
     }
     void Update()
     {
+
         _forward = forward.ReadValue<float>();
-        _yaw = yaw.ReadValue<float>();
+        //_yaw = yaw.ReadValue<float>();
+      
         _pitch =  pitch.ReadValue<float>();
         _roll = roll.ReadValue<float>();
           
-        
     }
-
     void CalculateState()
     {
         Velocity = rb.velocity;
@@ -78,6 +89,8 @@ public class PlayerControllerKelly : MonoBehaviour
         yaw.Disable();
         pitch.Disable();
         roll.Disable();
+
+        //lookAtMouse.Deactivate();
     }
 
     private void throttler()
@@ -113,7 +126,7 @@ public class PlayerControllerKelly : MonoBehaviour
         else
         {
             Debug.Log("euler");
-            Ailerons(Mathf.Sign(eZ),_force);
+            Roll(Mathf.Sign(eZ),_force);
         }
         //rb.AddRelativeTorque(0, 0, eZ);
         //if (eulerZ > 180) eulerZ -= 360;
@@ -132,43 +145,41 @@ public class PlayerControllerKelly : MonoBehaviour
         //rb.angularVelocity += stableVector;
         //rb.angularVelocity = rb.angularVelocity / 1.1f;
     }
-    private void rudder()
-    {//controls the nose movement (yaw)
-        float torque =  _yaw * responseModifier(pivotSpeed);
-        //do a little roll too
-        //Ailerons(-_yaw);
+    private void Yaw()
+    {//controls the nose movement //like a rudder
+
+        float torque = _yaw * responseModifier(pivotSpeed);
         rb.AddRelativeTorque(transform.up * torque);
     }
 
-    private void Ailerons(float _r)
+    private void Roll(float _r)
     {//The ailerons(flaps) of a plane contol the Roll
         //_roll = roll * responseModifier(rollSpeed);
         float torque = _r * responseModifier(pivotSpeed / 2);
         rb.AddTorque(transform.forward * torque);
         //rb.AddTorque(transform.forward * _pitch);//this worked for roll
     }
-    private void Ailerons(float _r, float force)
+    private void Roll(float _r, float force)
     {//The ailerons(flaps) of a plane contol the Roll
         //_roll = roll * responseModifier(rollSpeed);
         float torque = _r * responseModifier(force / 2);
         rb.AddTorque(transform.forward * torque);
         //rb.AddTorque(transform.forward * _pitch);//this worked for roll
     }
-    private void Ailerons()
+    private void Roll()
     {//The ailerons(flaps) of a plane contol the Roll
         //_roll = roll * responseModifier(rollSpeed);
         float torque = _roll * responseModifier(pivotSpeed / 2);
         rb.AddTorque(transform.forward * torque);
         //rb.AddTorque(transform.forward * _pitch);//this worked for roll
     }
-    private void Elevator ()
-    {//Controls the pitch
+    private void Pitch()
+    {//Controls the pitch // Elevator
         float torque = _pitch * responseModifier(pivotSpeed);
-        
         rb.AddTorque(transform.right * torque);
     }
 
-    private void lift()
+    private void Lift()
     {//like a helicopter, the brooms have upward lift(while steering more like a plane)
         //make it bob a little
         if (liftTimer == 0)
@@ -191,57 +202,22 @@ public class PlayerControllerKelly : MonoBehaviour
      //Vector3 Velocity = new Vector3(forwardMove * moveSpeed, 0,pivot* pivotSpeed);
      //rb.velocity = Velocity;
         throttler();
-        rudder();
-        lift();
-        Elevator();
-        Ailerons();
+        Yaw();
+        Lift();
+        Pitch();
+        Roll();
         //testing
         eulerX = transform.eulerAngles.x;
         eulerY = transform.eulerAngles.y;
         eulerZ = transform.eulerAngles.z;
     }
 
-    //factor in mass to rotation (pitch,yaw,roll)
+    
     private float responseModifier(float responsiveness)
     {
+        //factor in mass to rotation (pitch,yaw,roll)
            return (rb.mass / 10f) * responsiveness;
 
     }
-        //// FixedUpdate is called 50 times per second
-        //void FixedUpdate()
-        //{
-        //    rotationInputs = inputs.Player.Rotate.ReadValue<Vector3>();
-        //    if (rotationInputs.x > 0)
-        //        transform.Rotate(1, 0, 0);
-        //    else if (rotationInputs.x < 0)
-        //        transform.Rotate(-1, 0, 0);
-
-        //    if (rotationInputs.y > 0)
-        //        transform.Rotate(0, 1, 0);
-        //    else if (rotationInputs.y < 0)
-        //        transform.Rotate(0, -1, 0);
-
-        //    if (rotationInputs.z > 0)
-        //        transform.Rotate(0, 0, 1);
-        //    else if (rotationInputs.z < 0)
-        //        transform.Rotate(0, 0, -1);
-
-        //    movementInput = inputs.Player.Move.ReadValue<float>();
-        //    if (movementInput > 0)
-        //    {
-        //        // body.velocity += new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
-        //        Vector3 movementVector = transform.GetChild(0).position - transform.position;
-        //        movementVector.Normalize();
-        //        movementVector = movementVector / 2;
-        //        body.velocity += movementVector;
-        //        body.velocity = Vector3.ClampMagnitude(body.velocity, 2);
-        //    }
-        //    else if (movementInput < 0)
-        //    {
-        //        Vector3 deccel = new Vector3(body.velocity.x, body.velocity.y, body.velocity.z);
-        //        deccel.Normalize();
-        //        deccel = deccel / 2;
-        //        body.velocity -= deccel;
-        //    }
-        //}
-    }
+     
+ }
