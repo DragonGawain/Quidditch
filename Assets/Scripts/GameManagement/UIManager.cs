@@ -103,6 +103,8 @@ public class UIManager : MonoBehaviour
                 HUD.SetActive(false);
                 pauseMenu.SetActive(false);*/
         endGame.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void ChoosePlayerRole(TMP_Dropdown playerRoleInput)
