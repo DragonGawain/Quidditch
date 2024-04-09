@@ -15,20 +15,30 @@ namespace CharacterAI
         {
             //Debug.Log("Executing SeekNextWaypoint");
 
+            Transform nextWaypoint = myParentTree.ReturnNextWaypoint();
+
             // Make sure the next waypoint exists.
-            if (myParentTree.ReturnNextWaypoint() == null || myParentTree.ReturnNextWaypoint() == myParentTree.ReturnCurrentWaypoint() )
+            if (nextWaypoint == null || nextWaypoint == myParentTree.ReturnLastWaypoint()) // Should this return success instead? 
             {
                 myState = NodeState.FAILURE;
                 return myState;
             }
 
-            // Seek it and return running.
-            Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(myParentTree.ReturnNextWaypoint(), MyParentTree.MyMaxSpeed);
+            // Seek it.
+            Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(nextWaypoint.position, MyParentTree.MyMaxSpeed);
             MyParentTree.SetVRigidbodyVelocity(desiredVelocity);
-            // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
 
-            myState = NodeState.RUNNING;
-            return myState;
+            // Verify whether the waypoint has been reached.
+            if (Vector3.Distance(MyParentTree.gameObject.transform.position, nextWaypoint.position) <= MyParentTree.WaypointHasReachedDistance)
+            {
+                myState = NodeState.SUCCESS;
+                return myState;
+            }
+            else
+            {
+                myState = NodeState.RUNNING;
+                return myState;
+            }
         }
     }
 }

@@ -34,7 +34,7 @@ public class Ball : MonoBehaviour
 
     // Utilities.
     // Get the closest target
-    protected Transform GetClosestTarget(string[] tags)
+    protected Transform GetClosestTarget(string[] tags, GameObject exclude = null)
     {
         GameObject[] targets;                   // potential targets
         Transform target = null;                // the closest target
@@ -50,7 +50,7 @@ public class Ball : MonoBehaviour
             foreach (GameObject t in targets)
             {
                 float distance = Vector3.Distance(t.transform.position, transform.position);
-                if (distance < minDistance)
+                if (t != exclude && distance < minDistance)
                 {
                     target = t.transform;
                     minDistance = distance;

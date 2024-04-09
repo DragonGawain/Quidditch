@@ -13,11 +13,11 @@ namespace CharacterAI
         // METHODS
         public override NodeState Execute()
         {
-            Debug.Log("Executing IsEnemyHoldingQuaffle?");
+            //Debug.Log("Executing IsEnemyHoldingQuaffle?");
 
             // Do the check.
             GameObject quafflesCurrentHolderGO = MyParentTree.MyGroupAI.TheQuaffle.MyHolder;
-            GroupAI quafflesCurrentHolder = quafflesCurrentHolderGO.GetComponent<GroupAI>();
+            GroupAI quafflesCurrentHolder = quafflesCurrentHolderGO != null ? quafflesCurrentHolderGO.GetComponent<GroupAI>() : null;
 
             if (quafflesCurrentHolderGO != null && quafflesCurrentHolder != null && quafflesCurrentHolder.GetTeam() != myParentTree.MyGroupAI.GetTeam())
             {

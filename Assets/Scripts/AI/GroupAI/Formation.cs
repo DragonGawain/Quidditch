@@ -5,7 +5,9 @@ using UnityEngine;
 public enum FormationType
 {
     NONE,
-    WINGMEN
+    WINGMEN,
+    BEATFLANK,
+    ALIGN
 }
 
 public class Formation
@@ -17,6 +19,7 @@ public class Formation
     GroupAI keeper;
     GroupAI seeker;
     FormationType formationType;
+    Dictionary<FormationType, bool> formationFlags = new();
 
     public Formation()
     {
@@ -25,6 +28,11 @@ public class Formation
         keeper = null;
         seeker = null;
         formationType = FormationType.NONE;
+        // Add a flag for every type of formation
+        // The order of the formations is order of precedence -> first true flag in the list will be the formation
+        formationFlags.Add(FormationType.WINGMEN, false);
+        formationFlags.Add(FormationType.BEATFLANK, false);
+        formationFlags.Add(FormationType.ALIGN, false);
     }
 
     public void SetChasers(GroupAI c0 = null, GroupAI c1 = null, GroupAI c2 = null)
@@ -32,35 +40,71 @@ public class Formation
         chasers[0] = c0;
         chasers[1] = c1;
         chasers[2] = c2;
+        if (c0 != null)
+            chasers[0].SetIsinFormation(true);
+        if (c1 != null)
+            chasers[1].SetIsinFormation(true);
+        if (c2 != null)
+            chasers[2].SetIsinFormation(true);
     }
 
     public void SetBeaters(GroupAI b0 = null, GroupAI b1 = null)
     {
         beaters[0] = b0;
         beaters[1] = b1;
+        if (b0 != null)
+            beaters[0].SetIsinFormation(true);
+        if (b1 != null)
+            beaters[1].SetIsinFormation(true);
     }
 
     public void SetKeeper(GroupAI k = null)
     {
         keeper = k;
+        if (k != null)
+            keeper.SetIsinFormation(true);
     }
 
     public void SetSeeker(GroupAI s = null)
     {
         seeker = s;
+        if (s != null)
+            seeker.SetIsinFormation(true);
     }
 
     public void ResetAll()
     {
+        // formationType = FormationType.NONE;
         for (int i = 0; i < chasers.Length; i++)
+        {
+            if (chasers[i] != null)
+                chasers[i].SetIsinFormation(false);
             chasers[i] = null;
+        }
 
         for (int i = 0; i < beaters.Length; i++)
+        {
+            if (beaters[i] != null)
+                beaters[i].SetIsinFormation(false);
             beaters[i] = null;
+        }
 
+        if (keeper != null)
+            keeper.SetIsinFormation(false);
         keeper = null;
+        if (seeker != null)
+            seeker.SetIsinFormation(false);
         seeker = null;
+
+        formationFlags[FormationType.WINGMEN] = false;
+        formationFlags[FormationType.BEATFLANK] = false;
+        formationFlags[FormationType.ALIGN] = false;
         formationType = FormationType.NONE;
+
+        // foreach (KeyValuePair<FormationType, bool> flag in formationFlags)
+        // {
+        //     formationFlags[flag.Key] = false;
+        // }
     }
 
     public GroupAI[] GetChasers()
@@ -92,4 +136,39 @@ public class Formation
     {
         return formationType;
     }
+
+    public void SetFormationFlag(FormationType key, bool val)
+    {
+        formationFlags[key] = val;
+        chooseFormation();
+    }
+
+    public bool GetFormationFlag(FormationType key)
+    {
+        return formationFlags[key];
+    }
+
+    private void chooseFormation()
+    {
+        // Check the flags one by one, and set the flag to the first one that is true.
+        foreach (KeyValuePair<FormationType, bool> flag in formationFlags)
+        {
+            if (flag.Value == true)
+            {
+                Debug.Log("SETTING FORMATION TO: " + flag.Key);
+                formationType = flag.Key;
+                return;
+            }
+        }
+        Debug.Log("THERE IS NO FORMATION");
+        formationType = FormationType.NONE;
+        this.ResetAll();
+    }
 }
+
+// experimental, not sure if I'll do this
+// public class FormationPosition
+// {
+//     public GroupAI groupAI;
+//     public Vector3 position;
+// }

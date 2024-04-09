@@ -149,8 +149,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myNPCMovement: {fileID: 7632343103064059163}
   target: {fileID: 0}
-  maxSpeed: 2.5
-  acceleration: 1
+  maxSpeed: 2.125
+  acceleration: 2
 --- !u!114 &7632343103064059163
 MonoBehaviour:
   m_ObjectHideFlags: 0

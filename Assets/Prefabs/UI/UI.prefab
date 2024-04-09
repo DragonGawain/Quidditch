@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1218238304730021819}
   m_Layer: 0
   m_Name: UI
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -667,6 +667,36 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8918707969603925443, guid: 692d9adc7e3fa4d47a555cb7ec95010a,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8918707969603925443, guid: 692d9adc7e3fa4d47a555cb7ec95010a,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1218238304730021819}
+    - target: {fileID: 8918707969603925443, guid: 692d9adc7e3fa4d47a555cb7ec95010a,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChoosePlayerRole
+      objectReference: {fileID: 0}
+    - target: {fileID: 8918707969603925443, guid: 692d9adc7e3fa4d47a555cb7ec95010a,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8918707969603925443, guid: 692d9adc7e3fa4d47a555cb7ec95010a,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1836825882214224810}
+    - target: {fileID: 8918707969603925443, guid: 692d9adc7e3fa4d47a555cb7ec95010a,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: TMPro.TMP_Dropdown, Unity.TextMeshPro
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -684,3 +714,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7113482673270597225}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1836825882214224810 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8918707969603925443, guid: 692d9adc7e3fa4d47a555cb7ec95010a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7113482673270597225}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b743370ac3e4ec2a1668f5455a8ef8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

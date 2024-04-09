@@ -28,7 +28,7 @@ namespace CharacterAI
             MyParentTree.SetVRigidbodyVelocity(desiredVelocity);
             // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
 
-            myState = NodeState.RUNNING;
+            myState = NodeState.SUCCESS;
             return myState;
         }
     }

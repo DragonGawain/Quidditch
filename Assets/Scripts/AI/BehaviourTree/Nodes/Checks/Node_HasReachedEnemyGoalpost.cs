@@ -14,19 +14,20 @@ namespace CharacterAI
         // METHODS
         public override NodeState Execute()
         {
-            Debug.Log("Executing HasReachedEnemyGoalpost?");
+            //Debug.Log("Executing HasReachedEnemyGoalpost?");
 
             // Find the goalpost.
-            GameObject theEnemyGoalpost = ReadFromBlackboard("enemyGoalpost") as GameObject;
-            if (theEnemyGoalpost == null)
+            GameObject targetEnemyGoalpost = ReadFromBlackboard("enemyGoalpost") as GameObject;
+            if (targetEnemyGoalpost == null)
             {
-                theEnemyGoalpost = MyParentTree.MyGroupAI.EnemyGoalpost.gameObject;
-                WriteToBlackboard("enemyGoalpost", theEnemyGoalpost);
+                targetEnemyGoalpost = MyParentTree.LocateClosestEnemyGoalpost().Item1;
+                WriteToBlackboard("enemyGoalpost", targetEnemyGoalpost);
             }
 
+            //Debug.Log(theEnemyGoalpost);
+
             // Do the check.
-            // TODO: set the distance threshold to something legit.
-            if (Vector3.Distance(MyParentTree.gameObject.transform.position, theEnemyGoalpost.transform.position) <= 10f)
+            if (Vector3.Distance(MyParentTree.gameObject.transform.position, targetEnemyGoalpost.transform.position) <= MyParentTree.GoalpostHasReachedDistance)
             {
                 myState = NodeState.SUCCESS;
             }

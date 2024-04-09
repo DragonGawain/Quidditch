@@ -13,7 +13,7 @@ namespace CharacterAI
         // METHODS
         public override NodeState Execute()
         {
-            Debug.Log("Executing IsTeammateHoldingQuaffle?");
+            //Debug.Log("Executing IsTeammateHoldingQuaffle?");
 
             // Do the check.
             foreach (GroupAI chaser in MyParentTree.MyGroupAI.FriendlyChasers)

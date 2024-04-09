@@ -13,11 +13,13 @@ namespace CharacterAI
         // METHODS
         public override NodeState Execute()
         {
-            Debug.Log("Executing AmIHoldingQuaffle?");
+            // Debug.Log("Executing AmIHoldingQuaffle?");
 
             // Do the check.
             if (MyParentTree.MyGroupAI.HasBall)
             {
+                Debug.Log(MyParentTree.gameObject + " is holding the Quaffle.");
+
                 myState = NodeState.SUCCESS;
             }
             else

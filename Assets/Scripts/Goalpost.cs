@@ -8,12 +8,20 @@ public class Goalpost : MonoBehaviour
 {
     // TODO: add colliders for the various scoring zones, handle collision detection.
     // TODO: add waypoints that the keeper and chasers will use.
+    // TODO: add the event proper.
 
     // VARIABLES
     [SerializeField] private Team owningTeam = Team.NONE;
     public Team OwningTeam { get { return owningTeam; } }
 
     private ScoreManager scoreManager;
+
+
+
+    // EVENTS
+    public event GameManager.GoalScored OnGoalScored;
+
+
 
     // METHODS
     private void Start()
@@ -28,13 +36,18 @@ public class Goalpost : MonoBehaviour
         if (other.CompareTag("quaffle"))
         {
             Quaffle q = other.GetComponent<Quaffle>();
-            GroupAI theChaser = q.MyHolder.GetComponent<GroupAI>();
+            GroupAI theChaser = q.LastHolder.GetComponent<GroupAI>();
 
             // Ensure that a goal is registered only when the goalpost is triggered by the enemy team!
             if (owningTeam != theChaser.GetTeam())
             {
                 // Update score for the corresponding team using the ScoreManager
-                scoreManager.IncrementScore(owningTeam);
+                scoreManager.IncrementScore(theChaser.GetTeam());
+
+                // After a goal, reposition the quaffle at the center of the "pitch" and ensure there is no velocity acting on it!
+                q.ResetQuaffle();
+
+                OnGoalScored?.Invoke(owningTeam, theChaser);
             }
         }
     }

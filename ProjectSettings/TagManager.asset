@@ -12,6 +12,7 @@ TagManager:
   - bludger
   - quaffle
   - goalpost
+  - UI
   layers:
   - Default
   - TransparentFX

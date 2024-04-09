@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     GameObject endGame;
 
+    PlayerRole playerRole;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -39,7 +41,29 @@ public class UIManager : MonoBehaviour
         // Temporary for timer testing
         //SceneManager.LoadScene("CristianScene");
 
-        SceneManager.LoadScene("MainGame");
+        switch (playerRole)
+        {
+            case PlayerRole.CHASER:
+                PlayerController.playerMaxSpeed = 3f;
+                SceneManager.LoadScene("MainGameChaser");
+                break;
+            case PlayerRole.BEATER:
+                PlayerController.playerMaxSpeed = 5f;
+                SceneManager.LoadScene("MainGameBeater");
+                break;
+            case PlayerRole.SEEKER:
+                PlayerController.playerMaxSpeed = 2.25f;
+                SceneManager.LoadScene("MainGameSeeker");
+                break;
+            case PlayerRole.KEEPER:
+                PlayerController.playerMaxSpeed = 5f;
+                SceneManager.LoadScene("MainGameKeeper");
+                break;
+            default:
+                PlayerController.playerMaxSpeed = 3f;
+                SceneManager.LoadScene("MainGameChaser");
+                break;
+        }
         mainMenu.SetActive(false);
         HUD.SetActive(true);
         Debug.Log("start game");
@@ -74,6 +98,32 @@ public class UIManager : MonoBehaviour
     // Enable the End Game Panel
     public void EndGame()
     {
+        /*        SceneManager.LoadScene("EndGame");
+                mainMenu.SetActive(false);
+                HUD.SetActive(false);
+                pauseMenu.SetActive(false);*/
         endGame.SetActive(true);
+    }
+
+    public void ChoosePlayerRole(TMP_Dropdown playerRoleInput)
+    {
+        int pr = playerRoleInput.value;
+        switch (pr)
+        {
+            case 0:
+                playerRole = PlayerRole.CHASER;
+                break;
+            case 1:
+                playerRole = PlayerRole.BEATER;
+                break;
+            case 2:
+                playerRole = PlayerRole.SEEKER;
+                break;
+            case 3:
+                playerRole = PlayerRole.KEEPER;
+                break;
+            default:
+                break;
+        }
     }
 }

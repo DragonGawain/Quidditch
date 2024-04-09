@@ -2,87 +2,152 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bludger : Ball
+namespace CharacterAI
 {
-    // VARIABLES
-    // Should speed and the like be defined here, or by the parent classe?
-    [SerializeField, Range(0, 15)]
-    float maxSpeed = 4f;
-
-    [SerializeField, Range(0, 10)]
-    float acceleration = 1f;
-
-    [SerializeField]
-    Transform target;
-    public Transform Target { get { return target; } }
-
-    // Tags corresponding to the possible targets for the bludger.
-    private string[] tags = { "seeker", "keeper", "beater", "chaser" };
-
-    // Beater who previously hit.
-    [SerializeField] private GameObject myPreviousHitter;
-    public GameObject MyPreviousHitter { get { return myPreviousHitter; } set { myPreviousHitter = value; } }
-
-
-
-
-
-
-    // METHODS.
-    // Start is called before the first frame update
-    void Start() { }
-
-    // Update is called once per frame
-    void Update() { }
-
-    protected override void OnAwake()
+    public class Bludger : Ball
     {
-        base.OnAwake();
-    }
+        // VARIABLES
+        // Should speed and the like be defined here, or by the parent classe?
+        [SerializeField, Range(0, 15)]
+        float maxSpeed = 4f;
 
-    void FixedUpdate()
-    {
-        // Get the closest seeker to flee away from them
-        target = GetClosestTarget(tags);
+        [SerializeField, Range(0, 10)]
+        float acceleration = 1f;
 
-        if (target != null)
+        [SerializeField]
+        Transform target;
+        public Transform Target
         {
-            Vector3 desiredVelocity = Vector3.ClampMagnitude(
-            myNPCMovement.Seek(target.position, acceleration) + myRigidbody.velocity,
-            maxSpeed);
-            myRigidbody.velocity = desiredVelocity;
+            get { return target; }
         }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log(string.Format("Bludger {1} collided with {0}.", collision.gameObject, this.gameObject));
+        // Tags corresponding to the possible targets for the bludger.
+        private string[] tags = { "seeker", "beater", "chaser" }; //
 
-        //// TODO: Make sure the beater was seeking the bludger, not hit by an enemy one.
-        //GroupAI theBeater = collision.gameObject.GetComponent<GroupAI>();
-        //if (theBeater != null && collision.gameObject.CompareTag("beater"))
-        //{
-        //    // TODO: set beater GroupAI variable.
-        //    //theBeater.SetHasBall(true);
-        //    myHitter = collision.gameObject;
-        //    myPreviousHitter = null;
-        //    // SetTeam(myHitter.Team);
+        // Beater who previously hit.
+        [SerializeField]
+        private GameObject myPreviousHitter;
+        public GameObject MyPreviousHitter
+        {
+            get { return myPreviousHitter; }
+            set { myPreviousHitter = value; }
+        }
 
-        //    MyRigidbody.velocity = Vector3.zero;
-        //    MyRigidbody.isKinematic = true;
-        //    gameObject.transform.parent = collision.gameObject.transform;
-        //}
-    }
+        [SerializeField]
+        bool canChase = true;
+        [SerializeField]
+        GameObject lastHit = null;
 
-    // Actions.
-    public void Throw(Vector3 force, GameObject hitter)
-    {
-        myPreviousHitter = hitter;
+        // METHODS.
+        // Start is called before the first frame update
+        void Start() { }
 
-        MyRigidbody.isKinematic = false;
-        gameObject.transform.parent = null;
+        // Update is called once per frame
+        void Update() { }
 
-        // Should this partly exist in the parent Ball class?
-        myRigidbody.AddForce(force, ForceMode.Impulse);
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+        }
+
+        void FixedUpdate()
+        {
+            // Get the closest seeker to flee away from them
+            if (canChase)
+            {
+                target = GetClosestTarget(tags, lastHit);
+
+                if (target != null)
+                {
+                    Vector3 desiredVelocity = Vector3.ClampMagnitude(
+                        myNPCMovement.Seek(target.position, maxSpeed) + myRigidbody.velocity,
+                        maxSpeed
+                    );
+                    myRigidbody.velocity = desiredVelocity;
+                }
+            }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            Debug.Log(
+                string.Format(
+                    "Bludger {1} collided with {0}.",
+                    collision.gameObject,
+                    this.gameObject
+                )
+            );
+            // TODO:: add extra logic for actual player (I'm assuming that an actual player won't have have a BehaviourTree script on it?)
+
+            // Check if the other has a Behaviour tree
+            if (collision.gameObject.GetComponent<BehaviourTree>())
+            {
+                Debug.Log("BLUDGER HIT: " + collision.gameObject);
+                collision.gameObject.GetComponent<BehaviourTree>().GotHitByBludger();
+
+                lastHit = collision.gameObject;
+            }
+            // loop through all the children to see if this object is holding the quaffle
+            // doing it this way cause it'll just automatically work with a player as well
+            // player - bludger
+            for (int i = 0; i < collision.gameObject.transform.childCount; i++)
+            {
+                if (collision.gameObject.transform.GetChild(i).GetComponent<Quaffle>())
+                {
+                    Debug.Log("BLUDGER HIT PARENT WITH QUAFFLE");
+                    // shoot quaffle away from bludger hit
+                    Quaffle quaffle = collision.gameObject.transform
+                        .GetChild(i)
+                        .GetComponent<Quaffle>();
+
+                    quaffle.Throw(
+                        (
+                            (
+                                collision.gameObject.transform.position - this.transform.position
+                            ).normalized
+                            + (
+                                quaffle.transform.position - collision.gameObject.transform.position
+                            ).normalized
+                        ).normalized
+                            * collision.gameObject
+                                .GetComponent<BehaviourTree>()
+                                .BallAddedForceMultiplier
+                    );
+                    // quaffle.Throw(
+                    // (
+                    //     (
+                    //         collision.gameObject.transform.position - this.transform.position
+                    //     ).normalized
+                    //     + (
+                    //         quaffle.transform.position - collision.gameObject.transform.position
+                    //     ).normalized
+                    // ).normalized
+                    // );
+                }
+            }
+
+            // TODO: handle actually hitting a player.
+        }
+
+        // Actions.
+        public void Throw(Vector3 force, GameObject hitter)
+        {
+            myPreviousHitter = hitter;
+            lastHit = hitter;
+            target = null;
+
+
+            // Should this partly exist in the parent Ball class?
+            myRigidbody.AddForce(force, ForceMode.Impulse);
+
+            // TODO: Stop it from imediately seeking a new target.
+            canChase = false;
+            Invoke("CanChaseAgain", 1f);
+        }
+
+        private void CanChaseAgain()
+        {
+            canChase = true;
+        }
     }
 }

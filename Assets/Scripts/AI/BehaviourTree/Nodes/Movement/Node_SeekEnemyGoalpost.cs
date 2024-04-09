@@ -13,22 +13,23 @@ namespace CharacterAI
         // METHODS
         public override NodeState Execute()
         {
-            //Debug.Log("Executing ArriveAtEnemyGoalpost");
+            //Debug.Log("Executing SeekEnemyGoalpost");
 
             // Find the goalpost.
-            GameObject theEnemyGoalpost = ReadFromBlackboard("enemyGoalpost") as GameObject;
-            if (theEnemyGoalpost == null)
+            GameObject targetEnemyGoalpost = ReadFromBlackboard("enemyGoalpost") as GameObject;
+            if (targetEnemyGoalpost == null)
             {
-                theEnemyGoalpost = MyParentTree.MyGroupAI.EnemyGoalpost.gameObject;
-                WriteToBlackboard("enemyGoalpost", theEnemyGoalpost);
+                targetEnemyGoalpost = MyParentTree.LocateClosestEnemyGoalpost().Item1;
+                WriteToBlackboard("enemyGoalpost", targetEnemyGoalpost);
             }
 
             // Seek it and return running.
-            Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(theEnemyGoalpost.transform.position, MyParentTree.MyMaxSpeed);
+            Vector3 desiredVelocity = MyParentTree.MyNPCMovement.Seek(targetEnemyGoalpost.transform.position, MyParentTree.MyMaxSpeed);
             MyParentTree.SetVRigidbodyVelocity(desiredVelocity);
-            // TODO: gooder movement behaviour. Obstacle avoidance, pathfinding, etc. - should be done
 
-            myState = NodeState.RUNNING;
+            Debug.Log(MyParentTree.gameObject + " is seeking the enemy Goalpost.");
+
+            myState = NodeState.SUCCESS;
             return myState;
         }
     }

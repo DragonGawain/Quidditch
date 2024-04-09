@@ -163,6 +163,17 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": """",
+                    ""id"": ""0317128f-3f2c-4463-8218-65dd80c9aa3d"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""3D Vector"",
                     ""id"": ""bb61b5cf-722c-4ace-bbe5-6300a6ce0543"",
                     ""path"": ""3DVector"",

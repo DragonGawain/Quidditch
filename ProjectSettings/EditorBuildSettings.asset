@@ -4,5 +4,30 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/ActualGameScenes/MainMenu.unity
+    guid: eee6bd211e85f674693d78485598e5e3
+  - enabled: 1
+    path: Assets/Scenes/ActualGameScenes/MainGameChaser.unity
+    guid: d559582e02d84c34b9d3334f823b0fa9
+  - enabled: 1
+    path: Assets/Scenes/CristianScene.unity
+    guid: 6d3aad22ef456e54698450675a00137e
+  - enabled: 1
+    path: Assets/Scenes/ActualGameScenes/EndGame.unity
+    guid: aed2160f18fb74c4cb74c0ba21340c09
+  - enabled: 1
+    path: Assets/Scenes/ActualGameScenes/MainGameBeater.unity
+    guid: 3286f7a577273524e8c3861ea980459a
+  - enabled: 1
+    path: Assets/Scenes/ActualGameScenes/MainGameKeeper.unity
+    guid: ccaf7369074002c42a4e7a2bd05d7e26
+  - enabled: 1
+    path: Assets/Scenes/ActualGameScenes/MainGameSeeker.unity
+    guid: c30fc481092b8034b97b0a9e1aec2061
+>>>>>>> 44df0b6802ae59e091a8f4383489257983a08d1f
   m_configObjects: {}

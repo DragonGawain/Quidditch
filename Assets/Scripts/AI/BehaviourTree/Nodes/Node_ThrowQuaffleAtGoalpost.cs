@@ -16,8 +16,6 @@ namespace CharacterAI
         {
             Debug.Log("Executing ThrowQuaffleAtTargetGoalpost");
 
-            // TODO: use this same node for passes also?
-
             // First verify that we are holding the quaffle
             if (MyParentTree.MyGroupAI.HasBall)
             {

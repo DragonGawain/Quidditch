@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using CharacterAI;
 using UnityEngine;
 
 public enum AIType
@@ -11,14 +12,10 @@ public enum AIType
 }
 
 // TODO:: actually make these states make sense (each individual AI type should be represented in this enum. I just, made some stuff up for this)
-public enum AIState
+public enum AIStance
 {
     AGGRESSIVE,
-    PASSIVE,
-    STEALING,
     DEFENSIVE,
-    GOALIE,
-    SEEKING
 }
 
 public enum Team
@@ -58,7 +55,16 @@ public abstract class GroupAI : MonoBehaviour
     protected List<GroupAI> friendlyBeaters = new();
     protected GroupAI freindlySeeker;
     protected GroupAI freindlyKeeper;
-    protected AIState state;
+    
+    protected GroupAI enemySeeker;
+
+    public GroupAI GetEnemySeeker()
+    {
+        return enemySeeker;
+    }
+
+    [SerializeField]
+    protected AIStance stance;
 
     protected Snitch theSnitch;
     public Snitch TheSnitch
@@ -76,15 +82,17 @@ public abstract class GroupAI : MonoBehaviour
         get { return theBludgers; }
     }
 
-    protected Goalpost ourGoalpost;
-    public Goalpost OurGoalpost
+    protected List<Goalpost> ourGoalposts = new();
+    public List<Goalpost> OurGoalposts
     {
-        get { return ourGoalpost; }
+        get { return ourGoalposts; }
     }
-    protected Goalpost enemyGoalpost;
-    public Goalpost EnemyGoalpost
+
+    [SerializeField]
+    protected List<Goalpost> enemyGoalposts = new();
+    public List<Goalpost> EnemyGoalposts
     {
-        get { return enemyGoalpost; }
+        get { return enemyGoalposts; }
     }
 
     protected Rigidbody rb;
@@ -95,10 +103,34 @@ public abstract class GroupAI : MonoBehaviour
 
     static protected Formation AIFormation = new();
     static protected Formation PlayerFormation = new();
+    protected Formation MyFormation = new();
 
-    public AIState GetState()
+    protected Vector3 prevPos; // used to make AI face the direction that it's moving
+    protected Vector3 prevPos2;
+    protected Vector3 prevPos3;
+
+    protected Vector3 formationPosition;
+
+    protected bool isInFormation = false;
+
+    public void SetIsinFormation(bool val)
     {
-        return state;
+        isInFormation = val;
+    }
+
+    public bool GetIsInFormation()
+    {
+        return isInFormation;
+    }
+
+    public AIStance GetStance()
+    {
+        return stance;
+    }
+
+    public void SetStance(AIStance input)
+    {
+        stance = input;
     }
 
     public AIType GetAIType()
@@ -130,10 +162,22 @@ public abstract class GroupAI : MonoBehaviour
     public void SetHasBall(bool state)
     {
         hasBall = state;
+        // MyFormation.SetFormationFlag(FormationType.WINGMEN, true);
+        // MyFormation.SetFormationFlag(FormationType.WINGMEN, false);
         if (state)
             OnTeamObtainedQuaffle();
         else
             OnTeamLostQuaffle();
+    }
+
+    public void SetFormationPosition(Vector3 fPos)
+    {
+        formationPosition = fPos;
+    }
+
+    public Vector3 GetFormationPosition()
+    {
+        return formationPosition;
     }
 
     private void Awake()
@@ -146,12 +190,12 @@ public abstract class GroupAI : MonoBehaviour
 
         // Find the player.
         // Roxane: add to add a check to keep it from glitching in my test scene.
-        GameObject potentialPlayer = GameObject.FindGameObjectWithTag("Player");
-        if (potentialPlayer != null)
-        {
-            player = potentialPlayer.GetComponent<PlayerController>();
-            playerRole = player.GetPlayerRole();
-        }
+        // GameObject potentialPlayer = GameObject.FindGameObjectWithTag("Player");
+        // if (potentialPlayer != null)
+        // {
+        //     player = potentialPlayer.GetComponent<PlayerController>();
+        //     playerRole = player.GetPlayerRole();
+        // }
 
         // Find the balls.
         GameObject potentialSnitch = GameObject.FindGameObjectWithTag("snitch");
@@ -182,18 +226,17 @@ public abstract class GroupAI : MonoBehaviour
         GameObject[] potentialGoalpostGOs = GameObject.FindGameObjectsWithTag("goalpost");
         if (potentialGoalpostGOs != null && potentialGoalpostGOs.Length > 0)
         {
-            // We assume that there are at most two goalposts.
             foreach (GameObject potentialGoalpostGO in potentialGoalpostGOs)
             {
                 Goalpost potentialGoalpost = potentialGoalpostGO.GetComponent<Goalpost>();
 
                 if (potentialGoalpost.OwningTeam == team)
                 {
-                    ourGoalpost = potentialGoalpost;
+                    ourGoalposts.Add(potentialGoalpost);
                 }
                 else
                 {
-                    enemyGoalpost = potentialGoalpost;
+                    enemyGoalposts.Add(potentialGoalpost);
                 }
             }
         }
@@ -255,8 +298,13 @@ public abstract class GroupAI : MonoBehaviour
             // If the target is on the same team, assign it (there should only be 1 seeker)
             if (ai.GetTeam() == this.team)
                 freindlySeeker = ai;
+            else if (ai.GetTeam() != this.team)
+                enemySeeker = ai;
         }
 
+        prevPos = transform.position;
+        prevPos2 = transform.position;
+        prevPos3 = transform.position;
         OnAwake();
     }
 
@@ -270,5 +318,33 @@ public abstract class GroupAI : MonoBehaviour
     protected virtual void OnTeamLostQuaffle()
     {
         return;
+    }
+
+    public Formation GetMyFormation()
+    {
+        return MyFormation;
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        // only do rotaion stuff if it's not the player
+        // if (
+        //     !gameObject.name.Equals("PlayerChaser")
+        //     && !gameObject.name.Equals("PlayerBeater")
+        //     && !gameObject.name.Equals("PlayerKeeper")
+        //     && !gameObject.name.Equals("PlayerSeeker")
+        // )
+        if (!gameObject.name.Equals("Player"))
+        {
+            // AI will face away from the point they were at last update tick (i.e. they will look in the direction they are moving)
+            if (prevPos2 == prevPos3)
+                transform.rotation = Quaternion.LookRotation(transform.position - prevPos);
+            else
+                transform.rotation = this.GetComponent<BehaviourTree>()
+                    .MyNPCMovement.KinematicFaceAway(prevPos3);
+            prevPos3 = prevPos2;
+            prevPos2 = prevPos;
+            prevPos = transform.position;
+        }
     }
 }

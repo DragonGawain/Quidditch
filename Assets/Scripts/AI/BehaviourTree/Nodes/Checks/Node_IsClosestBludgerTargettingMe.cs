@@ -20,13 +20,12 @@ namespace CharacterAI
             (GameObject, float) closestBludgerAndDistance = MyParentTree.LocateClosestBludger(closestBludger);
             WriteToBlackboard("closestBludger", closestBludgerAndDistance.Item1);
 
-            WriteToBlackboard("targetBludger", closestBludgerAndDistance.Item1);
-
             Bludger closestBludgerBludger = closestBludgerAndDistance.Item1.GetComponent<Bludger>();
 
             // Do the check.
             if (closestBludgerBludger != null && closestBludgerBludger.Target != null && closestBludgerBludger.Target.gameObject == MyParentTree.gameObject)
             { // TODO: Test whether this works as intended.
+                //Debug.Log(string.Format("The Bludger {0} is targeting {1}.", closestBludgerBludger.gameObject, closestBludgerBludger.Target));
                 myState = NodeState.SUCCESS;
             }
             else
