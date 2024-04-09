@@ -28,4 +28,12 @@ public class GroupBeater : GroupAI
     // {
     //     base.Update();
     // }
+
+    private void FixedUpdate()
+    {
+        if (!isInFormation && stance == AIStance.DEFENSIVE)
+            stance = AIStance.AGGRESSIVE;
+        else if (isInFormation && stance == AIStance.AGGRESSIVE)
+            stance = AIStance.DEFENSIVE;
+    }
 }
