@@ -24,7 +24,7 @@ namespace CharacterAI
             float bestTeammateDistanceToGoalpost = float.MaxValue;
 
             // Check if any teammate is closer to the enemy goalpost than the current character
-            foreach (GroupAI chaser in MyParentTree.MyGroupAI.FriendlyChasers)
+            foreach (GameObject chaser in MyParentTree.MyGroupAI.chasers)
             {
                 // Calculate distance between myself and the teammate.
                 float distanceBetweenSelfAndTeammate = Vector3.Distance(chaser.transform.position, MyParentTree.transform.position);

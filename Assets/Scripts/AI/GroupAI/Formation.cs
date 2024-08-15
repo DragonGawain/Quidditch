@@ -2,104 +2,92 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum FormationType
-{
-    NONE,
-    WINGMEN,
-    BEATFLANK,
-    ALIGN
-}
+using groupAI;
+using Unity.VisualScripting;
 
+
+namespace formation
+{
+    public enum Type
+    {
+        NONE,
+        WINGMEN,
+        BEATFLANK,
+        ALIGN
+    }
+}
 public class Formation
 {
     // I'm using full getters/setters here because I want to set the values in a particular way - namely, the unused elements of the arrays wil automatically be set to null.
     // (also I just prefer the way getters.setters look - the visual appeal of the call is worth some value to me)
-    GroupAI[] chasers;
-    GroupAI[] beaters;
-    GroupAI keeper;
-    GroupAI seeker;
-    FormationType formationType;
-    Dictionary<FormationType, bool> formationFlags = new();
-
-    public Formation()
+   
+    formation.Type type;
+    public formation.Type Ftype
     {
-        chasers = new GroupAI[] { null, null, null };
-        beaters = new GroupAI[] { null, null };
-        keeper = null;
-        seeker = null;
-        formationType = FormationType.NONE;
+        get { return type; }
+        set { type = value; }
+    }
+    new List<bool> formationFlags; 
+    //Dictionary<formation.Type, bool> formationFlags = new();
+
+    private List<Player> chasers= new List<Player>();
+    private List<Player> beaters = new List<Player>();
+    Player keeper;
+    Player seeker;
+
+    public Formation( GameObject[] chasers, GameObject[] beaters, GameObject keeper, GameObject Seeker)
+    {
+        type = formation.Type.NONE;
+        int num_types = System.Enum.GetNames(typeof(formation.Type)).Length;
+        formationFlags = new List<bool>(new bool[num_types]);//default initialisation value for bools is false
         // Add a flag for every type of formation
         // The order of the formations is order of precedence -> first true flag in the list will be the formation
-        formationFlags.Add(FormationType.WINGMEN, false);
-        formationFlags.Add(FormationType.BEATFLANK, false);
-        formationFlags.Add(FormationType.ALIGN, false);
-    }
+        
 
-    public void SetChasers(GroupAI c0 = null, GroupAI c1 = null, GroupAI c2 = null)
-    {
-        chasers[0] = c0;
-        chasers[1] = c1;
-        chasers[2] = c2;
-        if (c0 != null)
-            chasers[0].SetIsinFormation(true);
-        if (c1 != null)
-            chasers[1].SetIsinFormation(true);
-        if (c2 != null)
-            chasers[2].SetIsinFormation(true);
-    }
+        foreach (GameObject chaser in chasers)
+        {
+            this.chasers.Add(chaser.GetComponent<Player>());
+        }
+        foreach (GameObject beater in beaters)
+        {
+            this.chasers.Add(beater.GetComponent<Player>());
+        }
 
-    public void SetBeaters(GroupAI b0 = null, GroupAI b1 = null)
-    {
-        beaters[0] = b0;
-        beaters[1] = b1;
-        if (b0 != null)
-            beaters[0].SetIsinFormation(true);
-        if (b1 != null)
-            beaters[1].SetIsinFormation(true);
-    }
+        this.keeper = keeper.GetComponent<Player>();
+        this.seeker = seeker.GetComponent<Player>();
 
-    public void SetKeeper(GroupAI k = null)
-    {
-        keeper = k;
-        if (k != null)
-            keeper.SetIsinFormation(true);
-    }
 
-    public void SetSeeker(GroupAI s = null)
-    {
-        seeker = s;
-        if (s != null)
-            seeker.SetIsinFormation(true);
     }
 
     public void ResetAll()
     {
         // formationType = FormationType.NONE;
-        for (int i = 0; i < chasers.Length; i++)
+        for (int i = 0; i < chasers.Count; i++)
         {
             if (chasers[i] != null)
-                chasers[i].SetIsinFormation(false);
+                chasers[i].InFormation =false;
             chasers[i] = null;
         }
 
-        for (int i = 0; i < beaters.Length; i++)
+        for (int i = 0; i < beaters.Count; i++)
         {
             if (beaters[i] != null)
-                beaters[i].SetIsinFormation(false);
+                beaters[i].InFormation = false;
             beaters[i] = null;
         }
 
         if (keeper != null)
-            keeper.SetIsinFormation(false);
+            keeper.InFormation = false;
         keeper = null;
         if (seeker != null)
-            seeker.SetIsinFormation(false);
+            seeker.InFormation = false;
         seeker = null;
 
-        formationFlags[FormationType.WINGMEN] = false;
-        formationFlags[FormationType.BEATFLANK] = false;
-        formationFlags[FormationType.ALIGN] = false;
-        formationType = FormationType.NONE;
+
+        int num_types = System.Enum.GetNames(typeof(formation.Type)).Length;
+        formationFlags.Clear();
+        formationFlags = new List<bool>(new bool[num_types]);//default initialisation value for bools is false
+
 
         // foreach (KeyValuePair<FormationType, bool> flag in formationFlags)
         // {
@@ -107,68 +95,46 @@ public class Formation
         // }
     }
 
-    public GroupAI[] GetChasers()
-    {
-        return chasers;
-    }
 
-    public GroupAI[] GetBeaters()
-    {
-        return beaters;
-    }
 
-    public GroupAI GetKeeper()
+    public void SetFormationFlag(formation.Type flag, bool val)
     {
-        return keeper;
-    }
-
-    public GroupAI GetSeeker()
-    {
-        return seeker;
-    }
-
-    public void SetFormationType(FormationType ft)
-    {
-        formationType = ft;
-    }
-
-    public FormationType GetFormationType()
-    {
-        return formationType;
-    }
-
-    public void SetFormationFlag(FormationType key, bool val)
-    {
-        formationFlags[key] = val;
+        formationFlags[(int)flag] = val;
+        Debug.Log("SETTING FORMATION TO: " + nameof(flag));
         chooseFormation();
     }
 
     public bool GetFormationFlag(FormationType key)
     {
-        return formationFlags[key];
+        return formationFlags[(int)key];
     }
 
     private void chooseFormation()
     {
         // Check the flags one by one, and set the flag to the first one that is true.
-        foreach (KeyValuePair<FormationType, bool> flag in formationFlags)
+        bool flagset = false;
+        int flagtype = 0;
+
+        foreach (bool flag in formationFlags)
         {
-            if (flag.Value == true)
+            if (flag == true)
             {
-                Debug.Log("SETTING FORMATION TO: " + flag.Key);
-                formationType = flag.Key;
-                return;
+                flagset = true;
+                Debug.Log("FORMATION SET TO: " + nameof(flag));
+                type = (formation.Type) flagtype;
+                break;
             }
+            flagtype++;
         }
-        Debug.Log("THERE IS NO FORMATION");
-        formationType = FormationType.NONE;
-        this.ResetAll();
+        if (!flagset)
+        {
+            Debug.Log("NO FORMATION SET");
+            type = formation.Type.NONE;
+            //TODO: SHould this reset
+            this.ResetAll();
+        }
+     
+
     }
 }
 
-// experimental, not sure if I'll do this
-// public class FormationPosition
-// {
-//     public GroupAI groupAI;
-//     public Vector3 position;
-// }

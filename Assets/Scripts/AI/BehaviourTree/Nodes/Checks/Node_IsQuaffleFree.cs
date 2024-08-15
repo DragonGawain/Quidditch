@@ -16,7 +16,8 @@ namespace CharacterAI
             //Debug.Log("Executing IsQuaffleFree?");
 
             // Do the check.
-            GameObject quafflesCurrentHolderGO = MyParentTree.MyGroupAI.TheQuaffle.MyHolder;
+            Quaffle q = MyParentTree.MyGroupAI.quaffle.GetComponent<Quaffle>();
+            GameObject quafflesCurrentHolderGO = q.Holder;
 
             if (quafflesCurrentHolderGO == null)
             {

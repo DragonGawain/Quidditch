@@ -8,20 +8,24 @@ public class Quaffle : Ball
     // VARIABLES
     // Should speed and the like be defined here, or by the parent classe?
     [SerializeField]
-    private GameObject myHolder = null;
-    public GameObject MyHolder
+    private GameObject holder = null;
+    public GameObject Holder
     {
-        get { return myHolder; }
-        set { myHolder = value; }
+        get { return holder; }
+        set { holder = value; }
+    }
+    public GameObject getOwner()
+    {
+        return holder;
     }
 
     // Important for tracking who is the chaser (and what is the team) that scored
     [SerializeField]
-    private GameObject lastHolder;
-    public GameObject LastHolder
+    private GameObject lastOwner;
+    public GameObject LastOwner
     {
-        get { return lastHolder; }
-        set { lastHolder = value; }
+        get { return lastOwner; }
+        set { lastOwner = value; }
     }
 
     int wasCaughtTimer = 0;
@@ -51,20 +55,20 @@ public class Quaffle : Ball
             GroupAI theCatcher = collision.gameObject.GetComponent<GroupAI>();
             if (theCatcher != null && collision.gameObject.CompareTag("chaser"))
             {
-                lastHolder = myHolder;
+                lastOwner = holder;
 
-                if (myHolder != null && myHolder != theCatcher.gameObject)
+                if (holder != null && holder != theCatcher.gameObject)
                 {
-                    myHolder.GetComponent<GroupAI>().SetHasBall(false);
-                    myHolder.GetComponent<BehaviourTree>().QuaffleBoostEnd();
+                    holder.GetComponent<GroupAI>().SetHasBall(false);
+                    holder.GetComponent<BehaviourTree>().QuaffleBoostEnd();
                 }
 
-                myHolder = collision.gameObject;
+                holder = collision.gameObject;
                 theCatcher.SetHasBall(true);
 
                 // check if the myHolder has a Behaviour tree -> if it does, give them a speed boost
-                if (myHolder.GetComponent<BehaviourTree>())
-                    myHolder.GetComponent<BehaviourTree>().CollectedQuaffle();
+                if (holder.GetComponent<BehaviourTree>())
+                    holder.GetComponent<BehaviourTree>().CollectedQuaffle();
 
                 // SetTeam(theChaser.Team);
 
@@ -92,22 +96,22 @@ public class Quaffle : Ball
                 )
             );
             GroupAI theChaser = collision.gameObject.GetComponent<GroupAI>();
-            if (theChaser != null && collision.gameObject.CompareTag("chaser") && myHolder == null)
+            if (theChaser != null && collision.gameObject.CompareTag("chaser") && holder == null)
             {
-                lastHolder = myHolder;
+                lastOwner = holder;
 
-                if (myHolder != null && myHolder != theChaser.gameObject)
+                if (holder != null && holder != theChaser.gameObject)
                 {
-                    myHolder.GetComponent<GroupAI>().SetHasBall(false);
-                    myHolder.GetComponent<BehaviourTree>().QuaffleBoostEnd();
+                    holder.GetComponent<GroupAI>().SetHasBall(false);
+                    holder.GetComponent<BehaviourTree>().QuaffleBoostEnd();
                 }
 
-                myHolder = collision.gameObject;
+                holder = collision.gameObject;
                 theChaser.SetHasBall(true);
 
                 // check if the myHolder has a Behaviour tree -> if it does, give them a speed boost
-                if (myHolder.GetComponent<BehaviourTree>())
-                    myHolder.GetComponent<BehaviourTree>().CollectedQuaffle();
+                if (holder.GetComponent<BehaviourTree>())
+                    holder.GetComponent<BehaviourTree>().CollectedQuaffle();
 
                 // SetTeam(theChaser.Team);
 
@@ -123,11 +127,11 @@ public class Quaffle : Ball
     public void Throw(Vector3 force)
     {
         Debug.Log("thrown");
-        GroupAI theChaser = myHolder.GetComponent<GroupAI>();
+        GroupAI theChaser = holder.GetComponent<GroupAI>();
         theChaser.SetHasBall(false);
 
-        lastHolder = myHolder;
-        myHolder = null;
+        lastOwner = holder;
+        holder = null;
 
         // MyRigidbody.isKinematic = false;
         myRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
@@ -149,14 +153,14 @@ public class Quaffle : Ball
         transform.position = Vector3.zero;
         MyRigidbody.velocity = Vector3.zero;
 
-        if (myHolder != null)
+        if (holder != null)
         {
-            if (myHolder.GetComponent<GroupAI>())
-                myHolder.GetComponent<GroupAI>().SetHasBall(false);
+            if (holder.GetComponent<GroupAI>())
+                holder.GetComponent<GroupAI>().SetHasBall(false);
         }
 
-        myHolder = null;
-        lastHolder = null;
+        holder = null;
+        lastOwner = null;
 
         wasCaught = false;
     }
@@ -169,7 +173,7 @@ public class Quaffle : Ball
                 wasCaught = false;
             wasCaughtTimer--;
         }
-        if (myHolder == null)
+        if (holder == null)
         {
             MyRigidbody.velocity = MyRigidbody.velocity - (MyRigidbody.velocity.normalized * 0.05f);
         }

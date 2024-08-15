@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GroupKeeper : GroupAI
 {
-    protected override void OnAwake()
-    {
+    //protected override void OnAwake()
+    //{
         // string output = "KEEPER " + this.gameObject.name + ", - chasers: ";
         // foreach (GroupAI chaser in friendlyChasers)
         // {
@@ -21,7 +21,7 @@ public class GroupKeeper : GroupAI
         // if (freindlyKeeper != null)
         //     output += ", keeper: " + freindlyKeeper.gameObject.name;
         // Debug.Log(output);
-    }
+    //}
 
     // Update is called once per frame
     // protected override void Update()

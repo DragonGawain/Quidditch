@@ -41,29 +41,29 @@ public class UIManager : MonoBehaviour
         // Temporary for timer testing
         //SceneManager.LoadScene("CristianScene");
 
-        switch (playerRole)
-        {
-            case PlayerRole.CHASER:
-                PlayerController.playerMaxSpeed = 3f;
-                SceneManager.LoadScene("MainGameChaser");
-                break;
-            case PlayerRole.BEATER:
-                PlayerController.playerMaxSpeed = 5f;
-                SceneManager.LoadScene("MainGameBeater");
-                break;
-            case PlayerRole.SEEKER:
-                PlayerController.playerMaxSpeed = 2.25f;
-                SceneManager.LoadScene("MainGameSeeker");
-                break;
-            case PlayerRole.KEEPER:
-                PlayerController.playerMaxSpeed = 5f;
-                SceneManager.LoadScene("MainGameKeeper");
-                break;
-            default:
-                PlayerController.playerMaxSpeed = 3f;
-                SceneManager.LoadScene("MainGameChaser");
-                break;
-        }
+        //switch (playerRole)
+        //{
+        //    case PlayerRole.CHASER:
+        //        //PlayerController.playerMaxSpeed = 3f;
+        //        SceneManager.LoadScene("MainGameChaser");
+        //        break;
+        //    case PlayerRole.BEATER:
+        //        //PlayerController.playerMaxSpeed = 5f;
+        //        SceneManager.LoadScene("MainGameBeater");
+        //        break;
+        //    case PlayerRole.SEEKER:
+        //        //PlayerController.playerMaxSpeed = 2.25f;
+        //        SceneManager.LoadScene("MainGameSeeker");
+        //        break;
+        //    case PlayerRole.KEEPER:
+        //        //PlayerController.playerMaxSpeed = 5f;
+        //        SceneManager.LoadScene("MainGameKeeper");
+        //        break;
+        //    default:
+        //        //PlayerController.playerMaxSpeed = 3f;
+        //        SceneManager.LoadScene("MainGameChaser");
+        //        break;
+        //}
         mainMenu.SetActive(false);
         HUD.SetActive(true);
         Debug.Log("start game");

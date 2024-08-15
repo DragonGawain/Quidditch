@@ -18,8 +18,6 @@ public class Ball : MonoBehaviour
     protected Rigidbody myRigidbody;
     public Rigidbody MyRigidbody { get { return myRigidbody; } }
 
-
-
     // METHODS.
     private void Awake()
     {

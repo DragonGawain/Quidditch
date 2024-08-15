@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.GraphicsBuffer;
 
-public class PlayerControllerKelly : MonoBehaviour
+public class MovementControllerOld : MonoBehaviour
 {
     //a broom is somewhat like a helicopter meets a plane
     public PlayerInputActions playerControls;

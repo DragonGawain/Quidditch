@@ -15,7 +15,7 @@ namespace CharacterAI
             //Debug.Log("Executing Node_SeekFormationSpot");
 
             // Verify the formation is valid.
-            if (MyParentTree.MyGroupAI.GetIsInFormation() == false)
+            if (MyParentTree.MyGroupAI.InFormation == false)
             {
                 Debug.Log(string.Format("{0} has no valid formation.", MyParentTree.gameObject));
 

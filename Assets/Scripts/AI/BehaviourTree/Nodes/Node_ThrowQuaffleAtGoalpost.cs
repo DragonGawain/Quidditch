@@ -20,13 +20,13 @@ namespace CharacterAI
             if (MyParentTree.MyGroupAI.HasBall)
             {
                 // Make sure it knows we are holding it.
-                GameObject theQuaffleGO = MyParentTree.MyGroupAI.TheQuaffle.gameObject;
+                GameObject theQuaffleGO = MyParentTree.MyGroupAI.quaffle.gameObject;
                 Quaffle theQuaffle = theQuaffleGO.GetComponent<Quaffle>();
 
                 // Fetch the target goalpost.
                 GameObject targetGoalpost = ReadFromBlackboard("enemyGoalpost") as GameObject;
 
-                if (targetGoalpost != null && theQuaffleGO != null && theQuaffle != null && theQuaffle.MyHolder == MyParentTree.gameObject)
+                if (targetGoalpost != null && theQuaffleGO != null && theQuaffle != null && theQuaffle.Holder == MyParentTree.gameObject)
                 {
                     // Determine hit force vector.
                     // TODO: let distance from target influence the throw force?

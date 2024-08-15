@@ -14,6 +14,7 @@ namespace Astar
     {
         //must be cubes (or perfect squares)
         public Transform player;
+        [Tooltip("Using this layer mask on a GameObject will denote nodes overlapping with that node as Unwalkable")]
         public LayerMask unwalkableMask;
 
         [SerializeField]
@@ -32,6 +33,7 @@ namespace Astar
         {
             get { return xsize * ysize * zsize; }
         } 
+
         [SerializeField]
         public bool drawGizmos, showGridPositions;
 
@@ -136,7 +138,6 @@ namespace Astar
             
             //use postion relative to a fixed assigned center object - less messy
             //that way x and z are centered at 0 so there are - and positive vals
-            //we just assume y is never negative because why would a pathfinding node be underground
             float percentX = (relativePosition.x + (worldSize.x / 2)) / worldSize.x;
             float percentY = (relativePosition.y + (worldSize.y / 2)) / worldSize.y;
             float percentZ = (relativePosition.z + (worldSize.z / 2)) / worldSize.z;
@@ -187,7 +188,7 @@ namespace Astar
                         int y = node.gridY + _y;
                         int z = node.gridZ + _z;
 
-                        if (x >= 0 && x < grid.GetLength(0) && y >= 0 && y < grid.GetLength(1) && z >= 0 && y < grid.GetLength(2))
+                        if (x >= 0 && x < grid.GetLength(0) && y >= 0 && y < grid.GetLength(1) && z >= 0 && z < grid.GetLength(2))
                         {
                             neighbours.Add(grid[x, y, z]);
                         }
@@ -241,7 +242,7 @@ namespace Astar
             worldSize.z = r.bounds.size.z != 0 ? r.bounds.size.z : 1;
 
             centerWorldPosition = center.transform.position;
-            centerWorldPosition.y = worldSize.y/2;//we just assume y is never in the negative direction because why would a pathfinding node be underground
+            //centerWorldPosition.y = worldSize.y/2;//we just assume y is never in the negative direction because why would a pathfinding node be underground
             
             transform.position = centerWorldPosition;
 

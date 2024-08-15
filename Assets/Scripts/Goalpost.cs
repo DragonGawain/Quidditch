@@ -11,8 +11,8 @@ public class Goalpost : MonoBehaviour
     // TODO: add the event proper.
 
     // VARIABLES
-    [SerializeField] private Team owningTeam = Team.NONE;
-    public Team OwningTeam { get { return owningTeam; } }
+    private TeamManager owner = null;
+    public TeamManager Owner { get { return owner; } set { owner = value; } }
 
     private ScoreManager scoreManager;
 
@@ -30,24 +30,25 @@ public class Goalpost : MonoBehaviour
         scoreManager = FindObjectOfType<ScoreManager>();
     }
 
+
     // Increase the score whenever the quaffle enters the trigger zone of the goalpost
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("quaffle"))
         {
             Quaffle q = other.GetComponent<Quaffle>();
-            GroupAI theChaser = q.LastHolder.GetComponent<GroupAI>();
+            GroupAI theChaser = q.LastOwner.GetComponent<GroupAI>();
 
             // Ensure that a goal is registered only when the goalpost is triggered by the enemy team!
-            if (owningTeam != theChaser.GetTeam())
+            if (owner != theChaser.Team)
             {
                 // Update score for the corresponding team using the ScoreManager
-                scoreManager.IncrementScore(theChaser.GetTeam());
+                scoreManager.IncrementScore(theChaser.Team);
 
                 // After a goal, reposition the quaffle at the center of the "pitch" and ensure there is no velocity acting on it!
                 q.ResetQuaffle();
 
-                OnGoalScored?.Invoke(owningTeam, theChaser);
+                OnGoalScored?.Invoke(owner, theChaser);
             }
         }
     }

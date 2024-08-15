@@ -15,7 +15,7 @@ namespace CharacterAI
         {
             //Debug.Log("Executing IsQuaffleTooClose");
 
-            GameObject theQuaffle = MyParentTree.MyGroupAI.TheQuaffle.gameObject;
+            GameObject theQuaffle = MyParentTree.MyGroupAI.quaffle.gameObject;
             float distanceFromQuaffle = Vector3.Distance(MyParentTree.gameObject.transform.position, theQuaffle.transform.position);
 
             // Do the check.

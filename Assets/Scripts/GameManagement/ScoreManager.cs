@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using groupAI;
 
 public class ScoreManager : MonoBehaviour
 {
-    private Dictionary<Team, int> teamScores = new Dictionary<Team, int>();
+    private Dictionary<TeamManager, int> teamScores = new Dictionary<TeamManager, int>();
 
     // Get both teams score text from the HUD
     [SerializeField]
@@ -13,6 +14,10 @@ public class ScoreManager : MonoBehaviour
 
     [SerializeField]
     TextMeshProUGUI team2Score;
+
+    private TextMeshProUGUI finalResult;
+
+    private TeamManager team1, team2;
 
     public static ScoreManager singleton = null;
 
@@ -27,24 +32,52 @@ public class ScoreManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         // Initialize scores for each team
-        teamScores[Team.PLAYER] = 0;
-        teamScores[Team.AI] = 0;
+        var teams = FindObjectsOfType<TeamManager>();
+
+        Debug.Log("Score manager found" + teams.Length + " teams");
+
+        if (teams.Length != 2)
+        {
+            Debug.Log("Invalid number of teams");
+        }
+        else
+        {
+            teamScores.Add(teams[0], 0);
+            teamScores.Add(teams[1], 0);
+        }
+        
     }
 
-    public void IncrementScore(Team team)
+    public void IncrementScore(TeamManager team)
     {
         // Increment the score for the specified team
         teamScores[team]++;
         Debug.Log("Goal scored by " + team.ToString());
         Debug.Log(
-            "New score: Team 1 (Player): "
-                + teamScores[Team.PLAYER]
-                + " vs Team 2 (AI): "
-                + teamScores[Team.AI]
+            "New score: Team 1 : "
+                + teamScores[team1]
+                + " vs Team 2 : "
+                + teamScores[team2]
         );
 
+        
+    }
+
+    public void SnitchCaught(TeamManager team)
+    {
+         finalResult = GameObject.Find("Game Result Text (TMP)").GetComponent<TextMeshProUGUI>();
+
+        if (team == team2)
+            finalResult.SetText("Team 2 caught the snitch and WON!");
+        else if (team == team1)
+            finalResult.SetText("Team 1 caught the snitch and WON!");
+    }
+
+    private void Update()
+    {       
         // Update the score on the UI
-        team1Score.text = teamScores[Team.PLAYER].ToString();
-        team2Score.text = teamScores[Team.AI].ToString();
+ 
+        team1Score.text = teamScores[team1].ToString();
+        team2Score.text = teamScores[team2].ToString();
     }
 }

@@ -16,7 +16,19 @@ namespace CharacterAI
             //Debug.Log("Executing IsTeammateHoldingQuaffle?");
 
             // Do the check.
-            foreach (GroupAI chaser in MyParentTree.MyGroupAI.FriendlyChasers)
+            foreach (GameObject go in MyParentTree.MyGroupAI.chasers)
+            {
+                Player chaser = go.GetComponent<Player>();
+                if (chaser.HasQuaffle)
+                {
+                    WriteToBlackboard("quaffleHolder", chaser.gameObject);
+
+                    myState = NodeState.SUCCESS;
+                    return myState;
+                }
+            }
+            //before reformat code
+            /*foreach (GroupAI chaser in MyParentTree.MyGroupAI.Chasers)
             {
                 if (chaser.HasBall)
                 {
@@ -25,7 +37,8 @@ namespace CharacterAI
                     myState = NodeState.SUCCESS;
                     return myState;
                 }
-            }
+            }*/
+
             //if (MyParentTree.MyGroupAI.
             //    && MyParentTree.MyGroupAI.PlayersRole == PlayerRole.CHASER)
             //{

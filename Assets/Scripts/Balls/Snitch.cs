@@ -19,14 +19,17 @@ public class Snitch : Ball
     // Tags corresponding to the possible targets for the snitch
     private string[] tags = { "seeker" };
 
-    private TextMeshProUGUI finalResult;
+    //private TextMeshProUGUI finalResult;
+    private ScoreManager scoreManager;
 
     // EVENTS
     public event GameManager.SnitchCaught OnSnitchCaught;
 
     // METHODS.
     // Start is called before the first frame update
-    void Start() { }
+    void Start() {
+        scoreManager = FindObjectOfType<ScoreManager>();
+    }
 
     protected override void OnAwake()
     {
@@ -63,20 +66,22 @@ public class Snitch : Ball
 
         GroupAI theSeeker = collision.gameObject.GetComponent<GroupAI>();
         if (collision.gameObject.CompareTag("seeker") && theSeeker != null)
-        {
-            Debug.Log(string.Format("The Snitch was caught by {0}.", theSeeker.gameObject));
-
+        {            
+            
             // TODO: handle player seeker, and make sure everything is fine with the AI one.
+
+            Debug.Log(string.Format("The Snitch was caught by {0}.", theSeeker.gameObject));
+        
 
             // Throw the event.
             EndGame();
-
-            finalResult = GameObject.Find("Game Result Text (TMP)").GetComponent<TextMeshProUGUI>();
-            
-            if (theSeeker.GetTeam() == Team.AI)
-                finalResult.SetText("Team 2 (AI) caught the snitch and WON!");
-            else if (theSeeker.GetTeam() == Team.PLAYER)
-                finalResult.SetText("Team 1 (PLAYER) caught the snitch and WON!");
+            scoreManager.SnitchCaught(theSeeker.Team);
+        //    finalResult = GameObject.Find("Game Result Text (TMP)").GetComponent<TextMeshProUGUI>();
+                
+        //    if (theSeeker.Team == team2)
+        //        finalResult.SetText("Team 2 (AI) caught the snitch and WON!");
+         //   else if (theSeeker.GetTeam() == Team.PLAYER)
+        //        finalResult.SetText("Team 1 (PLAYER) caught the snitch and WON!");
             
             // OnSnitchCaught?.Invoke(theSeeker);
         }
@@ -96,7 +101,6 @@ public class Snitch : Ball
 
                     // Throw the event.
                     EndGame();
-                    finalResult.SetText("Team 1 (PLAYER) caught the snitch and WON!");
                     // OnSnitchCaught?.Invoke(theSeeker);
                 }
             }

@@ -250,7 +250,7 @@ namespace CharacterAI
                         closestBludger.transform.position
                     )
                     : float.MaxValue;
-            foreach (Bludger bludger in this.MyGroupAI.TheBludgers)
+            foreach (GameObject bludger in this.MyGroupAI.bludgers)
             {
                 // Assuming that we have only two bludgers.
                 if (
@@ -278,7 +278,7 @@ namespace CharacterAI
             GameObject closestBludger = null;
             float distanceToClosestBludger = float.MaxValue;
 
-            foreach (Bludger bludger in this.MyGroupAI.TheBludgers)
+            foreach (GameObject bludger in this.MyGroupAI.bludgers)
             {
                 if (
                     Vector3.Distance(
@@ -303,7 +303,8 @@ namespace CharacterAI
             GameObject closestEnemyGoalpost = null;
             float distanceToClosestEnemyGoalpost = float.MaxValue;
 
-            foreach (Goalpost goalpost in this.MyGroupAI.EnemyGoalposts)
+            //TODO: This is a weird way to access this
+            foreach (GameObject goalpost in this.MyGroupAI.Team.EnemyGoalposts)
             {
                 float distanceToThisGoalpost = Vector3.Distance(gameObject.transform.position, goalpost.gameObject.transform.position);
                 if (distanceToThisGoalpost < distanceToClosestEnemyGoalpost)
@@ -320,7 +321,7 @@ namespace CharacterAI
             GameObject closestEnemyGoalpost = null;
             float distanceToClosestEnemyGoalpost = float.MaxValue;
 
-            foreach (Goalpost goalpost in this.MyGroupAI.EnemyGoalposts)
+            foreach (GameObject goalpost in this.MyGroupAI.Team.EnemyGoalposts)
             {
                 float distanceToThisGoalpost = Vector3.Distance(target.gameObject.transform.position, goalpost.gameObject.transform.position);
                 if (distanceToThisGoalpost < distanceToClosestEnemyGoalpost)

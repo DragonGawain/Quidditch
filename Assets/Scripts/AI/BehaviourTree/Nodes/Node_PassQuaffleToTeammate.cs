@@ -20,7 +20,7 @@ namespace CharacterAI
             // First verify that we are holding the quaffle
             if (MyParentTree.MyGroupAI.HasBall)
             {
-                GameObject theQuaffleGO = MyParentTree.MyGroupAI.TheQuaffle.gameObject;
+                GameObject theQuaffleGO = MyParentTree.MyGroupAI.quaffle.gameObject;
                 Quaffle theQuaffle = theQuaffleGO.GetComponent<Quaffle>();
 
                 Debug.Log(theQuaffle);
@@ -28,7 +28,7 @@ namespace CharacterAI
                 // Fetch the target teammate
                 GameObject targetTeammate = ReadFromBlackboard("teammateInGoodSpot") as GameObject;
 
-                if (targetTeammate != null && theQuaffleGO != null && theQuaffle != null && theQuaffle.MyHolder == MyParentTree.gameObject)
+                if (targetTeammate != null && theQuaffleGO != null && theQuaffle != null && theQuaffle.Holder == MyParentTree.gameObject)
                 {
 
                     // Determine hit force vector

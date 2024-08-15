@@ -7,6 +7,7 @@ public class GroupChaser : GroupAI
     // static GroupAI[] chaserFormation = new GroupAI[] { null, null, null }; // list of the chasers in order - pos 0 = leader
     // static GroupAI closestBeater = null;
 
+    /*
     protected override void OnAwake()
     {
         // determine which team this AI is on
@@ -31,7 +32,7 @@ public class GroupChaser : GroupAI
             output += ", keeper: " + freindlyKeeper.gameObject.name;
         Debug.Log(output);
     }
-
+   
     protected override void FixedUpdate()
     {
         if (hasBall)
@@ -208,5 +209,5 @@ public class GroupChaser : GroupAI
             }
         }
         return closestBeater;
-    }
+    } */
 }

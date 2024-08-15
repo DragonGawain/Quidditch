@@ -16,10 +16,12 @@ namespace CharacterAI
             //Debug.Log("Executing IsEnemyHoldingQuaffle?");
 
             // Do the check.
-            GameObject quafflesCurrentHolderGO = MyParentTree.MyGroupAI.TheQuaffle.MyHolder;
+            GameObject q = MyParentTree.MyGroupAI.quaffle;
+            Quaffle quaffle =  q.GetComponent<Quaffle>(); ;
+            GameObject quafflesCurrentHolderGO = quaffle.getOwner();
             GroupAI quafflesCurrentHolder = quafflesCurrentHolderGO != null ? quafflesCurrentHolderGO.GetComponent<GroupAI>() : null;
 
-            if (quafflesCurrentHolderGO != null && quafflesCurrentHolder != null && quafflesCurrentHolder.GetTeam() != myParentTree.MyGroupAI.GetTeam())
+            if (quafflesCurrentHolderGO != null && quafflesCurrentHolder != null && quafflesCurrentHolder.Team != myParentTree.MyGroupAI.Team)
             {
                 WriteToBlackboard("enemyHoldingQuaffle", quafflesCurrentHolderGO);
 

@@ -19,7 +19,7 @@ namespace CharacterAI
             GameObject theQuaffle = ReadFromBlackboard("quaffle") as GameObject;
             if (theQuaffle == null)
             {
-                theQuaffle = MyParentTree.MyGroupAI.TheQuaffle.gameObject;
+                theQuaffle = MyParentTree.MyGroupAI.quaffle.gameObject;
                 WriteToBlackboard("quaffle", theQuaffle);
             }
 

@@ -1,5 +1,5 @@
-using System.Collections;using System.Collections.Generic;
-
+using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -40,8 +40,16 @@ namespace Astar
     {
         Assert.IsNotNull(seeker, "Seeker is null");
         Assert.IsNotNull(target, "Target is null");
-
-        FindPath(seeker.position, target.position);
+        try{
+                 FindPath(seeker.position, target.position);
+        }catch(Exception e)
+        {
+                Debug.LogError(e);
+                string stacktrace = e.StackTrace;
+                Debug.Log(stacktrace);
+                
+        }
+       
     }
 
     void testAddToOpen(Astar.Node n)
@@ -69,6 +77,7 @@ namespace Astar
         //convert world position into Nodes
         Node start = grid.GetNode(startPos);
         Node target = grid.GetNode(targetPos);
+        Debug.Log($"Target x:{target.gridX} y:{target.gridY} z:{target.gridZ} ");
         Node current = null;
         if (start == null) { UnityEngine.Debug.Log("Start Node is Null"); return; }
         if (target == null) { UnityEngine.Debug.Log("Target Node is Null"); return; }

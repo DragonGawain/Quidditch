@@ -15,11 +15,12 @@ namespace CharacterAI
         {
             //Debug.Log("Executing IsTeammateHoldingQuaffle?");
 
-            GameObject quaffleHolder = MyParentTree.MyGroupAI.TheQuaffle.MyHolder;
-            GroupAI quaffleHolderAI = quaffleHolder != null ? quaffleHolder.GetComponent<GroupAI>() : null;
+            GameObject go = MyParentTree.MyGroupAI.quaffle;
+            Quaffle q = go.GetComponent<Quaffle>();
+            GroupAI quaffleHolderAI = q.Holder != null ? q.Holder.GetComponent<GroupAI>() : null;
 
             // Do the check.
-            if (quaffleHolder == null || quaffleHolderAI.GetTeam() != MyParentTree.MyGroupAI.GetTeam())
+            if (q.Holder == null || quaffleHolderAI.Team != MyParentTree.MyGroupAI.Team)
             {
                 myState = NodeState.SUCCESS;
                 return myState;

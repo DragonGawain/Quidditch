@@ -19,7 +19,7 @@ namespace CharacterAI
             GameObject theSnitch = ReadFromBlackboard("snitch") as GameObject;
             if (theSnitch == null)
             {
-                theSnitch = MyParentTree.MyGroupAI.TheSnitch.gameObject;
+                theSnitch = MyParentTree.MyGroupAI.snitch.gameObject;
                 WriteToBlackboard("snitch", theSnitch);
             }
 
