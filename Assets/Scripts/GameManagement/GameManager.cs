@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] Bludgers { get {  return bludgers; } }
 
     [SerializeField] GameObject Team0, Team1;
-    private TeamManager team0, team1;
+    private TeamManager team1, team2;
     private GroupAI groupAI0, groupAI1;
 
     [SerializeField] PlayerController playerController;
@@ -36,16 +36,31 @@ public class GameManager : MonoBehaviour
     {
         //Team0.AddComponent<TeamManager>();
         //Team1.AddComponent<TeamManager>(); 
-        team0 = Team0.GetComponent<TeamManager>();
-        team0.EnemyTeam = team1;
-        team0.HasPlayer = true;
-        team0.init();
-        playerController.Team = team0;
-
-        team1 = Team1.GetComponent<TeamManager>();
-        team1.EnemyTeam = team0;
+        team1 = Team0.GetComponent<TeamManager>();
+        team1.Name = "team1";
+        team1.EnemyTeam = team2;
+        team1.HasPlayer = true;
         team1.init();
+        playerController.Team = team1;
 
+        team2 = Team1.GetComponent<TeamManager>();
+        team2.Name = "team2";
+        team2.EnemyTeam = team1;
+        team2.init();
+
+    }
+
+    public void playerRole(player.role pr)
+    {
+        team1.setPlayerRole(pr);
+    }
+
+    public void attachPlayerBody(GameObject player)
+    {
+        //set the camera and controller to control the player object
+        Rigidbody rb = player.GetComponent<Rigidbody>();
+        GameObject playerParent = GameObject.Find("PlayerParent");
+        playerParent.GetComponent<PlayerMovementController>().Rb= rb;
     }
 
     /*

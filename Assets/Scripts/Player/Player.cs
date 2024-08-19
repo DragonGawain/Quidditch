@@ -97,4 +97,5 @@ public class Player : MonoBehaviour
     {
         return role == r;
     }
+
 }

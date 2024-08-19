@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     GameObject endGame;
 
-    PlayerRole playerRole;
+    player.role playerRole;
 
     // Start is called before the first frame update
     void Awake()
@@ -111,16 +111,16 @@ public class UIManager : MonoBehaviour
         switch (pr)
         {
             case 0:
-                playerRole = PlayerRole.CHASER;
+                playerRole = player.role.CHASER;
                 break;
             case 1:
-                playerRole = PlayerRole.BEATER;
+                playerRole = player.role.BEATER;
                 break;
             case 2:
-                playerRole = PlayerRole.SEEKER;
+                playerRole = player.role.SEEKER;
                 break;
             case 3:
-                playerRole = PlayerRole.KEEPER;
+                playerRole = player.role.KEEPER;
                 break;
             default:
                 break;

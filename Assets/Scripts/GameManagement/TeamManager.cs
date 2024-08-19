@@ -14,6 +14,8 @@ public class TeamManager : MonoBehaviour
      * Keep track of team info for group ai
      */
 
+    GameManager gameManager;
+
     [SerializeField] private GameObject[] goalposts;
     public GameObject[] Goalposts { get { return goalposts; } }
     public GameObject[] EnemyGoalposts { get { return EnemyTeam.Goalposts; } }
@@ -29,12 +31,16 @@ public class TeamManager : MonoBehaviour
     [SerializeField] private GameObject seeker;
     public GameObject Seeker { get; }
 
+    public GameObject player;
     private TeamManager enemyTeam;
     public TeamManager EnemyTeam { set { enemyTeam = value; } get { return enemyTeam; } }
 
     private bool hasPlayer = false;
     public bool HasPlayer { set { hasPlayer = value; } get { return hasPlayer; } }
-    
+
+    private string name;
+    public string Name { set { name = value; } get { return name; } }
+
 
     public void init()
     {
@@ -44,7 +50,7 @@ public class TeamManager : MonoBehaviour
         //{
         //    Instantiate(chaserPrefab, new Vector3(0,0,0), q)
         //}
-
+        gameManager = GetComponent<GameManager>();
         recolour();
         GroupAI groupAI= gameObject.AddComponent<GroupAI>();
 
@@ -55,12 +61,12 @@ public class TeamManager : MonoBehaviour
             gp.Owner = this;
         }
 
-
     }
 
     public void recolour()
     {
         SkinnedMeshRenderer rend;
+        
         //reload materials
         foreach (GameObject go in chasers)
         {
@@ -89,6 +95,48 @@ public class TeamManager : MonoBehaviour
             rend = seeker.GetComponentInChildren<SkinnedMeshRenderer>();
             rend.material = seekerMat;
         }
+
+    }
+
+    public void setPlayerRole(player.role pr)
+    {
+        int num= 1;
+        int numChasers = 3;
+        int numBeaters = 2;
+
+        if (!hasPlayer)
+        {
+            Debug.Log("Cant set player role in "+ name + ". Team does not contain human player.");
+            return;
+        }
+
+        switch (pr)
+        {
+            case role.CHASER:
+                Debug.Log("Chaser selected");
+                num = Random.Range((int)0,numChasers - 1);
+                player = chasers[num];
+                break;
+            case role.BEATER:
+                Debug.Log("Beater selected");
+                num = Random.Range((int)0, numBeaters - 1);
+                player = beaters[num];
+                break;
+            case role.SEEKER:
+                Debug.Log("Seeker selected");
+                player = seeker;
+                break;
+            case role.KEEPER:
+                Debug.Log("Keeper selected");
+
+                player = keeper;
+                break;
+            default:
+                break;
+        }
+
+        gameManager.attachPlayerBody(player);
+        
 
     }
 

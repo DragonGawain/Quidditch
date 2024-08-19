@@ -19,6 +19,7 @@ public class PlayerMovementController : MonoBehaviour
     public float pitchResponsiveness = 0.5f;
 
     private Rigidbody rb;
+    public Rigidbody Rb { set { rb = value; } }
     private float _throttle, _forward, _roll, _yaw, _pitch;
     private float MAX_OFF = 10.5f, MIN_OFF = 9.0f;
     private float liftTimer = 0;

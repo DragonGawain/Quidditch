@@ -6,6 +6,8 @@ using groupAI;
 
 public class ScoreManager : MonoBehaviour
 {
+    
+    
     private Dictionary<TeamManager, int> teamScores = new Dictionary<TeamManager, int>();
 
     // Get both teams score text from the HUD
@@ -34,29 +36,35 @@ public class ScoreManager : MonoBehaviour
         // Initialize scores for each team
         var teams = FindObjectsOfType<TeamManager>();
 
-        Debug.Log("Score manager found" + teams.Length + " teams");
+        //Debug.Log("Score manager found" + teams.Length + " teams");
 
-        if (teams.Length != 2)
-        {
-            Debug.Log("Invalid number of teams");
-        }
-        else
-        {
-            teamScores.Add(teams[0], 0);
-            teamScores.Add(teams[1], 0);
-        }
+        //if (teams.Length != 2)
+        //{
+        //    Debug.Log("Invalid number of teams");
+        //}
+        //else
+        //{
+        //    teamScores.Add(teams[0], 0);
+        //    teamScores.Add(teams[1], 0);
+        //}
         
+    }
+
+    public void addTeams(TeamManager team1, TeamManager team2)
+    {
+        teamScores.Add(team1, 0);
+        teamScores.Add(team2, 0);
     }
 
     public void IncrementScore(TeamManager team)
     {
         // Increment the score for the specified team
         teamScores[team]++;
-        Debug.Log("Goal scored by " + team.ToString());
+        Debug.Log("Goal scored by " + team.Name);
         Debug.Log(
-            "New score: Team 1 : "
+            "New score:" + team1.Name + " : "
                 + teamScores[team1]
-                + " vs Team 2 : "
+                + " vs " + team2.Name + " : "
                 + teamScores[team2]
         );
 
@@ -76,8 +84,9 @@ public class ScoreManager : MonoBehaviour
     private void Update()
     {       
         // Update the score on the UI
- 
-        team1Score.text = teamScores[team1].ToString();
-        team2Score.text = teamScores[team2].ToString();
+
+            team1Score.text = teamScores[team1].ToString();
+            team2Score.text = teamScores[team2].ToString();
+
     }
 }

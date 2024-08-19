@@ -18,15 +18,20 @@ public class Timer : MonoBehaviour
     void Awake()
     {
         // Get the timer text from the HUD
-        timerTxt = GameObject.Find("Time Left Text (TMP)").GetComponent<TextMeshProUGUI>();
+        //timerTxt = GameObject.Find("Time Left Text (TMP)").GetComponent<TextMeshProUGUI>();
 
         // Get the UIManager from the UI obj.
-        uiManager = GameObject.Find("UI").GetComponent<UIManager>();
+        //uiManager = GameObject.Find("UI").GetComponent<UIManager>();
     }
 
     void Start()
     {
         timerOn = true;
+        // Get the timer text from the HUD
+        timerTxt = GameObject.Find("Time Left Text (TMP)").GetComponent<TextMeshProUGUI>();
+
+        // Get the UIManager from the UI obj.
+        uiManager = GameObject.Find("UI").GetComponent<UIManager>();
     }
 
     void Update()
